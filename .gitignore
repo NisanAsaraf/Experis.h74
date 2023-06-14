@@ -115,3 +115,6 @@ dkms.conf
 utest
 main
 *.log
+
+# Zone.Identifier files
+**/zone.identifier
