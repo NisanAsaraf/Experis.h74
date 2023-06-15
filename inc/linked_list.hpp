@@ -1,5 +1,5 @@
 #include <cstddef>
-
+#include <iostream>
 namespace ds
 {
     template <typename T>
@@ -28,6 +28,7 @@ namespace ds
 
         Linked_List<T>& push_head(const T& a_data);
         Linked_List<T>& push_tail(const T& a_data);
+        Linked_List<T>& print();
 
         size_t size() const; 
         Linked_List& clear();
@@ -166,6 +167,17 @@ namespace ds
             current = current->m_next;
         }
         return count;
+    }
+
+    template <typename T>
+    Linked_List<T>& Linked_List<T>::print() 
+    {
+        Node<T>* current = m_head->m_next;
+        while(current != m_tail)
+        {
+            std::cout<<current->m_data<< '\n' ;
+            current = current->m_next;
+        }
     }
 
     template <typename T>
