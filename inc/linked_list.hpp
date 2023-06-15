@@ -10,11 +10,11 @@ namespace ds
         Node(const T& a_data);
         Node& operator=(const Node& a_other);
         ~Node();
-
-    private:
+        
         T m_data;
         Node<T>* m_next;
         Node<T>* m_prev;
+    private:
     };
 
     template <typename T>
@@ -39,8 +39,7 @@ namespace ds
 
     template <typename T>
     Node<T>::Node()
-    : m_data(nullptr)
-    , m_next(nullptr)
+    :m_next(nullptr)
     , m_prev(nullptr)
     {  
     }
@@ -90,7 +89,7 @@ namespace ds
     : m_head(new Node<T>())
     , m_tail(new Node<T>())
     {
-        Node<T>* current_node = a_list.m_head;
+        Node<T>* current_node = a_list.m_head->m_next;
         while(current_node != nullptr)
         {
             this->push_tail(current_node->m_data);
@@ -115,6 +114,11 @@ namespace ds
         return *this;
     }
 
+    template <typename T>
+    Linked_List<T>::~Linked_List()
+    {
+        clear();  
+    }
 
     template <typename T>
     Linked_List<T>& Linked_List<T>::push_head(const T& a_data)
@@ -134,6 +138,7 @@ namespace ds
             new_node->m_next = m_head;
             m_head->m_prev = new_node;
         }
+        return *this;
     }
 
     template <typename T>
@@ -155,11 +160,13 @@ namespace ds
             m_tail->m_prev->m_next = new_node;
             m_tail->m_prev = new_node;
         }
+        return *this;
     }
 
     template <typename T>
     size_t Linked_List<T>::size() const
     {
+        size_t count = 0;
         Node<T>* current = m_head->m_next;
         while(current != m_tail)
         {
@@ -178,6 +185,7 @@ namespace ds
             std::cout<<current->m_data<< '\n' ;
             current = current->m_next;
         }
+        return *this;
     }
 
     template <typename T>
@@ -192,7 +200,7 @@ namespace ds
         }
         m_head->m_next = m_tail;
         m_tail->m_prev = m_head;
-        return *this; // Return a reference to the list
+        return *this;
     }
 
 } // namespace ds

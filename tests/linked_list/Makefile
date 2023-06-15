@@ -31,10 +31,10 @@ clean:
 
 utest.cpp: $(INCLUDES_DIR)/linked_list.hpp
 
-$(SOURCES_DIR)/linked_list.o:  $(INCLUDES_DIR)/linked_list.hpp
+linked_list.o: $(INCLUDES_DIR)/linked_list.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-$(TARGET): utest.o $(SOURCES_DIR)/linked_list.o
+$(TARGET): utest.o $(INCLUDES_DIR)/linked_list.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
 
 .PHONY: all clean check recheck clang_check

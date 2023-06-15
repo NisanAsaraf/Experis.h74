@@ -28,13 +28,15 @@ END_TEST
 
 BEGIN_TEST(_linked_list_push_head)
 	ds::Linked_List<int> new_list;
-	new_list.push_head(1).push_head(2).push_head(3).push_head(4).push_head(5);
+	new_list.push_head(1).push_head(2).push_head(3).push_head(4).push_head(5).print();
 	ASSERT_THAT(new_list.size() == 5);
-	
 END_TEST
 
 TEST_SUITE(決して道から外れてはいけません)
 	TEST(_linked_list_creation_empty)
 	TEST(_linked_list_creation_copy)
 	TEST(_linked_list_creation_eq)
+	TEST(_linked_list_push_head)
+
 END_SUITE
+
