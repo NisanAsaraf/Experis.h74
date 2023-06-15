@@ -26,11 +26,11 @@ namespace ds
         Linked_List& operator=(const Linked_List& a_other);
         ~Linked_List();
 
-        const T& push_head(const T& a_data);
-        const T& push_tail(const T& a_data);
+        Linked_List<T>& push_head(const T& a_data);
+        Linked_List<T>& push_tail(const T& a_data);
 
-        size_t size(); const
-
+        size_t size() const; 
+        Linked_List& clear();
     private:
         Node<T>* m_head;
         Node<T>* m_tail;
@@ -85,25 +85,38 @@ namespace ds
     }
 
     template <typename T>
-    Linked_List<T>::Linked_List(const Linked_List& a_data)
+    Linked_List<T>::Linked_List(const Linked_List& a_list)
     : m_head(new Node<T>())
     , m_tail(new Node<T>())
     {
-        Node<T>* current = a_data.m_head;
-        while(current != nullptr)
+        Node<T>* current_node = a_list.m_head;
+        while(current_node != nullptr)
         {
-
+            this->push_tail(current_node->m_data);
+            current_node = current_node->m_next;
         }
     }
 
     template <typename T>
     Linked_List<T>& Linked_List<T>::operator=(const Linked_List& a_other)
     {
+        if (this != &a_other)
+        {
+            clear();
 
+            Node<T>* current_node = a_other.m_head;
+            while (current_node != nullptr)
+            {
+                push_tail(current_node->m_data);
+                current_node = current_node->m_next;
+            }
+        }
+        return *this;
     }
 
+
     template <typename T>
-    const T&Linked_List<T>::push_head(const T& a_data)
+    Linked_List<T>& Linked_List<T>::push_head(const T& a_data)
     {
         Node<T>* new_node = new Node<T>(a_data);
         if(m_head->m_next == m_tail)
@@ -123,7 +136,7 @@ namespace ds
     }
 
     template <typename T>
-    const T& Linked_List<T>::push_tail(const T& a_data)
+    Linked_List<T>& Linked_List<T>::push_tail(const T& a_data)
     {
         Node<T>* new_node = new Node<T>(a_data);
 
@@ -144,7 +157,7 @@ namespace ds
     }
 
     template <typename T>
-    size_t Linked_List<T>::size()
+    size_t Linked_List<T>::size() const
     {
         Node<T>* current = m_head->m_next;
         while(current != m_tail)
@@ -153,6 +166,21 @@ namespace ds
             current = current->m_next;
         }
         return count;
+    }
+
+    template <typename T>
+    Linked_List<T>& Linked_List<T>::clear()
+    {
+        Node<T>* current = m_head->m_next;
+        while (current != m_tail)
+        {
+            Node<T>* next_node = current->m_next;
+            delete current;
+            current = next_node;
+        }
+        m_head->m_next = m_tail;
+        m_tail->m_prev = m_head;
+        return *this; // Return a reference to the list
     }
 
 } // namespace ds
