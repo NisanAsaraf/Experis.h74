@@ -86,11 +86,15 @@ namespace ds
 
     template <typename T>
     Linked_List<T>::Linked_List(const Linked_List& a_list)
-    : m_head(new Node<T>())
-    , m_tail(new Node<T>())
+        : m_head(new Node<T>())
+        , m_tail(new Node<T>())
     {
+        m_head->m_next = m_tail;
+        m_tail->m_prev = m_head;
+
         Node<T>* current_node = a_list.m_head->m_next;
-        while(current_node != nullptr)
+
+        while (current_node != a_list.m_tail)
         {
             this->push_tail(current_node->m_data);
             current_node = current_node->m_next;
@@ -104,8 +108,8 @@ namespace ds
         {
             clear();
 
-            Node<T>* current_node = a_other.m_head;
-            while (current_node != nullptr)
+            Node<T>* current_node = a_other.m_head->m_next;
+            while (current_node != a_other.m_tail)
             {
                 push_tail(current_node->m_data);
                 current_node = current_node->m_next;
