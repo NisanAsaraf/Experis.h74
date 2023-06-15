@@ -26,8 +26,10 @@ namespace ds
         Linked_List& operator=(const Linked_List& a_other);
         ~Linked_List();
 
-        const T& Linked_List<T>::push_head(const T& a_data);
-        const T& Linked_List<T>::push_tail(const T& a_data);
+        const T& push_head(const T& a_data);
+        const T& push_tail(const T& a_data);
+
+        size_t size(); const
 
     private:
         Node<T>* m_head;
@@ -141,6 +143,17 @@ namespace ds
         }
     }
 
+    template <typename T>
+    size_t Linked_List<T>::size()
+    {
+        Node<T>* current = m_head->m_next;
+        while(current != m_tail)
+        {
+            count += 1;
+            current = current->m_next;
+        }
+        return count;
+    }
 
 } // namespace ds
 

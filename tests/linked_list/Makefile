@@ -31,7 +31,7 @@ clean:
 
 utest.cpp: $(INCLUDES_DIR)/linked_list.hpp
 
-$(SOURCES_DIR)/stack.o: $(SOURCES_DIR)/linked_list.cpp $(INCLUDES_DIR)/linked_list.hpp
+$(SOURCES_DIR)/linked_list.o:  $(INCLUDES_DIR)/linked_list.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 $(TARGET): utest.o $(SOURCES_DIR)/linked_list.o
