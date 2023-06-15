@@ -124,21 +124,23 @@ namespace ds
     const T& Linked_List<T>::push_tail(const T& a_data)
     {
         Node<T>* new_node = new Node<T>(a_data);
-        if(m_head->m_next == m_tail)
+
+        if (m_head->m_next == m_tail)
         {
             m_tail->m_next = new_node;
             m_head->m_prev = new_node;
-            new_node->m_next = m_head;
-            new_node->m_prev = m_tail;
-
-        }else{
-            new_node->m_prev = m_head->m_prev;
-            m_head->m_prev->m_next = new_node;
-
-            new_node->m_next = m_head;
-            m_head->m_prev = new_node;
+            new_node->m_next = m_tail;
+            new_node->m_prev = m_head;
+        }
+        else
+        {
+            new_node->m_next = m_tail;
+            new_node->m_prev = m_tail->m_prev;
+            m_tail->m_prev->m_next = new_node;
+            m_tail->m_prev = new_node;
         }
     }
+
 
 } // namespace ds
 
