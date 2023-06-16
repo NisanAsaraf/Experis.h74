@@ -86,10 +86,69 @@ BEGIN_TEST(_linked_list_swap)
 	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
 	ASSERT_THAT(new_list.size() == 5);
 	new_list.swap(0,4);
-
 	//new_list.print();
+END_TEST
+
+BEGIN_TEST(_linked_list_OP_eq)
+	ds::Linked_List<int> new_list;
+	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
+	ASSERT_THAT(new_list.size() == 5);
+	ASSERT_THAT(new_list == new_list);
+	ds::Linked_List<int> copy_list;
+	copy_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
+	ASSERT_THAT(new_list == copy_list);
 
 END_TEST
+
+BEGIN_TEST(_linked_list_OP_not_eq)
+	ds::Linked_List<int> new_list;
+	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
+	ASSERT_THAT(new_list.size() == 5);
+	new_list.swap(0,4);
+	//new_list.print();
+END_TEST
+
+BEGIN_TEST(_linked_list_OP_less)
+	ds::Linked_List<int> new_list;
+	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
+	ASSERT_THAT(new_list.size() == 5);
+	new_list.swap(0,4);
+	//new_list.print();
+END_TEST
+
+BEGIN_TEST(_linked_list_OP_greater)
+	ds::Linked_List<int> new_list;
+	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
+	ASSERT_THAT(new_list.size() == 5);
+	new_list.swap(0,4);
+	//new_list.print();
+END_TEST
+
+BEGIN_TEST(_linked_list_OP_less_eq)
+	ds::Linked_List<int> new_list;
+	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
+	ASSERT_THAT(new_list.size() == 5);
+	new_list.swap(0,4);
+
+	//new_list.print();
+END_TEST
+
+BEGIN_TEST(_linked_list_OP_greater_eq)
+	ds::Linked_List<int> new_list;
+	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
+	ASSERT_THAT(new_list.size() == 5);
+	new_list.swap(0,4);
+	//new_list.print();
+END_TEST
+
+
+
+
+
+
+
+
+
 
 BEGIN_TEST(_linked_list_size)
 	ds::Linked_List<int> new_list;
@@ -135,6 +194,13 @@ TEST_SUITE(決して道から外れてはいけません)
 	TEST(_linked_list_clear)
 	TEST(_linked_list_swap)
 	TEST(_linked_list_contains)
+	TEST(_linked_list_OP_eq)
+
+
+
+
+
+
 	IGNORE_TEST(_linked_list_print)
 
 END_SUITE

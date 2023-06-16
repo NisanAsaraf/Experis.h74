@@ -44,7 +44,7 @@ namespace ds
         bool operator<(const Linked_List& a_other);
         bool operator>(const Linked_List& a_other);
         bool operator<=(const Linked_List& a_other);
-        bool operator<=(const Linked_List& a_other);
+        bool operator>=(const Linked_List& a_other);
 
         T pop_head();
         T pop_tail();
@@ -417,6 +417,86 @@ namespace ds
         m_head->m_next = m_tail;
         m_tail->m_prev = m_head;
         return *this;
+    }
+
+    template <typename T>
+    bool Linked_List<T>::operator==(const Linked_List& a_other)
+    {
+        if(*this == a_other)
+        {
+            return true;
+        }
+
+        Node<T>* current_this = m_head->m_next;
+        Node<T>* current_other = a_other.m_head->m_next;
+
+        while (current_this != m_tail && current_other != a_other.m_tail)
+        {
+            if(current_this->m_data != current_other->m_data)
+            {
+                return false;
+            }
+            current_this = current_this->m_next;
+            current_other = current_other->m_next;
+        }
+
+        return (current_this == m_tail && current_other == a_other.m_tail);
+    }
+
+    template <typename T>
+    bool Linked_List<T>::operator!=(const Linked_List& a_other)
+    {
+        return !(*this == a_other);
+    }
+
+    template <typename T>
+    bool Linked_List<T>::operator<(const Linked_List& a_other)
+    {
+        Node<T>* current_this = m_head->m_next;
+        Node<T>* current_other = a_other->m_head->m_next;
+
+        while (current_this != m_tail && current_other != a_other.m_tail)
+        {
+            if(current_this->m_data != current_other->m_data)
+            {
+                return false;
+            }
+            current_this = current_this->m_next;
+            current_other = current_other->m_next;
+        }
+
+        return (current_this == m_tail && current_other != a_other.m_tail);
+    }
+
+    template <typename T>
+    bool Linked_List<T>::operator>(const Linked_List& a_other)
+    {
+        Node<T>* current_this = m_head->m_next;
+        Node<T>* current_other = a_other.m_head->m_next;
+
+        while (current_this != m_tail && current_other != a_other.m_tail)
+        {
+            if (current_this->m_data != current_other->m_data)
+            {
+                return current_this->m_data > current_other->m_data;
+            }
+            current_this = current_this->m_next;
+            current_other = current_other->m_next;
+        }
+
+        return current_this != m_tail && current_other == a_other.m_tail;
+    }
+
+    template <typename T>
+    bool Linked_List<T>::operator<=(const Linked_List& a_other)
+    {
+        return !(*this > a_other);
+    }
+
+    template <typename T>
+    bool Linked_List<T>::operator>=(const Linked_List& a_other)
+    {
+        return !(*this < a_other);
     }
 
 } // namespace ds
