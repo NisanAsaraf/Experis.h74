@@ -13,6 +13,8 @@ namespace ds
         Node& operator=(const Node& a_other);
         ~Node();
         
+        Node& flip();
+
         T m_data;
         Node<T>* m_next;
         Node<T>* m_prev;
@@ -52,9 +54,11 @@ namespace ds
         bool contains(const T& a_data);
 
         Linked_List<T>& print();
-
         size_t size() const; 
         Linked_List& clear();
+
+        Linked_List& reverse();
+        size_t for_each();
 
     private:
         Node<T>* m_head;
@@ -95,6 +99,15 @@ namespace ds
             if (m_prev)
                 m_prev->m_next = this;
         }
+        return *this;
+    }
+
+    template <typename T>
+    Node<T>& Node<T>::flip()
+    {
+        Node<T>* temp = m_next;
+        m_next = m_prev;
+        m_prev = temp;
         return *this;
     }
 
@@ -377,6 +390,26 @@ namespace ds
             position += 1;
         }
         return false;
+    }
+    
+    template <typename T>
+    Linked_List<T>& Linked_List<T>::reverse()
+    {
+        Node<T>* current = m_head->m_next;
+        while(current != m_tail)
+        {
+            current->flip();
+            current = current->m_prev;
+        }
+
+        m_head->m_next->m_next = m_tail;
+        m_tail->m_prev->m_prev = m_head;
+
+        Node<T>* temp = m_head->m_next;
+        m_head->m_next = m_tail->m_prev;
+        m_tail->m_prev = temp;
+
+        return *this;
     }
 
     template <typename T>

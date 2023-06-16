@@ -146,14 +146,15 @@ BEGIN_TEST(_linked_list_OP_greater_eq)
 	ASSERT_THAT(copy_list >= new_list);
 END_TEST
 
+BEGIN_TEST(_linked_list_reverse)
+	ds::Linked_List<int> new_list;
+	new_list.append(1).append(2).append(3).append(4).append(5).append(6);
+	ASSERT_THAT(new_list.size() == 6);
+//	new_list.print();
+	new_list.reverse();
+//	new_list.print();
 
-
-
-
-
-
-
-
+END_TEST
 
 BEGIN_TEST(_linked_list_size)
 	ds::Linked_List<int> new_list;
@@ -203,7 +204,7 @@ TEST_SUITE(決して道から外れてはいけません)
 	TEST(_linked_list_OP_not_eq)
 	TEST(_linked_list_OP_less)
 	TEST(_linked_list_OP_greater)
-
+	TEST(_linked_list_reverse)
 	IGNORE_TEST(_linked_list_print)
 
 END_SUITE
