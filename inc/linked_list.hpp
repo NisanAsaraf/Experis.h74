@@ -28,6 +28,8 @@ namespace ds
 
         Linked_List<T>& push_head(const T& a_data);
         Linked_List<T>& push_tail(const T& a_data);
+        Linked_List& append(const T& a_data);
+
         Linked_List<T>& print();
 
         size_t size() const; 
@@ -151,6 +153,12 @@ namespace ds
         m_tail->m_prev = new_node;
 
         return *this;
+    }
+    
+    template <typename T>
+    Linked_List<T>& Linked_List<T>::append(const T& a_data)
+    {
+        return push_tail(a_data);
     }
 
     template <typename T>

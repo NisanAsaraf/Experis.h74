@@ -32,6 +32,32 @@ BEGIN_TEST(_linked_list_push_head)
 	ASSERT_THAT(new_list.size() == 5);
 END_TEST
 
+BEGIN_TEST(_linked_list_push_tail)
+	ds::Linked_List<int> new_list;
+	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
+	ASSERT_THAT(new_list.size() == 5);
+END_TEST
+
+BEGIN_TEST(_linked_list_append)
+	ds::Linked_List<int> new_list;
+	new_list.append(1).append(2).append(3).append(4).append(5).append(6);
+	ASSERT_THAT(new_list.size() == 6);
+END_TEST
+
+BEGIN_TEST(_linked_list_size)
+	ds::Linked_List<int> new_list;
+	new_list.append(1).append(2).append(3).append(4).append(5).append(6);
+	ASSERT_THAT(new_list.size() == 6);
+END_TEST
+
+BEGIN_TEST(_linked_list_clear)
+	ds::Linked_List<int> new_list;
+	new_list.append(1).append(2).append(3).append(4).append(5).append(6);
+	ASSERT_THAT(new_list.size() == 6);
+	new_list.clear();
+	ASSERT_THAT(new_list.size() == 0);
+END_TEST
+
 BEGIN_TEST(_linked_list_print)
 	ds::Linked_List<int> new_list;
 	new_list.push_head(142).push_head(61).push_head(641).push_head(121).push_head(90);
@@ -45,4 +71,8 @@ TEST_SUITE(決して道から外れてはいけません)
 	TEST(_linked_list_creation_eq)
 	TEST(_linked_list_push_head) 
 	IGNORE_TEST(_linked_list_print)
+	TEST(_linked_list_push_tail)
+	TEST(_linked_list_append)
+	TEST(_linked_list_size)
+	TEST(_linked_list_clear)
 END_SUITE
