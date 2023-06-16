@@ -32,8 +32,24 @@ namespace ds
         Linked_List<T>& push_tail(const T& a_data);
         Linked_List& append(const T& a_data);
 
+        Linked_List<T>& insert_after(const size_t& index, const T& a_data);
+        Linked_List<T>& insert_before(const size_t& index, const T& a_data);
+
+        T remove(const size_t& index);
+        Linked_List<T>& insert_at(const size_t& a_index, const T& a_data);
+        Linked_List<T>& swap(const size_t& a_index1, const size_t& a_index2);
+
+        bool operator==(const Linked_List& a_other);
+        bool operator!=(const Linked_List& a_other);
+        bool operator<(const Linked_List& a_other);
+        bool operator>(const Linked_List& a_other);
+        bool operator<=(const Linked_List& a_other);
+        bool operator<=(const Linked_List& a_other);
+
         T pop_head();
         T pop_tail();
+
+        bool contains(const T& a_data);
 
         Linked_List<T>& print();
 
@@ -194,6 +210,173 @@ namespace ds
     Linked_List<T>& Linked_List<T>::append(const T& a_data)
     {
         return push_tail(a_data);
+    }
+
+    template <typename T>
+    Linked_List<T>& Linked_List<T>::insert_after(const size_t& a_index, const T& a_data)
+    {
+        if (a_index >= size()) 
+        {
+            throw std::out_of_range("Index out of bounds");
+        }
+
+        size_t position = 0;
+        Node<T>* current = m_head->m_next;
+        Node<T>* new_node = new Node<T>(a_data);
+
+        while(current != m_tail)
+        {
+            if(position == a_index)
+            {
+                Node<T>* after = current->m_next;
+                new_node->m_next = after;
+                new_node->m_prev = current;
+                after->m_prev = new_node;
+                current->m_next = new_node;
+                break;
+            }
+            current = current->m_next;
+            position += 1;
+        }
+        return *this;
+    }
+    
+    template <typename T>
+    Linked_List<T>& Linked_List<T>::insert_before(const size_t& a_index, const T& a_data)
+    {
+        if (a_index >= size()) 
+        {
+            throw std::out_of_range("Index out of bounds");
+        }
+        size_t position = 0;
+        Node<T>* current = m_head->m_next;
+        Node<T>* new_node = new Node<T>(a_data);
+
+        while(current != m_tail)
+        {
+            if(position == a_index)
+            {
+                Node<T>* before = current->m_prev;
+                new_node->m_next = current;
+                new_node->m_prev = before;
+                before->m_next = new_node;
+                current->m_prev = new_node;
+                break;
+            }
+            current = current->m_next;
+            position += 1;
+        }
+        return *this;
+    }
+
+    template <typename T>
+    T Linked_List<T>::remove(const size_t& a_index)
+    {
+        if (a_index >= size()) 
+        {
+            throw std::out_of_range("Index out of bounds");
+        }
+        size_t position = 0;
+        Node<T>* current = m_head->m_next;
+        T data;
+        while(current != m_tail)
+        {
+            if(position == a_index)
+            {
+                data = current->m_data;
+                current->m_prev->m_next = current->m_next;
+                current->m_next->m_prev = current->m_prev;
+                delete current;
+                break;
+            }
+            current = current->m_next;
+            position += 1;
+        }
+        return data;
+    }
+
+    template <typename T>
+    Linked_List<T>& Linked_List<T>::insert_at(const size_t& a_index, const T& a_data)
+    {
+        if (a_index >= size()) 
+        {
+            throw std::out_of_range("Index out of bounds");
+        }
+        size_t position = 0;
+        Node<T>* current = m_head->m_next;
+
+        while(current != m_tail)
+        {
+            if(position == a_index)
+            {
+                current->m_data = a_data;
+                break;
+            }
+            current = current->m_next;
+            position += 1;
+        }
+        return *this;
+    }
+
+    template <typename T>
+    Linked_List<T>& Linked_List<T>::swap(const size_t& a_index1, const size_t& a_index2)
+    {
+        size_t list_size = size();
+        if (a_index1 >= list_size || a_index2 >= list_size) 
+        {
+            throw std::out_of_range("Index out of bounds");
+        }
+        size_t position = 0;
+        Node<T>* current = m_head->m_next;
+        T tmp;
+        Node<T>* Node1;
+        Node<T>* Node2;
+
+        while(current != m_tail)
+        {
+            if(position == a_index1)
+            {
+                Node1 = current;
+                break;
+            }
+            current = current->m_next;
+            position += 1;
+        }
+
+        current = m_head->m_next;
+        while(current != m_tail)
+        {
+            if(position == a_index2)
+            {
+                Node2 = current;
+                break;
+            }
+            current = current->m_next;
+            position += 1;
+        }
+
+        tmp = Node1->m_data;
+        Node1->m_data = Node2->m_data;
+        Node2->m_data = tmp;
+        return *this;
+    }
+
+    template <typename T>
+    bool Linked_List<T>::contains(const T& a_data)
+    {
+        size_t position = 0;
+        Node<T>* current = m_head->m_next;
+
+        while(current != m_tail)
+        {
+            if(current->m_data == a_data)
+            {
+                return true;
+            }
+            current = current->m_next;
+            position += 1;
+        }
+        return false;
     }
 
     template <typename T>
