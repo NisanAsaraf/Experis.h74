@@ -48,6 +48,9 @@ namespace ds
         bool operator<=(const Linked_List& a_other);
         bool operator>=(const Linked_List& a_other);
 
+        Node<T>* get_head();
+        Node<T>* get_tail();
+
         T pop_head();
         T pop_tail();
 
@@ -64,6 +67,12 @@ namespace ds
         Node<T>* m_head;
         Node<T>* m_tail;
     };
+
+    template <typename T>
+    T sum(Linked_List<T>& a_list);
+
+    template <typename T>
+    Linked_List<T>& splice(Linked_List<T>& a_list1, Linked_List<T>& a_list2);
 
     template <typename T>
     Node<T>::Node()
@@ -550,7 +559,49 @@ namespace ds
         return !(*this < a_other);
     }
 
-    
+    template <typename T>
+    Node<T>* Linked_List<T>::get_head()
+    {
+        return m_head;
+    }
+
+    template <typename T>
+    Node<T>* Linked_List<T>::get_tail()
+    {
+        return m_tail;
+    }
+
+    template <typename T>
+    T sum(Linked_List<T>& a_list)
+    {
+        T sum = 0;
+        Node<T>* current = a_list.get_head();
+        Node<T>* tail = a_list.get_tail();
+        while (current != tail)
+        {
+            sum += current->m_data;
+            current = current->m_next;
+        }
+        return sum;
+    }
+
+    template <typename T>
+    Linked_List<T>& splice(Linked_List<T>& a_list1, Linked_List<T>& a_list2) // splices list2 into list1
+    {
+        Node<T>* tail1 = a_list1.get_tail();
+        Node<T>* head2 = a_list2.get_head();
+
+        tail1->m_prev->m_next = head2->m_next;
+        head2->m_next->m_prev = tail1->m_prev;
+
+        Node<T>* tail2 = a_list2.get_tail();
+        tail2->m_prev->m_next = tail1;
+        tail1->m_prev = tail2->m_prev;
+
+        //a_list2.clear();
+
+        return a_list1;
+    }
 
 } // namespace ds
 

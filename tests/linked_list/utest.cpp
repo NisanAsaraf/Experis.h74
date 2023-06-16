@@ -170,6 +170,26 @@ BEGIN_TEST(_linked_list_for_each)
 //	new_list.print();
 END_TEST
 
+BEGIN_TEST(_linked_list_sum_int)
+	ds::Linked_List<int> new_list;
+	new_list.append(1).append(2).append(3).append(4).append(5).append(6);
+	ASSERT_THAT(new_list.size() == 6);
+	ASSERT_THAT(sum(new_list) == 21);
+END_TEST
+
+BEGIN_TEST(_linked_list_sum_double)
+	ds::Linked_List<double> new_list;
+	new_list.append(1.5).append(2.5).append(3.5).append(4.5).append(5.5).append(6.5);
+	ASSERT_THAT(new_list.size() == 6);
+	ASSERT_THAT(sum(new_list) == 24);
+END_TEST
+
+BEGIN_TEST(_linked_list_sum_float)
+	ds::Linked_List<double> new_list;
+	new_list.append(1.5).append(2.5).append(3.5).append(4.5).append(5.5).append(6.5);
+	ASSERT_THAT(new_list.size() == 6);
+	ASSERT_THAT(sum(new_list) == 24);
+END_TEST
 
 BEGIN_TEST(_linked_list_size)
 	ds::Linked_List<int> new_list;
@@ -191,6 +211,15 @@ BEGIN_TEST(_linked_list_clear)
 	ASSERT_THAT(new_list.size() == 6);
 	new_list.clear();
 	ASSERT_THAT(new_list.size() == 0);
+END_TEST
+
+BEGIN_TEST(_linked_list_splice)
+	ds::Linked_List<int> new_list;
+	new_list.append(1).append(2).append(3).append(4).append(5).append(6);
+	ds::Linked_List<int> spliced_list;
+	spliced_list.append(7).append(8).append(9).append(10).append(11).append(12);
+	ds::splice(new_list, spliced_list);
+	ASSERT_THAT(new_list.size() == 12);
 END_TEST
 
 BEGIN_TEST(_linked_list_print)
@@ -221,6 +250,11 @@ TEST_SUITE(決して道から外れてはいけません)
 	TEST(_linked_list_OP_greater)
 	TEST(_linked_list_reverse)
 	TEST(_linked_list_for_each)
+	TEST(_linked_list_sum_int)
+	TEST(_linked_list_sum_double)
+	TEST(_linked_list_sum_float)
+	TEST(_linked_list_splice)
+
 	IGNORE_TEST(_linked_list_print)
 
 END_SUITE
