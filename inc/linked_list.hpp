@@ -32,6 +32,7 @@ namespace ds
 
         size_t size() const; 
         Linked_List& clear();
+
     private:
         Node<T>* m_head;
         Node<T>* m_tail;
@@ -70,8 +71,8 @@ namespace ds
                 m_next->m_prev = this;
             if (m_prev)
                 m_prev->m_next = this;
-            return *this;
         }
+        return *this;
     }
 
     template <typename T>
@@ -128,18 +129,13 @@ namespace ds
     Linked_List<T>& Linked_List<T>::push_head(const T& a_data)
     {
         Node<T>* new_node = new Node<T>(a_data);
-        if(m_head->m_next == m_tail)
-        {
-            m_tail->m_next = new_node;
-            m_head->m_prev = new_node;
-            new_node->m_next = m_head;
-            new_node->m_prev = m_tail;
-        }else{
-            new_node->m_prev = m_head->m_prev;
-            m_head->m_prev->m_next = new_node;
-            new_node->m_next = m_head;
-            m_head->m_prev = new_node;
-        }
+
+        new_node->m_prev = m_head;
+        new_node->m_next = m_head->m_next;
+
+        m_head->m_next->m_prev = new_node;
+        m_head->m_next = new_node;
+
         return *this;
     }
 
@@ -148,21 +144,12 @@ namespace ds
     {
         Node<T>* new_node = new Node<T>(a_data);
 
-        if (m_head->m_next == m_tail)
-        {
-            m_tail->m_next = new_node;
-            m_head->m_prev = new_node;
-            new_node->m_next = m_tail;
-            new_node->m_prev = m_head;
-        }
-        else
-        {
-            new_node->m_next = m_tail;
-            new_node->m_prev = m_tail->m_prev;
-            m_tail->m_prev->m_next = new_node;
-            m_tail->m_prev = new_node;
-        }
-        this.print();
+        new_node->m_prev = m_tail->m_prev;
+        new_node->m_next = m_tail;
+
+        m_tail->m_prev->m_next = new_node;
+        m_tail->m_prev = new_node;
+
         return *this;
     }
 
@@ -183,10 +170,9 @@ namespace ds
     Linked_List<T>& Linked_List<T>::print() 
     {
         Node<T>* current = m_head->m_next;
-        std::cout<< "PRINT START" << '\n' ;
-        while(current != m_tail)
+        while (current != m_tail)
         {
-            std::cout<<current->m_data<< '\n' ;
+            std::cout << current->m_data << '\n';
             current = current->m_next;
         }
         return *this;
