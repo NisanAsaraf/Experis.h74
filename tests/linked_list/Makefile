@@ -8,9 +8,8 @@ CXXFLAGS += -std=c++17
 CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR)
 
 INCLUDES_DIR = ../../inc
-SOURCES_DIR = ../../src
 
-OBJS = utest.o stack.o
+OBJS = utest.o
 TARGET = utest
 
 all: $(TARGET)
@@ -31,10 +30,7 @@ clean:
 
 utest.cpp: $(INCLUDES_DIR)/linked_list.hpp
 
-linked_list.o: $(INCLUDES_DIR)/linked_list.hpp
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
-
-$(TARGET): utest.o $(INCLUDES_DIR)/linked_list.hpp
+$(TARGET): utest.o
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
 
 .PHONY: all clean check recheck clang_check
