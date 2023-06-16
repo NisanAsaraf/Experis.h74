@@ -422,7 +422,7 @@ namespace ds
     template <typename T>
     bool Linked_List<T>::operator==(const Linked_List& a_other)
     {
-        if(*this == a_other)
+        if (this == &a_other)
         {
             return true;
         }
