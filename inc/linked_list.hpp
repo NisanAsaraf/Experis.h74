@@ -58,7 +58,7 @@ namespace ds
         Linked_List& clear();
 
         Linked_List& reverse();
-        size_t for_each();
+        size_t for_each(int (*action)(T&));
 
     private:
         Node<T>* m_head;
@@ -413,6 +413,24 @@ namespace ds
     }
 
     template <typename T>
+    size_t Linked_List<T>::for_each(int (*action)(T&))
+    {
+        Node<T>* current = m_head->m_next;
+        size_t count = 0;
+        while (current != m_tail)
+        {
+            if(action(current->m_data) == 0)
+            {
+                break;
+            }
+
+            current = current->m_next;
+            count++;
+        }
+        return count;
+    }
+
+    template <typename T>
     size_t Linked_List<T>::size() const
     {
         size_t count = 0;
@@ -531,6 +549,8 @@ namespace ds
     {
         return !(*this < a_other);
     }
+
+    
 
 } // namespace ds
 
