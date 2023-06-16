@@ -1,5 +1,7 @@
 #include <cstddef>
 #include <iostream>
+#include <optional>
+
 namespace ds
 {
     template <typename T>
@@ -29,6 +31,9 @@ namespace ds
         Linked_List<T>& push_head(const T& a_data);
         Linked_List<T>& push_tail(const T& a_data);
         Linked_List& append(const T& a_data);
+
+        T pop_head();
+        T pop_tail();
 
         Linked_List<T>& print();
 
@@ -154,7 +159,37 @@ namespace ds
 
         return *this;
     }
-    
+
+    template <typename T>
+    T Linked_List<T>::pop_head()
+    {
+        if(m_head->m_next == m_tail)
+        {
+            throw std::runtime_error("Cannot pop head from an empty list");
+        }
+
+        Node<T>* current = m_head->m_next;
+        current->m_next->m_prev = m_head;
+        m_head->m_next = current->m_next;
+
+        return current->m_data;
+    }
+
+    template <typename T>
+    T Linked_List<T>::pop_tail()
+    {
+        if(m_head->m_next == m_tail)
+        {
+            throw std::runtime_error("Cannot pop tail from an empty list");
+        }
+
+        Node<T>* current = m_tail->m_prev;
+        current->m_prev->m_next = m_tail;
+        m_tail->m_prev = current->m_prev;
+
+        return current->m_data;;
+    }
+
     template <typename T>
     Linked_List<T>& Linked_List<T>::append(const T& a_data)
     {
