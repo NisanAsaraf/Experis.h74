@@ -453,7 +453,7 @@ namespace ds
     bool Linked_List<T>::operator<(const Linked_List& a_other)
     {
         Node<T>* current_this = m_head->m_next;
-        Node<T>* current_other = a_other->m_head->m_next;
+        Node<T>* current_other = a_other.m_head->m_next;
 
         while (current_this != m_tail && current_other != a_other.m_tail)
         {

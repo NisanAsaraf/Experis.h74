@@ -111,35 +111,39 @@ END_TEST
 
 BEGIN_TEST(_linked_list_OP_less)
 	ds::Linked_List<int> new_list;
-	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
-	ASSERT_THAT(new_list.size() == 5);
-	new_list.swap(0,4);
-	//new_list.print();
+	new_list.push_tail(1).push_tail(2).push_tail(3);
+	ASSERT_THAT(new_list.size() == 3);
+	ds::Linked_List<int> copy_list;
+	copy_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
+	ASSERT_THAT(new_list < copy_list);
+	
 END_TEST
 
 BEGIN_TEST(_linked_list_OP_greater)
 	ds::Linked_List<int> new_list;
-	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
-	ASSERT_THAT(new_list.size() == 5);
-	new_list.swap(0,4);
-	//new_list.print();
+	new_list.push_tail(1).push_tail(2).push_tail(3);
+	ASSERT_THAT(new_list.size() == 3);
+	ds::Linked_List<int> copy_list;
+	copy_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
+	ASSERT_THAT(copy_list > new_list);
 END_TEST
 
 BEGIN_TEST(_linked_list_OP_less_eq)
 	ds::Linked_List<int> new_list;
-	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
-	ASSERT_THAT(new_list.size() == 5);
-	new_list.swap(0,4);
-
-	//new_list.print();
+	new_list.push_tail(1).push_tail(2).push_tail(3);
+	ASSERT_THAT(new_list.size() == 3);
+	ds::Linked_List<int> copy_list;
+	copy_list.push_tail(1).push_tail(2).push_tail(3);
+	ASSERT_THAT(copy_list <= new_list);
 END_TEST
 
 BEGIN_TEST(_linked_list_OP_greater_eq)
 	ds::Linked_List<int> new_list;
-	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
-	ASSERT_THAT(new_list.size() == 5);
-	new_list.swap(0,4);
-	//new_list.print();
+	new_list.push_tail(1).push_tail(2).push_tail(3);
+	ASSERT_THAT(new_list.size() == 3);
+	ds::Linked_List<int> copy_list;
+	copy_list.push_tail(1).push_tail(2).push_tail(3);
+	ASSERT_THAT(copy_list >= new_list);
 END_TEST
 
 
@@ -197,7 +201,8 @@ TEST_SUITE(決して道から外れてはいけません)
 	TEST(_linked_list_contains)
 	TEST(_linked_list_OP_eq)
 	TEST(_linked_list_OP_not_eq)
-
+	TEST(_linked_list_OP_less)
+	TEST(_linked_list_OP_greater)
 
 	IGNORE_TEST(_linked_list_print)
 
