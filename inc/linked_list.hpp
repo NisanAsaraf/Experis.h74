@@ -9,10 +9,7 @@ namespace ds
     {
     public:
         Node() = default;
-        Node(const T& a_data)
-        :m_data(a_data)
-        {
-        }
+        Node(const T& a_data);
         Node& operator=(const Node& a_other);
         ~Node() = default;
         
@@ -92,6 +89,12 @@ namespace ds
                 m_prev->m_next = this;
         }
         return *this;
+    }
+    
+    template <typename T>
+    Node<T>::Node(const T& a_data)
+    :m_data(a_data)
+    {
     }
 
     template <typename T>
