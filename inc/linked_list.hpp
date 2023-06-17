@@ -199,7 +199,10 @@ namespace ds
         current->m_next->m_prev = m_head;
         m_head->m_next = current->m_next;
 
-        return current->m_data;
+        T data = current->m_data;
+        delete current;
+
+        return data;
     }
 
     template <typename T>
@@ -214,7 +217,10 @@ namespace ds
         current->m_prev->m_next = m_tail;
         m_tail->m_prev = current->m_prev;
 
-        return current->m_data;;
+        T data = current->m_data;
+        delete current;
+
+        return data;
     }
 
     template <typename T>
@@ -591,5 +597,5 @@ namespace ds
 
         return a_list1;
     }
-    
+
 } // namespace ds
