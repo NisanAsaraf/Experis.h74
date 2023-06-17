@@ -8,16 +8,19 @@ namespace ds
     class Node
     {
     public:
-        Node();
-        Node(const T& a_data);
+        Node() = default;
+        Node(const T& a_data)
+        :m_data(a_data)
+        {
+        }
         Node& operator=(const Node& a_other);
-        ~Node();
+        ~Node() = default;
         
         Node& flip();
 
         T m_data;
-        Node<T>* m_next;
-        Node<T>* m_prev;
+        Node<T>* m_next = nullptr;
+        Node<T>* m_prev = nullptr;
     private:
     };
 
@@ -73,26 +76,6 @@ namespace ds
 
     template <typename T>
     Linked_List<T>& splice(Linked_List<T>& a_list1, Linked_List<T>& a_list2);
-
-    template <typename T>
-    Node<T>::Node()
-    :m_next(nullptr)
-    , m_prev(nullptr)
-    {  
-    }
-
-    template <typename T>
-    Node<T>::Node(const T& a_data)
-        : m_data(a_data)
-        , m_next(nullptr)
-        , m_prev(nullptr)
-    {
-    }
-
-    template <typename T>
-    Node<T>::~Node()
-    {
-    }
 
     template <typename T>
     Node<T>& Node<T>::operator=(const Node<T>& a_other)
@@ -167,7 +150,13 @@ namespace ds
     template <typename T>
     Linked_List<T>::~Linked_List()
     {
-        //clear();  
+        Node<T>* current = m_head;
+        while (current != nullptr) 
+        {
+            Node<T>* next = current->m_next;
+            delete current;
+            current = next;
+        }
     }
 
     template <typename T>
@@ -590,16 +579,17 @@ namespace ds
     {
         Node<T>* tail1 = a_list1.get_tail();
         Node<T>* head2 = a_list2.get_head();
+        Node<T>* tail2 = a_list2.get_tail();
 
         tail1->m_prev->m_next = head2->m_next;
         head2->m_next->m_prev = tail1->m_prev;
 
-        Node<T>* tail2 = a_list2.get_tail();
         tail2->m_prev->m_next = tail1;
         tail1->m_prev = tail2->m_prev;
 
-        //a_list2.clear();
+        head2->m_next = tail2;
 
         return a_list1;
     }
+    
 } // namespace ds

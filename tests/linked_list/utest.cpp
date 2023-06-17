@@ -231,7 +231,7 @@ END_TEST
 
 TEST_SUITE(決して道から外れてはいけません)
 	TEST(_linked_list_creation_empty)
- 	TEST(_linked_list_creation_copy)
+	TEST(_linked_list_creation_copy)
 	TEST(_linked_list_creation_eq)
 	TEST(_linked_list_push_head)
 	TEST(_linked_list_pop_head)
