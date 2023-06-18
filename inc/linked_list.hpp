@@ -61,7 +61,8 @@ namespace ds
         bool contains(const T& a_data);
 
         Linked_List<T>& print();
-        size_t size() const; 
+        size_t size() const;
+        void set_size(size_t);
         Linked_List& clear();
 
         Linked_List& reverse();
@@ -71,6 +72,7 @@ namespace ds
     private:
         Node<T>* m_head;
         Node<T>* m_tail;
+        size_t m_size;
     };
 
     template <typename T>
@@ -128,6 +130,7 @@ namespace ds
     Linked_List<T>::Linked_List()
     : m_head(new Node<T>())
     , m_tail(new Node<T>())
+    , m_size(0)
     {  
         //other pointer values are defaulted to nullptr
         m_head->next() = m_tail;
@@ -138,6 +141,7 @@ namespace ds
     Linked_List<T>::Linked_List(const Linked_List& a_list)
     : m_head(new Node<T>())
     , m_tail(new Node<T>())
+    , m_size(0)
     {
         m_head->next() = m_tail;
         m_tail->prev() = m_head;
@@ -190,7 +194,7 @@ namespace ds
 
         m_head->next()->prev() = new_node;
         m_head->next() = new_node;
-
+        m_size += 1;
         return *this;
     }
 
@@ -205,6 +209,7 @@ namespace ds
         m_tail->prev()->next() = new_node;
         m_tail->prev() = new_node;
 
+        m_size += 1;
         return *this;
     }
 
@@ -223,7 +228,14 @@ namespace ds
         T data = current->data();
         delete current;
 
+        m_size -= 1;
         return data;
+    }
+
+    template <typename T>
+    void Linked_List<T>::set_size(size_t new_size)
+    {
+        m_size = new_size;
     }
 
     template <typename T>
@@ -241,6 +253,7 @@ namespace ds
         T data = current->data();
         delete current;
 
+        m_size -= 1;
         return data;
     }
 
@@ -276,6 +289,8 @@ namespace ds
             current = current->next();
             position += 1;
         }
+        m_size += 1;
+
         return *this;
     }
     
@@ -304,6 +319,7 @@ namespace ds
             current = current->next();
             position += 1;
         }
+        m_size += 1;
         return *this;
     }
 
@@ -330,6 +346,7 @@ namespace ds
             current = current->next();
             position += 1;
         }
+        m_size -= 1;
         return data;
     }
 
@@ -353,6 +370,7 @@ namespace ds
             current = current->next();
             position += 1;
         }
+        m_size += 1;
         return *this;
     }
 
@@ -459,14 +477,7 @@ namespace ds
     template <typename T>
     size_t Linked_List<T>::size() const
     {
-        size_t count = 0;
-        Node<T>* current = m_head->next();
-        while(current != m_tail)
-        {
-            count += 1;
-            current = current->next();
-        }
-        return count;
+        return m_size;
     }
 
     template <typename T>
@@ -493,6 +504,7 @@ namespace ds
         }
         m_head->next() = m_tail;
         m_tail->prev() = m_head;
+        m_size = 0;
         return *this;
     }
 
@@ -617,6 +629,7 @@ namespace ds
 
         head2->next() = tail2;
 
+        a_list1.set_size(a_list1.size() + a_list2.size());
         return a_list1;
     }
 
