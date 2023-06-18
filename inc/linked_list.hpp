@@ -141,7 +141,9 @@ namespace ds
     {  
         //other pointer values are defaulted to nullptr
         m_head->next() = m_tail;
+        m_head->prev() = m_head;
         m_tail->prev() = m_head;
+        m_tail->next() = m_tail;
     }
 
     template <typename T>
@@ -183,7 +185,7 @@ namespace ds
     Linked_List<T>::~Linked_List()
     {
         Node<T>* current = m_head;
-        while (current != nullptr) 
+        while (current != m_tail) 
         {
             Node<T>* next = current->next();
             current = next;
