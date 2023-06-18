@@ -272,7 +272,6 @@ TEST_SUITE(決して道から外れてはいけません)
 	TEST(_linked_list_sum_double)
 	TEST(_linked_list_sum_float)
 	TEST(_linked_list_splice)
-
 	IGNORE_TEST(_linked_list_print)
 
 END_SUITE
