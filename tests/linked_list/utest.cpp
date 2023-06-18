@@ -182,11 +182,9 @@ BEGIN_TEST(_linked_list_for_each_sum)
 	ds::Linked_List<int> new_list;
 	new_list.append(1).append(2).append(3).append(4).append(5).append(6);
 	ASSERT_THAT(new_list.size() == 6);
-//	new_list.print();
 	int context = 0;
-	new_list.for_each(sum,context);
+	new_list.for_each(sum, context);
 	ASSERT_THAT(context == 21);
-//	new_list.print();
 END_TEST
 
 BEGIN_TEST(_linked_list_sum_int)
