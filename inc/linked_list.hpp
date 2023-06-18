@@ -11,7 +11,7 @@ namespace ds
         Node() = default;
         Node(const T& a_data);
         Node& operator=(const Node& a_other);
-        ~Node() = default;
+        ~Node();
         
         Node& flip();
 
@@ -100,6 +100,13 @@ namespace ds
     }
 
     template <typename T>
+    Node<T>::~Node()
+    {
+        m_next->m_prev = m_prev;
+        m_prev->m_next = m_next;
+    }
+
+    template <typename T>
     Node<T>& Node<T>::flip()
     {
         Node<T>* temp = m_next;
@@ -179,7 +186,6 @@ namespace ds
         while (current != nullptr) 
         {
             Node<T>* next = current->next();
-            delete current;
             current = next;
         }
     }
