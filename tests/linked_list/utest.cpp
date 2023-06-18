@@ -155,18 +155,37 @@ BEGIN_TEST(_linked_list_reverse)
 //	new_list.print();
 END_TEST
 
-int power(int& X)
+int power(int& X, int& ctx)
 {
+	ctx = 1;
 	X = X*X;
 	return 1;
 }
 
-BEGIN_TEST(_linked_list_for_each)
+BEGIN_TEST(_linked_list_for_each_power)
 	ds::Linked_List<int> new_list;
 	new_list.append(1).append(2).append(3).append(4).append(5).append(6);
 	ASSERT_THAT(new_list.size() == 6);
 //	new_list.print();
-	new_list.for_each(power);
+	int context = 0;
+	new_list.for_each(power, context);
+//	new_list.print();
+END_TEST
+
+int sum(int& X, int& ctx)
+{
+	ctx += X;
+	return 1;
+}
+
+BEGIN_TEST(_linked_list_for_each_sum)
+	ds::Linked_List<int> new_list;
+	new_list.append(1).append(2).append(3).append(4).append(5).append(6);
+	ASSERT_THAT(new_list.size() == 6);
+//	new_list.print();
+	int context = 0;
+	new_list.for_each(sum,context);
+	ASSERT_THAT(context == 21);
 //	new_list.print();
 END_TEST
 
@@ -249,7 +268,8 @@ TEST_SUITE(決して道から外れてはいけません)
 	TEST(_linked_list_OP_less)
 	TEST(_linked_list_OP_greater)
 	TEST(_linked_list_reverse)
-	TEST(_linked_list_for_each)
+	TEST(_linked_list_for_each_power)
+	TEST(_linked_list_for_each_sum)
 	TEST(_linked_list_sum_int)
 	TEST(_linked_list_sum_double)
 	TEST(_linked_list_sum_float)
