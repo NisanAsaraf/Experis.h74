@@ -41,12 +41,12 @@ namespace ds
         Linked_List<T>& insert_at(const size_t& a_index, const T& a_data);
         Linked_List<T>& swap(const size_t& a_index1, const size_t& a_index2);
 
-        bool operator==(const Linked_List& a_other);
-        bool operator!=(const Linked_List& a_other);
-        bool operator<(const Linked_List& a_other);
-        bool operator>(const Linked_List& a_other);
-        bool operator<=(const Linked_List& a_other);
-        bool operator>=(const Linked_List& a_other);
+        bool operator==(const Linked_List& a_other) const;
+        bool operator!=(const Linked_List& a_other) const;
+        bool operator<(const Linked_List& a_other) const;
+        bool operator>(const Linked_List& a_other) const;
+        bool operator<=(const Linked_List& a_other) const;
+        bool operator>=(const Linked_List& a_other) const;
 
         Node<T>* get_head();
         Node<T>* get_tail();
@@ -90,7 +90,7 @@ namespace ds
         }
         return *this;
     }
-    
+
     template <typename T>
     Node<T>::Node(const T& a_data)
     :m_data(a_data)
@@ -478,7 +478,7 @@ namespace ds
     }
 
     template <typename T>
-    bool Linked_List<T>::operator==(const Linked_List& a_other)
+    bool Linked_List<T>::operator==(const Linked_List& a_other) const
     {
         if (this == &a_other)
         {
@@ -502,13 +502,13 @@ namespace ds
     }
 
     template <typename T>
-    bool Linked_List<T>::operator!=(const Linked_List& a_other)
+    bool Linked_List<T>::operator!=(const Linked_List& a_other) const
     {
         return !(*this == a_other);
     }
 
     template <typename T>
-    bool Linked_List<T>::operator<(const Linked_List& a_other)
+    bool Linked_List<T>::operator<(const Linked_List& a_other) const
     {
         Node<T>* current_this = m_head->m_next;
         Node<T>* current_other = a_other.m_head->m_next;
@@ -527,7 +527,7 @@ namespace ds
     }
 
     template <typename T>
-    bool Linked_List<T>::operator>(const Linked_List& a_other)
+    bool Linked_List<T>::operator>(const Linked_List& a_other) const
     {
         Node<T>* current_this = m_head->m_next;
         Node<T>* current_other = a_other.m_head->m_next;
@@ -546,13 +546,13 @@ namespace ds
     }
 
     template <typename T>
-    bool Linked_List<T>::operator<=(const Linked_List& a_other)
+    bool Linked_List<T>::operator<=(const Linked_List& a_other) const
     {
         return !(*this > a_other);
     }
 
-    template <typename T>
-    bool Linked_List<T>::operator>=(const Linked_List& a_other)
+    template <typename T> 
+    bool Linked_List<T>::operator>=(const Linked_List& a_other) const
     {
         return !(*this < a_other);
     }
