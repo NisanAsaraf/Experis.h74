@@ -83,11 +83,6 @@ namespace ds
             m_data = a_other.m_data;
             m_next = a_other.m_next;
             m_prev = a_other.m_prev;
-
-            if (m_next)
-                m_next->m_prev = this;
-            if (m_prev)
-                m_prev->m_next = this;
         }
         return *this;
     }
