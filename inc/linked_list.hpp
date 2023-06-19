@@ -43,10 +43,12 @@ namespace ds
         Linked_List<T>& insert_after_index(const size_t& a_index, const T& a_data);
         Linked_List<T>& insert_before(const T& a_look, const T& a_put);
         Linked_List<T>& insert_before_index(const size_t& index, const T& a_data);
+        Linked_List<T>& remove(const T& a_data);
 
-        T remove(const size_t& index);
+        T remove_at_index(const size_t& index);
         Linked_List<T>& insert_at_index(const size_t& a_index, const T& a_data);
-        Linked_List<T>& swap(const size_t& a_index1, const size_t& a_index2);
+        Linked_List<T>& swap(const T& a_look, const T& a_put);
+        Linked_List<T>& swap_at_index(const size_t& a_index1, const size_t& a_index2);
 
         bool is_empty();
 
@@ -145,7 +147,6 @@ namespace ds
     , m_tail(new Node<T>())
     , m_size(0)
     {  
-        //other pointer values are defaulted to nullptr
         m_head->next() = m_tail;
         m_head->prev() = m_head;
         m_tail->prev() = m_head;
@@ -159,13 +160,16 @@ namespace ds
     , m_size(0)
     {
         m_head->next() = m_tail;
+        m_head->prev() = m_head;
         m_tail->prev() = m_head;
+        m_tail->next() = m_tail;
 
         Node<T>* current_node = a_list.m_head->next();
 
         while (current_node != a_list.m_tail)
         {
-            this->push_tail(current_node->data());
+            T new_data = current_node->data();
+            this->push_tail(new_data);
             current_node = current_node->next();
         }
     }
@@ -190,12 +194,14 @@ namespace ds
     template <typename T>
     Linked_List<T>::~Linked_List()
     {
-        Node<T>* current = m_head;
+        Node<T>* current = m_head->next();
         while (current != m_tail) 
         {
             Node<T>* next = current->next();
+            delete current;
             current = next;
         }
+        
     }
 
     template <typename T>
@@ -388,10 +394,11 @@ namespace ds
     template <typename T>
     Linked_List<T>& Linked_List<T>::insert_before_index(const size_t& a_index, const T& a_data)
     {
-        if (a_index >= size()) 
+        if (a_index >= size())
         {
-            throw std::out_of_range("Index out of bounds");
+            return *this;
         }
+
         size_t position = 0;
         Node<T>* current = m_head->next();
         Node<T>* new_node = new Node<T>(a_data);
@@ -415,7 +422,26 @@ namespace ds
     }
 
     template <typename T>
-    T Linked_List<T>::remove(const size_t& a_index)
+    Linked_List<T>& Linked_List<T>::remove(const T& a_data)
+    {
+        if (is_empty())
+        {
+            return *this;
+        }
+
+        Node<T>* found = find_node(a_data);
+        
+        if(found != m_tail)
+        {
+            delete found;
+            m_size -= 1;
+        }
+
+        return *this;
+    }
+
+    template <typename T>
+    T Linked_List<T>::remove_at_index(const size_t& a_index)
     {
         if (a_index >= size()) 
         {
@@ -466,13 +492,31 @@ namespace ds
     }
 
     template <typename T>
-    Linked_List<T>& Linked_List<T>::swap(const size_t& a_index1, const size_t& a_index2)
+    Linked_List<T>& Linked_List<T>::swap(const T& a_look, const T& a_put)
+    {
+        if (is_empty())
+        {
+            return *this;
+        }
+
+        Node<T>* found = find_node(a_look);
+
+        if(found != m_tail)
+        {
+            found->data() = a_put;
+        }
+        return *this;
+    }
+
+    template <typename T>
+    Linked_List<T>& Linked_List<T>::swap_at_index(const size_t& a_index1, const size_t& a_index2)
     {
         size_t list_size = size();
         if (a_index1 >= list_size || a_index2 >= list_size) 
         {
-            throw std::out_of_range("Index out of bounds");
+            return *this;
         }
+
         size_t position = 0;
         Node<T>* current = m_head->next();
         T tmpData;
@@ -511,18 +555,18 @@ namespace ds
     template <typename T>
     bool Linked_List<T>::contains(const T& a_data)
     {
-        size_t position = 0;
-        Node<T>* current = m_head->next();
-
-        while(current != m_tail)
+        if (is_empty())
         {
-            if(current->data() == a_data)
-            {
-                return true;
-            }
-            current = current->next();
-            position += 1;
+            return false;
         }
+
+        Node<T>* found = find_node(a_data);
+
+        if(found != m_tail)
+        {
+            return true;
+        }
+
         return false;
     }
     

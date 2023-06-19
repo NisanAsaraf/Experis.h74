@@ -62,6 +62,24 @@ BEGIN_TEST(_linked_list_append)
 	ASSERT_THAT(new_list.size() == 6);
 END_TEST
 
+BEGIN_TEST(_linked_list_remove)
+	ds::Linked_List<int> new_list;
+	new_list.push_head(1).push_head(2).push_head(3).push_head(4).push_head(5);
+	ASSERT_THAT(new_list.size() == 5);
+	new_list.remove(1);
+	ASSERT_THAT(new_list.size() == 4);
+	//new_list.print();
+END_TEST
+
+BEGIN_TEST(_linked_list_remove_at_index)
+	ds::Linked_List<int> new_list;
+	new_list.push_head(1).push_head(2).push_head(3).push_head(4).push_head(5);
+	ASSERT_THAT(new_list.size() == 5);
+	new_list.remove_at_index(0);
+	ASSERT_THAT(new_list.size() == 4);
+	//new_list.print();
+END_TEST
+
 BEGIN_TEST(_linked_list_insert_before)
 	ds::Linked_List<int> new_list;
 	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
@@ -104,7 +122,15 @@ BEGIN_TEST(_linked_list_swap)
 	ds::Linked_List<int> new_list;
 	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
 	ASSERT_THAT(new_list.size() == 5);
-	new_list.swap(0,4);
+	new_list.swap(1,-1);
+	//new_list.print();
+END_TEST
+
+BEGIN_TEST(_linked_list_swap_at_index)
+	ds::Linked_List<int> new_list;
+	new_list.push_tail(1).push_tail(2).push_tail(3).push_tail(4).push_tail(5);
+	ASSERT_THAT(new_list.size() == 5);
+	new_list.swap_at_index(0,4);
 	//new_list.print();
 END_TEST
 
@@ -274,6 +300,8 @@ TEST_SUITE(決して道から外れてはいけません)
 	TEST(_linked_list_push_tail)
 	TEST(_linked_list_pop_tail)
 	TEST(_linked_list_append)
+	TEST(_linked_list_remove)
+	TEST(_linked_list_remove_at_index)
 	TEST(_linked_list_insert_before)
 	TEST(_linked_list_insert_after)
 	TEST(_linked_list_insert_before_index)
@@ -281,6 +309,7 @@ TEST_SUITE(決して道から外れてはいけません)
 	TEST(_linked_list_size)
 	TEST(_linked_list_clear)
 	TEST(_linked_list_swap)
+	TEST(_linked_list_swap_at_index)
 	TEST(_linked_list_contains)
 	TEST(_linked_list_OP_eq)
 	TEST(_linked_list_OP_not_eq)
