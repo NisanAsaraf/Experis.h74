@@ -45,6 +45,8 @@ namespace ds
         Linked_List<T>& insert_at(const size_t& a_index, const T& a_data);
         Linked_List<T>& swap(const size_t& a_index1, const size_t& a_index2);
 
+        bool is_empty();
+
         bool operator==(const Linked_List& a_other) const;
         bool operator!=(const Linked_List& a_other) const;
         bool operator<(const Linked_List& a_other) const;
@@ -74,13 +76,12 @@ namespace ds
 
         template <typename C>
         friend Linked_List<C>& splice(Linked_List<C>& a_list1, Linked_List<C>& a_list2);
+
     private:
         Node<T>* m_head;
         Node<T>* m_tail;
         size_t m_size;
     };
-
-
 
     template <typename T>
     Node<T>& Node<T>::operator=(const Node<T>& a_other)
@@ -194,8 +195,15 @@ namespace ds
     }
 
     template <typename T>
+    bool Linked_List<T>::is_empty()
+    {
+        return size() == 0;
+    }
+
+    template <typename T>
     Linked_List<T>& Linked_List<T>::push_head(const T& a_data)
     {
+
         Node<T>* new_node = new Node<T>(a_data);
 
         new_node->prev() = m_head;
@@ -204,6 +212,7 @@ namespace ds
         m_head->next()->prev() = new_node;
         m_head->next() = new_node;
         m_size += 1;
+
         return *this;
     }
 
@@ -219,15 +228,16 @@ namespace ds
         m_tail->prev() = new_node;
 
         m_size += 1;
+
         return *this;
     }
 
     template <typename T>
     T Linked_List<T>::pop_head()
     {
-        if(m_head->next() == m_tail)
+        if (is_empty())
         {
-            throw std::runtime_error("Cannot pop head from an empty list");
+            return T();
         }
 
         Node<T>* current = m_head->next();
@@ -250,9 +260,9 @@ namespace ds
     template <typename T>
     T Linked_List<T>::pop_tail()
     {
-        if(m_head->next() == m_tail)
+        if (is_empty())
         {
-            throw std::runtime_error("Cannot pop tail from an empty list");
+            return T();
         }
 
         Node<T>* current = m_tail->prev();
