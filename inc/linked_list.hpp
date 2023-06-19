@@ -110,8 +110,11 @@ namespace ds
     template <typename T>
     Node<T>::~Node()
     {
-        m_next->m_prev = m_prev;
-        m_prev->m_next = m_next;
+        if(not (this == m_next || this == m_prev))
+        {
+            m_next->m_prev = m_prev;
+            m_prev->m_next = m_next;
+        }
     }
 
     template <typename T>
@@ -195,14 +198,17 @@ namespace ds
     Linked_List<T>::~Linked_List()
     {
         Node<T>* current = m_head->next();
-        while (current != m_tail) 
+        while (current != m_tail)
         {
             Node<T>* next = current->next();
             delete current;
             current = next;
         }
-        
+
+        delete m_head;
+        delete m_tail;
     }
+
 
     template <typename T>
     bool Linked_List<T>::is_empty()
