@@ -1,6 +1,7 @@
 #include <cstddef>
 #include <iostream>
 #include <optional>
+#include <cassert>
 
 namespace ds
 {
@@ -38,11 +39,13 @@ namespace ds
         Linked_List<T>& push_tail(const T& a_data);
         Linked_List& append(const T& a_data);
 
-        Linked_List<T>& insert_after(const size_t& index, const T& a_data);
-        Linked_List<T>& insert_before(const size_t& index, const T& a_data);
+        Linked_List<T>& insert_after(const T& a_look, const T& a_put);
+        Linked_List<T>& insert_after_index(const size_t& a_index, const T& a_data);
+        Linked_List<T>& insert_before(const T& a_look, const T& a_put);
+        Linked_List<T>& insert_before_index(const size_t& index, const T& a_data);
 
         T remove(const size_t& index);
-        Linked_List<T>& insert_at(const size_t& a_index, const T& a_data);
+        Linked_List<T>& insert_at_index(const size_t& a_index, const T& a_data);
         Linked_List<T>& swap(const size_t& a_index1, const size_t& a_index2);
 
         bool is_empty();
@@ -56,6 +59,7 @@ namespace ds
 
         Node<T>* get_head();
         Node<T>* get_tail();
+        Node<T>* find_node(const T& a_data);
 
         T pop_head();
         T pop_tail();
@@ -282,12 +286,80 @@ namespace ds
         return push_tail(a_data);
     }
 
+
     template <typename T>
-    Linked_List<T>& Linked_List<T>::insert_after(const size_t& a_index, const T& a_data)
+    Node<T>* Linked_List<T>::find_node(const T& a_data)
+    {
+        assert(!is_empty());
+
+        Node<T>* current = m_head->next();
+
+        while(current != m_tail)
+        {
+            if(current->data() == a_data)
+            {
+                return current;
+            }
+            current = current->next();
+        }
+        return current;
+    }
+
+    template <typename T>
+    Linked_List<T>& Linked_List<T>::insert_before(const T& a_look, const T& a_put)
+    {
+        if (is_empty())
+        {
+            return *this;
+        }
+
+        Node<T>* found = find_node(a_look);
+
+        if(found != m_tail)
+        {
+            Node<T>* new_node = new Node<T>(a_put);
+            Node<T>* before = found->prev();
+
+            new_node->next() = found;
+            new_node->prev() = before;
+            before->next() = new_node;
+            found->prev() = new_node;
+            m_size += 1;
+        }
+        return *this;
+    }
+
+    template <typename T>
+    Linked_List<T>& Linked_List<T>::insert_after(const T& a_look, const T& a_put)
+    {
+        if (is_empty())
+        {
+            return *this;
+        }
+
+        Node<T>* found = find_node(a_look);
+        
+        if(found != m_tail)
+        {
+            Node<T>* new_node = new Node<T>(a_put);
+            Node<T>* after = found->next();
+
+            new_node->next() = after;
+            new_node->prev() = found;
+            after->prev() = new_node;
+            found->next() = new_node;
+            m_size += 1;
+        }      
+        
+        return *this;
+    }
+    
+    template <typename T>
+    Linked_List<T>& Linked_List<T>::insert_after_index(const size_t& a_index, const T& a_data)
     {
         if (a_index >= size())
         {
-            throw std::out_of_range("Index out of bounds");
+            return *this;
         }
 
         size_t position = 0;
@@ -312,9 +384,9 @@ namespace ds
 
         return *this;
     }
-    
+
     template <typename T>
-    Linked_List<T>& Linked_List<T>::insert_before(const size_t& a_index, const T& a_data)
+    Linked_List<T>& Linked_List<T>::insert_before_index(const size_t& a_index, const T& a_data)
     {
         if (a_index >= size()) 
         {
@@ -370,7 +442,7 @@ namespace ds
     }
 
     template <typename T>
-    Linked_List<T>& Linked_List<T>::insert_at(const size_t& a_index, const T& a_data)
+    Linked_List<T>& Linked_List<T>::insert_at_index(const size_t& a_index, const T& a_data)
     {
         if (a_index >= size()) 
         {
