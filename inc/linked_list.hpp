@@ -69,17 +69,18 @@ namespace ds
         template <typename C>
         size_t for_each(int (*action)(T&,C&), C&);
 
+        template <typename C>
+        friend C sum(Linked_List<C>& a_list);
+
+        template <typename C>
+        friend Linked_List<C>& splice(Linked_List<C>& a_list1, Linked_List<C>& a_list2);
     private:
         Node<T>* m_head;
         Node<T>* m_tail;
         size_t m_size;
     };
 
-    template <typename T>
-    T sum(Linked_List<T>& a_list);
 
-    template <typename T>
-    Linked_List<T>& splice(Linked_List<T>& a_list1, Linked_List<T>& a_list2);
 
     template <typename T>
     Node<T>& Node<T>::operator=(const Node<T>& a_other)
