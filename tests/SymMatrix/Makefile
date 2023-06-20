@@ -32,7 +32,7 @@ clean:
 
 utest.o: $(INCLUDES_DIR)/linked_list.hpp
 
-$(TARGET): utest.o $(INCLUDES_DIR)/linked_list.hpp
+$(TARGET): utest.o $(INCLUDES_DIR)/SymMatrix.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
 
 .PHONY: all clean check recheck clang_check

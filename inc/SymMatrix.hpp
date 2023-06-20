@@ -1,11 +1,16 @@
 #include <cstddef>
 #include <iostream>
+#include <cassert>
+#include <cmath>
+
 template<typename T>
 class SymMatrix
 {
 public:
     SymMatrix(size_t a_dim);
     SymMatrix(SymMatrix const& a_other);
+    template <typename U>
+    SymMatrix(SymMatrix<U>& a_other);
     SymMatrix& operator=(SymMatrix const& a_other);
     ~SymMatrix();
 
@@ -16,7 +21,8 @@ public:
     
     template<typename U>
     friend SymMatrix operator+(SymMatrix<U> const& a_lVal, SymMatrix<U> const& a_rVal);
-  
+    template<typename U>
+    friend const SymMatrix operator+(SymMatrix<U> const& a_lVal, SymMatrix<U> const& a_rVal);
     template<typename U>
     friend std::ostream& operator<<(std::ostream &a_out, const SymMatrix<U> &a_matrix);
 
@@ -25,7 +31,16 @@ public:
 private:
     size_t m_dimension;
     T* m_data;
+    template<typename U>
+    friend class SymMatrix;
 };
+
+size_t find_n_from_sum(size_t sum)
+{
+    int discriminant = 1 + 8 *sum;
+    size_t root = (std::sqrt(discriminant) - 1) / 2;
+    return root;
+}
 
 size_t sum_from_1_to_n(size_t n)
 {
@@ -34,7 +49,10 @@ size_t sum_from_1_to_n(size_t n)
 
 size_t translate_index(size_t a_row, size_t a_col)
 {
-    return (a_row * (a_row + 1)) / 2 + a_col;
+    if (a_row < a_col)
+        std::swap(a_row, a_col);
+
+    return a_row * (a_row - 1) / 2 + a_col;
 }
 
 template <typename T>
@@ -52,6 +70,18 @@ SymMatrix<T>::SymMatrix(size_t a_dim)
 }
 
 template <typename T>
+template <typename U>
+SymMatrix<T>::SymMatrix(SymMatrix<U>& a_other)
+    : m_dimension(a_other.get_dim())
+    , m_data(new T[m_dimension])
+{
+    for (size_t i = 0; i < m_dimension; i++)
+    {
+        m_data[i] = (T)(a_other.m_data[i]);
+    }
+}
+
+template <typename T>
 SymMatrix<T>::SymMatrix(SymMatrix const& a_other)
 :m_dimension(a_other.m_dimension)
 ,m_data(new T[m_dimension])
@@ -63,7 +93,7 @@ SymMatrix<T>::SymMatrix(SymMatrix const& a_other)
 }
 
 template <typename T>
-SymMatrix<T>& SymMatrix<T>::operator=(SymMatrix const& a_other)
+SymMatrix<T>& SymMatrix<T>::operator=(SymMatrix<T> const& a_other)
 {
     if (this != &a_other) 
     {
@@ -88,7 +118,7 @@ SymMatrix<T>::~SymMatrix()
 }
 
 template <typename T>
-T& SymMatrix<T>::operator()(size_t a_row, size_t a_column)
+T& SymMatrix<T>::operator()(size_t a_row, size_t a_col)
 {
     assert(a_row < m_dimension && a_col < m_dimension);
     size_t index = translate_index(a_row, a_col);
@@ -96,7 +126,7 @@ T& SymMatrix<T>::operator()(size_t a_row, size_t a_column)
 }
 
 template <typename T>
-T const& SymMatrix<T>::operator()(size_t a_row, size_t a_column) const
+T const& SymMatrix<T>::operator()(size_t a_row, size_t a_col) const
 {
     assert(a_row < m_dimension && a_col < m_dimension);
     size_t index = translate_index(a_row, a_col);
@@ -120,8 +150,8 @@ SymMatrix<T>& SymMatrix<T>::operator+=(SymMatrix const& a_other)
     return *this;
 }
 
-template <typename T, typename U>
-SymMatrix<T>& operator+(SymMatrix<U> const& a_lVal, SymMatrix<U> const& a_rVal)
+template <typename T>
+SymMatrix<T> operator+(SymMatrix<T> const& a_lVal, SymMatrix<T> const& a_rVal)
 {
     assert(a_lVal.m_dimension == a_rVal.m_dimension);
 
@@ -138,14 +168,15 @@ SymMatrix<T>& operator+(SymMatrix<U> const& a_lVal, SymMatrix<U> const& a_rVal)
 template<typename U>
 std::ostream& operator<<(std::ostream &a_out, const SymMatrix<U> &a_matrix)
 {
-    for (size_t i = 0; i < a_matrix.m_dimension; i++)
+    size_t n = find_n_from_sum(a_matrix.m_dimension);
+    for (size_t i = 0; i < n; i++)
     {
-        for (size_t j = 0; j < a_matrix.m_dimension; j++)
+        for (size_t j = 0; j < n; j++)
         {
             if (j <= i)
-                a_out << a_matrix(i, j) << " ";
+                a_out << a_matrix(i, j) << ",";
             else
-                a_out << a_matrix(j, i) << " ";
+                a_out << a_matrix(j, i) << ",";
         }
         a_out << "\n";
     }
