@@ -32,6 +32,11 @@ size_t sum_from_1_to_n(size_t n)
     return n*(n + 1)/2;
 }
 
+size_t translate_index(size_t a_row, size_t a_col)
+{
+    return (a_row * (a_row + 1)) / 2 + a_col;
+}
+
 template <typename T>
 size_t SymMatrix<T>::get_dim()
 {
@@ -73,5 +78,44 @@ SymMatrix<T>& SymMatrix<T>::operator=(SymMatrix const& a_other)
         delete[] m_data;
         m_data = m_safe_data;
     }
+    return *this;
+}
+
+template <typename T>
+SymMatrix<T>::~SymMatrix()
+{
+    delete[] m_data;
+}
+
+template <typename T>
+T& SymMatrix<T>::operator()(size_t a_row, size_t a_column)
+{
+    assert(a_row < m_dimension && a_col < m_dimension);
+    size_t index = translate_index(a_row, a_col);
+    return m_data[index];
+}
+
+template <typename T>
+T const& SymMatrix<T>::operator()(size_t a_row, size_t a_column) const
+{
+    assert(a_row < m_dimension && a_col < m_dimension);
+    size_t index = translate_index(a_row, a_col);
+    return m_data[index];
+}
+
+template <typename T>
+SymMatrix<T>& SymMatrix<T>::operator+=(SymMatrix const& a_other)
+{
+    assert(m_dimension == a_other.m_dimension);
+    T* m_safe_data = new T[m_dimension];
+
+    for(size_t i = 0 ; i < m_dimension; i++)
+    {
+        m_safe_data[i] = m_data[i] + a_other.m_data[i];
+    }
+
+    delete[] m_data;
+    m_data = m_safe_data;
+
     return *this;
 }
