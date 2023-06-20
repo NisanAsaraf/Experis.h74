@@ -1,5 +1,5 @@
 #include <cstddef>
-
+#include <iostream>
 template<typename T>
 class SymMatrix
 {
@@ -15,7 +15,7 @@ public:
     SymMatrix& operator+=(SymMatrix const& a_other);
     
     template<typename U>
-    friend SymMatrix operator+(SymMatrix<U> const& a_lVal, SymMatrix<U> const& a_rVal) ;
+    friend SymMatrix operator+(SymMatrix<U> const& a_lVal, SymMatrix<U> const& a_rVal);
   
     template<typename U>
     friend std::ostream& operator<<(std::ostream &a_out, const SymMatrix<U> &a_matrix);
@@ -118,4 +118,36 @@ SymMatrix<T>& SymMatrix<T>::operator+=(SymMatrix const& a_other)
     m_data = m_safe_data;
 
     return *this;
+}
+
+template <typename T, typename U>
+SymMatrix<T>& operator+(SymMatrix<U> const& a_lVal, SymMatrix<U> const& a_rVal)
+{
+    assert(a_lVal.m_dimension == a_rVal.m_dimension);
+
+    SymMatrix<T> result(a_lVal.m_dimension);
+
+    for (size_t i = 0; i < result.m_dimension; i++)
+    {
+        result.m_data[i] = a_lVal.m_data[i] + a_rVal.m_data[i];
+    }
+
+    return result;
+}
+
+template<typename U>
+std::ostream& operator<<(std::ostream &a_out, const SymMatrix<U> &a_matrix)
+{
+    for (size_t i = 0; i < a_matrix.m_dimension; i++)
+    {
+        for (size_t j = 0; j < a_matrix.m_dimension; j++)
+        {
+            if (j <= i)
+                a_out << a_matrix(i, j) << " ";
+            else
+                a_out << a_matrix(j, i) << " ";
+        }
+        a_out << "\n";
+    }
+    return a_out;
 }
