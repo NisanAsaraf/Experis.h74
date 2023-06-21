@@ -2,6 +2,7 @@
 #include <string>
 
 #include "../../inc/SymMatrix.hpp"
+using namespace matrix;
 
 BEGIN_TEST(_SymMatrix_creation_empty)
 	SymMatrix<int> m(100);
@@ -59,8 +60,9 @@ BEGIN_TEST(_SymMatrix_ALL_EXAM_TESTS)
     k += m;
     SymMatrix<long> w = m;
     w += k;
-/*     m = k + k; */
-    ASSERT_THAT(w(3, 2) == 3*(int)4.2); 
+    m = k + k;
+    ASSERT_THAT(w(3, 2) == 3*(int)4.2);
+    ASSERT_THAT(m(3, 2) == 4*(int)4.2); 
 END_TEST
 
 TEST_SUITE(決して道から外れてはいけません)

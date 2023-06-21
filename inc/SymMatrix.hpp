@@ -3,6 +3,8 @@
 #include <cassert>
 #include <cmath>
 
+namespace matrix
+{
 template<typename T>
 class SymMatrix
 {
@@ -27,7 +29,7 @@ public:
 	SymMatrix& operator+=(SymMatrix<U> const& a_other);
 
     template<typename U>
-    friend SymMatrix operator+(SymMatrix<U> const& a_lVal, SymMatrix<U> const& a_rVal);
+    friend SymMatrix<U> operator+(SymMatrix<U> const& a_lVal, SymMatrix<U> const& a_rVal);
 
     template<typename U>
     friend std::ostream& operator<<(std::ostream &a_out, const SymMatrix<U> &a_matrix);
@@ -188,15 +190,9 @@ template <typename T>
 SymMatrix<T> operator+(SymMatrix<T> const& a_lVal, SymMatrix<T> const& a_rVal)
 {
     assert(a_lVal.m_dimension == a_rVal.m_dimension);
-
-    SymMatrix<T> result(a_lVal.m_dimension);
-
-    for (size_t i = 0; i < result.m_dimension; i++)
-    {
-        result.m_data[i] = a_lVal.m_data[i] + a_rVal.m_data[i];
-    }
-
-    return result;
+    SymMatrix<T> new_matrix(a_lVal);
+    new_matrix += a_rVal;
+    return new_matrix;
 }
 
 template<typename U>
@@ -216,3 +212,4 @@ std::ostream& operator<<(std::ostream &a_out, const SymMatrix<U> &a_matrix)
     }
     return a_out;
 }
+}//namespace matrix
