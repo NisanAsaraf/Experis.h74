@@ -28,8 +28,19 @@ public:
     template<typename U>
 	SymMatrix& operator+=(SymMatrix<U> const& a_other);
 
+    SymMatrix& operator*=(int a_factor); 
+
+
     template<typename U>
     friend SymMatrix<U> operator+(SymMatrix<U> const& a_lVal, SymMatrix<U> const& a_rVal);
+
+    template<typename U, typename L>
+    friend SymMatrix<U> operator+(SymMatrix<U> const& a_lVal, SymMatrix<L> const& a_rVal);
+
+    template<typename U>
+    friend SymMatrix<U> operator*(SymMatrix<U> const& a_lVal, int a_factor);
+    template<typename U>
+    friend SymMatrix<U> operator*(int a_factor, SymMatrix<T> const& a_lVal);
 
     template<typename U>
     friend std::ostream& operator<<(std::ostream &a_out, const SymMatrix<U> &a_matrix);
@@ -117,15 +128,15 @@ template <typename T>
 template <typename U>
 SymMatrix<T>& SymMatrix<T>::operator=(SymMatrix<U> const& a_other)
 {
-	void const* that = &a_other;
-	void const* self = this;
+    void const* that = &a_other;
+    void const* self = this;
 
-	if (self != that) {
-		SymMatrix c{a_other};
-		swap(c);
-	}
+    if (self != that) {
+        SymMatrix c{a_other};
+        std::swap(c, *this); 
+    }
 
-	return *this;
+    return *this;
 }
 
 
@@ -187,11 +198,47 @@ SymMatrix<T>& SymMatrix<T>::operator+=(SymMatrix<U> const& a_other)
 }
 
 template <typename T>
+SymMatrix<T>& SymMatrix<T>::operator*=(int a_factor)
+{
+    for(size_t i = 0 ; i < m_dimension; i++)
+    {
+        m_data[i] *= a_factor;
+    }
+    return *this;
+}
+
+template <typename T>
+SymMatrix<T> operator*(SymMatrix<T> const& a_Val, int a_factor)
+{
+    SymMatrix<T> new_matrix(a_Val);
+    new_matrix *= a_factor;
+    return new_matrix;
+}
+
+template <typename T>
+SymMatrix<T> operator*(int a_factor, SymMatrix<T> const& a_Val)
+{
+    SymMatrix<T> new_matrix(a_Val);
+    new_matrix *= a_factor;
+    return new_matrix;
+}
+
+
+template <typename T>
 SymMatrix<T> operator+(SymMatrix<T> const& a_lVal, SymMatrix<T> const& a_rVal)
 {
     assert(a_lVal.m_dimension == a_rVal.m_dimension);
     SymMatrix<T> new_matrix(a_lVal);
     new_matrix += a_rVal;
+    return new_matrix;
+}
+
+template <typename T, typename L>
+SymMatrix<T> operator+(SymMatrix<T> const& a_lVal, SymMatrix<L> const& a_rVal)
+{
+    assert(a_lVal.m_dimension == a_rVal.m_dimension);
+    SymMatrix<T> new_matrix(a_rVal);
+    new_matrix += a_lVal;
     return new_matrix;
 }
 

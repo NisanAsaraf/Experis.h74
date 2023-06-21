@@ -65,6 +65,35 @@ BEGIN_TEST(_SymMatrix_ALL_EXAM_TESTS)
     ASSERT_THAT(m(3, 2) == 4*(int)4.2); 
 END_TEST
 
+BEGIN_TEST(_SymMatrix_int_long_plus)
+    SymMatrix<int> m(100); 
+    m(3, 2) = 4.2;    
+    ASSERT_THAT(m(3, 2) == m(2,3));
+    SymMatrix<long> w = m;
+    m = w + m;
+    ASSERT_THAT(m(3, 2) == 2*(int)4.2); 
+END_TEST
+
+BEGIN_TEST(_SymMatrix_int_mul_scalar)
+    SymMatrix<int> m(100); 
+    m(3, 2) = 4.2;    
+    ASSERT_THAT(m(3, 2) == m(2,3));
+    SymMatrix<int> w = m;
+    m = w * 3;
+//   std::cout<<m(3, 2)<<'\n';
+    ASSERT_THAT(m(3, 2) == 12); 
+END_TEST
+
+BEGIN_TEST(_SymMatrix_int_long_mul_scalar)
+    SymMatrix<int> m(100); 
+    m(3, 2) = 4.2;    
+    ASSERT_THAT(m(3, 2) == m(2,3));
+    SymMatrix<long> w = m;
+    m = 3 * m;
+//    std::cout<<m(3, 2)<<'\n';
+    ASSERT_THAT(m(3, 2) == 12); 
+END_TEST
+
 TEST_SUITE(決して道から外れてはいけません)
 TEST(_SymMatrix_creation_empty)
 TEST(_SymMatrix_creation_copy)
@@ -74,4 +103,7 @@ TEST(_SymMatrix_print)
 TEST(_SymMatrix_OP_PLUS)
 TEST(_SymMatrix_OP_PLUS_LONG)
 TEST(_SymMatrix_ALL_EXAM_TESTS)
+TEST(_SymMatrix_int_long_plus)
+TEST(_SymMatrix_int_mul_scalar)
+TEST(_SymMatrix_int_long_mul_scalar)
 END_SUITE
