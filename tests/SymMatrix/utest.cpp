@@ -60,7 +60,7 @@ BEGIN_TEST(_SymMatrix_ALL_EXAM_TESTS)
     SymMatrix<long> w = m;
     w += k;
 /*     m = k + k; */
-/*     ASSERT_THAT(w(3, 2) == 3*(int)4.2); */
+    ASSERT_THAT(w(3, 2) == 3*(int)4.2); 
 END_TEST
 
 TEST_SUITE(決して道から外れてはいけません)
