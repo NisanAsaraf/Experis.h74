@@ -30,9 +30,9 @@ clang_check: check
 clean:
 	@$(RM) ./$(TARGET) $(OBJS)
 
-utest.o: $(INCLUDES_DIR)/linked_list.hpp
+utest.o: $(INCLUDES_DIR)/generic_algorithms.hpp
 
-$(TARGET): utest.o $(INCLUDES_DIR)/SymMatrix.hpp
+$(TARGET): utest.o $(INCLUDES_DIR)/generic_algorithms.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
 
 .PHONY: all clean check recheck clang_check
