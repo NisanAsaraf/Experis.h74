@@ -4,6 +4,7 @@
 #include <list>
 #include <cmath>
 #include <cstring>
+#include <stack>
 
 namespace pets
 {
@@ -132,8 +133,17 @@ Container merge(Container const& a, Container const& b ,Container & c)
 template<typename Container>
 void replace_with_left_bigger(Container& v) 
 {
-    typename Container::iterator begin = v.begin();
-    typename Container::iterator end = v.end();
-    
+    size_t size = v.size();
 
+    for (size_t i = 0; i < size; i++)
+    {
+        for (size_t j = i; j < size; j++)
+        {
+            if(v.at(i) < v.at(j) )
+            {
+                v.at(i) = v.at(j);
+                break;
+            }
+        }
+    }
 }

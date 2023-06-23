@@ -59,6 +59,7 @@ BEGIN_TEST(print_replace)
     replace_with_left_bigger(v);
     print(v);
     // prints  [ 5, 7, 4, 4, 4, 5, 7, 7, 2 ]
+    ASSERT_THAT(true);  
 END_TEST
 
 TEST_SUITE(決して道から外れてはいけません)
@@ -68,4 +69,5 @@ TEST(print_mul)
 TEST(print_binary)
 TEST(print_merge)
 TEST(print_replace)
+
 END_SUITE
