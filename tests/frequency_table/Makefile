@@ -10,10 +10,11 @@ CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR)
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = .
 
-OBJS = utest.o
+OBJS = utest.o freq.o
 TARGET = utest
+TARGET_FREQ = freq
 
-all: $(TARGET)
+all: $(TARGET) $(TARGET_FREQ)
 
 check: $(TARGET)
 	@./$(TARGET) -v
@@ -28,11 +29,16 @@ clang_check: CXX = clang++
 clang_check: check
 
 clean:
-	@$(RM) ./$(TARGET) $(OBJS)
+	@$(RM) ./$(TARGET) ./$(TARGET_FREQ) $(OBJS)
 
-utest.o: $(INCLUDES_DIR)/generic_algorithms.hpp
+utest.o: $(INCLUDES_DIR)/frequency_table.hpp
 
-$(TARGET): utest.o $(INCLUDES_DIR)/generic_algorithms.hpp
+freq.o: $(INCLUDES_DIR)/frequency_table.hpp
+
+$(TARGET): utest.o $(INCLUDES_DIR)/frequency_table.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
+
+$(TARGET_FREQ): freq.o $(INCLUDES_DIR)/frequency_table.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
 
 .PHONY: all clean check recheck clang_check
