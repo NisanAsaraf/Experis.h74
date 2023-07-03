@@ -2,6 +2,7 @@
 #include <string>
 #include "../inc/enc_message.hpp"
 #include "../inc/precious_stone.hpp"
+#include "../inc/enc_com_rot13.hpp"
 #include "../inc/enc_shifter.hpp"
 #include "../inc/enc_upper.hpp"
 #include "../inc/enc_vowels.hpp"
@@ -34,7 +35,7 @@ BEGIN_TEST(caesar)
     std::string text = "hello Javaestas!";
     enc::Message* original = new enc::TextMessage(text);
     enc::Message* encrypted = new enc::TextMessage(text);
-    enc::Encoder* C = new enc::Caesar;
+    enc::Encoder* C = new enc::Caesar(3);
     C->encrypt(*original, *encrypted);
     encrypted->print();
     ASSERT_THAT(true);
@@ -49,6 +50,17 @@ BEGIN_TEST(rot13)
     encrypted->print();
     ASSERT_THAT(true);
 END_TEST
+
+BEGIN_TEST(rot13_comp)
+    std::string text = "hello Javaestas!";
+    enc::Message* original = new enc::TextMessage(text);
+    enc::Message* encrypted = new enc::TextMessage(text);
+    enc::Rot13_comp* C = new enc::Rot13_comp();
+    C->encrypt(*original, *encrypted);
+    encrypted->print();
+    ASSERT_THAT(true);
+END_TEST
+
 
 BEGIN_TEST(leet)
     std::string text = "hello Javaestas!";
@@ -76,6 +88,7 @@ TEST(UPPER)
 TEST(vowels)
 TEST(caesar)
 TEST(rot13)
+TEST(rot13_comp)
 TEST(leet)
 TEST(scytale)
 

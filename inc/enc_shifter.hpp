@@ -10,7 +10,7 @@ public:
     Shifter(int n);
     ~Shifter() = default;
     void encrypt(Message const& m_original, Message& m_encrypted) override;
-    virtual char shift(char c) = 0;
+    char shift(char c);
 
 protected:
     int shiftAmount;

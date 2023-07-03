@@ -6,9 +6,8 @@ namespace enc
 class Caesar: public Shifter
 {
 public:
-    Caesar();
+    Caesar(int n);
     ~Caesar() = default;
-    char shift(char c) override;
 };
 
 }//namespace enc

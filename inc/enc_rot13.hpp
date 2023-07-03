@@ -8,7 +8,7 @@ class Rot13: public Shifter
 public:
    Rot13();
     ~Rot13() = default;
-    char shift(char c) override;
+    char shift(char c);
 };
 
 }//namespace enc
