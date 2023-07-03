@@ -6,6 +6,7 @@ namespace ENC
 class Vowels: public Encryption 
 {
 public:
+    ~Vowels() = default;
     Message* encrypt(Message const&) override;
 };
 

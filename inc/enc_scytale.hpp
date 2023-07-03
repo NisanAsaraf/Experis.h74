@@ -5,6 +5,7 @@ namespace ENC
 class Scytale: public Encryption 
 {
 public:
+    ~Scytale() = default;
     Message* encrypt(Message const&) override;
 };
 
