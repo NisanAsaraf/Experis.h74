@@ -10,7 +10,7 @@ CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR)
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-OBJS = utest.o enc_message.o enc_shifter.o enc_com_rot13.o enc_rot13.o enc_caesar.o enc_leet.o enc_scytale.o enc_upper.o enc_vowels.o
+OBJS = utest.o enc_message.o enc_shifter.o enc_com_rot13.o enc_rot13.o enc_caesar.o enc_leet.o enc_scytale.o enc_upper.o enc_vowels.o enc_trans_cipher.o
 TARGET = utest
 
 all: $(TARGET)
@@ -60,7 +60,10 @@ enc_upper.o: $(SOURCES_DIR)/enc_upper.cpp $(INCLUDES_DIR)/enc_upper.hpp
 enc_vowels.o: $(SOURCES_DIR)/enc_vowels.cpp $(INCLUDES_DIR)/enc_vowels.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-$(TARGET): utest.o enc_message.o enc_shifter.o enc_rot13.o enc_com_rot13.o enc_caesar.o enc_leet.o enc_scytale.o enc_upper.o enc_vowels.o $(INCLUDES_DIR)/precious_stone.hpp
+enc_trans_cipher.o: $(SOURCES_DIR)/enc_trans_cipher.cpp $(INCLUDES_DIR)/enc_trans_cipher.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+$(TARGET): utest.o enc_message.o enc_shifter.o enc_rot13.o enc_com_rot13.o enc_caesar.o enc_leet.o enc_scytale.o enc_upper.o enc_vowels.o enc_trans_cipher.o $(INCLUDES_DIR)/precious_stone.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
 
 .PHONY: all clean check recheck clang_check

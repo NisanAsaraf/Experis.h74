@@ -1,5 +1,6 @@
 #include "mu_test.h"
 #include <string>
+#include "../inc/enc_trans_cipher.hpp"
 #include "../inc/enc_message.hpp"
 #include "../inc/precious_stone.hpp"
 #include "../inc/enc_com_rot13.hpp"
@@ -82,6 +83,17 @@ BEGIN_TEST(scytale)
     ASSERT_THAT(true);
 END_TEST
 
+BEGIN_TEST(trans_cipher)
+    std::string text = "hello Javaestas!";
+    enc::Message* original = new enc::TextMessage(text);
+    enc::Message* encrypted = new enc::TextMessage(text);
+    std::string key = "MONEY";
+    enc::Encoder* T = new enc::Trans_Cipher(key);
+    T->encrypt(*original, *encrypted);
+    encrypted->print();    
+    ASSERT_THAT(true);
+END_TEST
+
 TEST_SUITE(決して道から外れてはいけません)
 
 TEST(UPPER)
@@ -91,5 +103,6 @@ TEST(rot13)
 TEST(rot13_comp)
 TEST(leet)
 TEST(scytale)
+TEST(trans_cipher)
 
 END_SUITE
