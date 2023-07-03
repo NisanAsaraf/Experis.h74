@@ -1,13 +1,15 @@
+#ifndef _ENC_SCYTALE_
+#define _ENC_SCYTALE_
 #include "../inc/precious_stone.hpp"
 
-namespace ENC
+namespace enc
 {
-class Scytale: public Encryption 
+class Scytale: public Encoder
 {
 public:
     ~Scytale() = default;
-    Message* encrypt(Message const&) override;
+    void encrypt(Message const& m_original, Message& m_encrypted) override;
 };
 
-
-}//namespace ENC
+}//namespace enc
+#endif

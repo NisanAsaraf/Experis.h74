@@ -1,13 +1,15 @@
+#ifndef _ENC_UPPER_
+#define _ENC_UPPER_
 #include "../inc/precious_stone.hpp"
 
-namespace ENC
+namespace enc
 {
-
-class UpperCase : public Encryption 
+class UpperCase : public Encoder
 {
 public:
     ~UpperCase() = default;
-    Message* encrypt(Message const&) override;
+    void encrypt(Message const& m_original, Message& m_encrypted) override;
 };
 
-}//namespace ENC
+}//namespace enc
+#endif

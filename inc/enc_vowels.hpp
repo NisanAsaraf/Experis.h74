@@ -1,14 +1,16 @@
+#ifndef _ENC_VOWELS_
+#define _ENC_VOWELS_
 #include "../inc/precious_stone.hpp"
 
-namespace ENC
+namespace enc
 {
 
-class Vowels: public Encryption 
+class Vowels: public Encoder
 {
 public:
     ~Vowels() = default;
-    Message* encrypt(Message const&) override;
+    void encrypt(Message const& m_original, Message& m_encrypted) override;
 };
 
-
-}//namespace ENC
+}//namespace enc
+#endif

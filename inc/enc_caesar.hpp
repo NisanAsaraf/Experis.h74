@@ -1,13 +1,14 @@
+#ifndef _ENC_CAESAR_
+#define _ENC_CAESAR_
 #include "../inc/precious_stone.hpp"
 
-namespace ENC
+namespace enc
 {
-class Caesar: public Encryption 
+class Caesar: public Encoder
 {
 public:
     ~Caesar() = default;
-    Message* encrypt(Message const&) override;
+    void encrypt(Message const& m_original, Message& m_encrypted) override;
 };
-
-
-}//namespace ENC
+}//namespace enc
+#endif

@@ -10,7 +10,7 @@ CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR)
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-OBJS = utest.o precious_stone.o
+OBJS = utest.o enc_caesar.o enc_leet.o enc_scytale.o enc_upper.o enc_vowels.o
 TARGET = utest
 
 all: $(TARGET)
@@ -33,10 +33,23 @@ clean:
 utest.o: utest.cpp $(INCLUDES_DIR)/precious_stone.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-precious_stone.o: $(SOURCES_DIR)/precious_stone.cpp $(INCLUDES_DIR)/precious_stone.hpp
+enc_caesar.o: $(SOURCES_DIR)/enc_caesar.cpp $(INCLUDES_DIR)/enc_caesar.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-$(TARGET): utest.o precious_stone.o $(INCLUDES_DIR)/precious_stone.hpp
+enc_leet.o: $(SOURCES_DIR)/enc_leet.cpp $(INCLUDES_DIR)/enc_leet.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+enc_scytale.o: $(SOURCES_DIR)/enc_scytale.cpp $(INCLUDES_DIR)/enc_scytale.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+enc_upper.o: $(SOURCES_DIR)/enc_upper.cpp $(INCLUDES_DIR)/enc_upper.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+enc_vowels.o: $(SOURCES_DIR)/enc_vowels.cpp $(INCLUDES_DIR)/enc_vowels.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+
+$(TARGET): utest.o enc_caesar.o enc_leet.o enc_scytale.o enc_upper.o enc_vowels.o $(INCLUDES_DIR)/precious_stone.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
 
 .PHONY: all clean check recheck clang_check

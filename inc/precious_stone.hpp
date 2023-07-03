@@ -9,7 +9,7 @@
 #include <cstring>
 #include <unordered_map>
 
-namespace ENC
+namespace enc
 {
 class Message 
 {
@@ -30,19 +30,23 @@ public:
     std::string::iterator begin() override { return m_text.begin(); }
     std::string::iterator end() override { return m_text.end(); }
     std::string getText()const{return m_text;}
+
+    void setText(const char* text){m_text = text;}
+    void setText(std::string text){m_text = text;}
+
     void print() const override {std::cout << m_text << '\n';};
 };
 
-class Encryption 
+class Encoder
 {
 public:
-    virtual ~Encryption() = default;
-    virtual Message* encrypt(Message const&) = 0;
+    virtual ~Encoder() = default;
+    virtual void encrypt(Message const& m_original, Message& m_encrypted) = 0;
 protected:
-    Encryption() = default;
-    Encryption(Encryption const&) = default;
-    Encryption& operator=(Encryption const&) = default;
+    Encoder() = default;
+    Encoder(Encoder const&) = default;
+    Encoder& operator=(Encoder const&) = default;
 };
 
-}//namespace ENC
+}//namespace enc
 #endif

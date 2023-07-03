@@ -9,49 +9,53 @@
 
 BEGIN_TEST(UPPER)
     std::string text = "hello Javaestas!";
-    ENC::Message* p = new ENC::TextMessage(text);
-    ENC::Encryption* UP = new ENC::UpperCase;
-    ENC::Message* encryptedMessage = UP->encrypt(*p);
-    encryptedMessage->print();
+    enc::Message* original = new enc::TextMessage(text);
+    enc::Message* encrypted = new enc::TextMessage(text);
+    enc::Encoder* UP = new enc::UpperCase;
+    UP->encrypt(*original, *encrypted);
+    encrypted->print();    
     ASSERT_THAT(true);
 END_TEST
 
 BEGIN_TEST(vowels)
     std::string text = "hello Javaestas!";
-    ENC::Message* p = new ENC::TextMessage(text);
-    ENC::Encryption* V = new ENC::Vowels;
-    ENC::Message* encryptedMessage = V->encrypt(*p);
-    encryptedMessage->print();
+    enc::Message* original = new enc::TextMessage(text);
+    enc::Message* encrypted = new enc::TextMessage(text);
+    enc::Encoder* V = new enc::Vowels;
+    V->encrypt(*original, *encrypted);
+    encrypted->print();
     ASSERT_THAT(true);
 END_TEST
 
 BEGIN_TEST(caesar)
     std::string text = "hello Javaestas!";
-    ENC::Message* p = new ENC::TextMessage(text);
-    ENC::Encryption* C = new ENC::Caesar;
-    ENC::Message* encryptedMessage = C->encrypt(*p);
-    encryptedMessage->print();
+    enc::Message* original = new enc::TextMessage(text);
+    enc::Message* encrypted = new enc::TextMessage(text);
+    enc::Encoder* C = new enc::Caesar;
+    C->encrypt(*original, *encrypted);
+    encrypted->print();
     ASSERT_THAT(true);
 END_TEST
 
 BEGIN_TEST(leet)
     std::string text = "hello Javaestas!";
-    ENC::Message* p = new ENC::TextMessage(text);
-    ENC::Encryption* L = new ENC::Leet;
-    ENC::Message* encryptedMessage = L->encrypt(*p);
-    encryptedMessage->print();
+    enc::Message* original = new enc::TextMessage(text);
+    enc::Message* encrypted = new enc::TextMessage(text);
+    enc::Encoder* L = new enc::Leet;
+    L->encrypt(*original, *encrypted);
+    encrypted->print();
     ASSERT_THAT(true);
 END_TEST
 
 BEGIN_TEST(scytale)
     std::string text = "hello Javaestas!";
-    ENC::Message* p = new ENC::TextMessage(text);
-    ENC::Encryption* S = new ENC::Scytale;
-    ENC::Message* encryptedMessage = S->encrypt(*p);
-    encryptedMessage->print();
+    enc::Message* original = new enc::TextMessage(text);
+    enc::Message* encrypted = new enc::TextMessage(text);
+    enc::Encoder* S = new enc::Scytale;
+    S->encrypt(*original, *encrypted);
+    encrypted->print();    
     ASSERT_THAT(true);
 END_TEST
-
 
 TEST_SUITE(決して道から外れてはいけません)
 TEST(UPPER)

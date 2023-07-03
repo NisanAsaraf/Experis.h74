@@ -1,13 +1,15 @@
+#ifndef _ENC_LEET_
+#define _ENC_LEET_
 #include "../inc/precious_stone.hpp"
 
-namespace ENC
+namespace enc
 {
-class Leet: public Encryption 
+class Leet: public Encoder
 {
 public:
     ~Leet() = default;
-    Message* encrypt(Message const&) override;
+    void encrypt(Message const& m_original, Message& m_encrypted) override;
 };
 
-
-}//namespace ENC
+}//namespace enc
+#endif
