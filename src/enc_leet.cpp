@@ -27,7 +27,7 @@ void Leet::encrypt(Message const& m_original, Message& m_encrypted)
     const std::string& text = dynamic_cast<const TextMessage&>(m_original).getText();
     
     std::string transformedText = text;
-    std::transform(transformedText.begin(), transformedText.end(), transformedText.begin(), leet_enc);
+    std::transform(transformedText.begin(), transformedText.end(), transformedText.begin(), &leet_enc);
 
     dynamic_cast<TextMessage&>(m_encrypted).setText(transformedText);
 }

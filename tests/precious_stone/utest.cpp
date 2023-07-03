@@ -1,9 +1,12 @@
 #include "mu_test.h"
 #include <string>
+#include "../inc/enc_message.hpp"
 #include "../inc/precious_stone.hpp"
+#include "../inc/enc_shifter.hpp"
 #include "../inc/enc_upper.hpp"
 #include "../inc/enc_vowels.hpp"
 #include "../inc/enc_caesar.hpp"
+#include "../inc/enc_rot13.hpp"
 #include "../inc/enc_leet.hpp"
 #include "../inc/enc_scytale.hpp"
 
@@ -37,6 +40,16 @@ BEGIN_TEST(caesar)
     ASSERT_THAT(true);
 END_TEST
 
+BEGIN_TEST(rot13)
+    std::string text = "hello Javaestas!";
+    enc::Message* original = new enc::TextMessage(text);
+    enc::Message* encrypted = new enc::TextMessage(text);
+    enc::Encoder* C = new enc::Rot13;
+    C->encrypt(*original, *encrypted);
+    encrypted->print();
+    ASSERT_THAT(true);
+END_TEST
+
 BEGIN_TEST(leet)
     std::string text = "hello Javaestas!";
     enc::Message* original = new enc::TextMessage(text);
@@ -58,9 +71,12 @@ BEGIN_TEST(scytale)
 END_TEST
 
 TEST_SUITE(決して道から外れてはいけません)
+
 TEST(UPPER)
 TEST(vowels)
 TEST(caesar)
+TEST(rot13)
 TEST(leet)
 TEST(scytale)
+
 END_SUITE

@@ -1,14 +1,14 @@
-#include "../inc/enc_caesar.hpp"
+#include "../inc/enc_rot13.hpp"
 
 namespace enc
 {
-Caesar::Caesar()
-:Shifter(3)
+Rot13::Rot13()
+:Shifter(13)
 {
 
 }
 
-char Caesar::shift(char c)
+char Rot13::shift(char c)
 {
     return 'A' + (c - 'A' + shiftAmount) % 26;
 }

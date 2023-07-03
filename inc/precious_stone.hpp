@@ -1,6 +1,7 @@
-#ifndef __precious_stone__
-#define __precious_stone__
+#ifndef _ENCODER_
+#define _ENCODER_
 
+#include "enc_message.hpp"
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -11,32 +12,6 @@
 
 namespace enc
 {
-class Message 
-{
-public:
-    virtual ~Message() = default;
-    virtual std::string::iterator begin() = 0;
-    virtual std::string::iterator end() = 0;
-    virtual void print() const = 0;
-};
-
-class TextMessage : public Message 
-{
-    std::string m_text;
-public:
-    ~TextMessage() override = default;
-    TextMessage(const char* text) : m_text{text} {}
-    TextMessage(std::string text) : m_text{text} {}
-    std::string::iterator begin() override { return m_text.begin(); }
-    std::string::iterator end() override { return m_text.end(); }
-    std::string getText()const{return m_text;}
-
-    void setText(const char* text){m_text = text;}
-    void setText(std::string text){m_text = text;}
-
-    void print() const override {std::cout << m_text << '\n';};
-};
-
 class Encoder
 {
 public:
