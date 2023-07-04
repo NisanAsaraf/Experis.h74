@@ -16,12 +16,12 @@ char scytale_enc(char c)
 
 void Scytale::encrypt(Message const& m_original, Message& m_encrypted)
 {
-    const std::string& text = dynamic_cast<const TextMessage&>(m_original).getText();
+    const std::string& text = m_original.getText();
     
     std::string transformedText = text;
     std::transform(transformedText.begin(), transformedText.end(), transformedText.begin(), &scytale_enc);
 
-    dynamic_cast<TextMessage&>(m_encrypted).setText(transformedText);
+    m_encrypted.setText(transformedText);
 }
 
 }//namespace enc

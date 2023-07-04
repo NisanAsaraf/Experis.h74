@@ -2,13 +2,7 @@
 #define _ENC_MESSAGE_
 
 #include <iostream>
-#include <algorithm>
-#include <vector>
-#include <list>
-#include <cmath>
-#include <cstring>
-#include <unordered_map>
-
+#include <string>
 namespace enc
 {
 class Message 
@@ -18,22 +12,26 @@ public:
     virtual std::string::iterator begin() = 0;
     virtual std::string::iterator end() = 0;
     virtual void print() const = 0;
+    virtual std::string getText()const = 0;
+    virtual void setText(const char* text) = 0;
+    virtual void setText(std::string const& text) = 0;
 };
 
 class TextMessage : public Message 
 {
-    std::string m_text;
 public:
     ~TextMessage() override = default;
     TextMessage(const char* text);
     TextMessage(std::string text);
     std::string::iterator begin() override;
     std::string::iterator end() override;
-    std::string getText()const;
-    void setText(const char* text);
-    void setText(std::string text);
-
+    std::string getText() const override ;
+    void setText(const char* text) override ;
+    void setText(std::string const& text) override;
     void print()const;
+
+private:
+    std::string m_text;
 };
 }//namespace enc
 #endif

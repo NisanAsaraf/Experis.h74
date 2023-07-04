@@ -94,12 +94,12 @@ static std::string cipher_enc(std::string str, std::string key)
 
 void Trans_Cipher::encrypt(Message const& m_original, Message& m_encrypted)
 {
-    const std::string& text = dynamic_cast<const TextMessage&>(m_original).getText();
+    const std::string& text = m_original.getText();
     
     std::string transformedText = text;
     transformedText = cipher_enc(transformedText, m_key);
 
-    dynamic_cast<TextMessage&>(m_encrypted).setText(transformedText);
+    m_encrypted.setText(transformedText);
 }
 
 }//namespace enc
