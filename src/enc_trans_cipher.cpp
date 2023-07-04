@@ -55,7 +55,7 @@ static std::string cipher_enc(std::string str, std::string key)
     }
     
 
-    int len = str_cut.length();
+    double len = str_cut.length();
     size_t n = key.length();
     size_t m = std::ceil(len / n);
     std::string transformedText;

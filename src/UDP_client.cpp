@@ -1,5 +1,5 @@
-#include "inc/UDP_client.hpp"
-
+#include "../inc/UDP_client.hpp"
+#include "../inc/enc_leet.hpp"
 namespace enc
 {
     UDP_client::UDP_client(int serverPort)
@@ -22,9 +22,14 @@ namespace enc
         close(sockfd);
     }
 
-    bool UDP_client::sendMessage(const char* message)
+    bool UDP_client::sendMessage(Message const& m_message)
     {
-        if (sendto(sockfd, message, strlen(message), 0, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) 
+        enc::Message* encrypted = new enc::TextMessage(m_message.getText());
+        enc::Encoder* L = new enc::Leet;
+        L->encrypt(m_message, *encrypted);
+        const char* buffer = encrypted->getText().c_str();
+
+        if (sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) 
         {
             std::cerr << "Failed to send message." << '\n';
             return false;
