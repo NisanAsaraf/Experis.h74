@@ -13,7 +13,8 @@
 #include "../inc/enc_rot13.hpp"
 #include "../inc/enc_leet.hpp"
 #include "../inc/enc_scytale.hpp"
-#include"console_source.hpp"
+#include "precious_stone.hpp"
+
 #include <thread>
 #include <iostream>
 #include <fstream>
@@ -93,15 +94,15 @@ BEGIN_TEST(trans_cipher)
     std::string text = "hello Javaestas!";
     enc::Message* original = new enc::TextMessage(text);
     enc::Message* encrypted = new enc::TextMessage(text);
-    std::string key = "MONEY";
+    std::string key = "LIGMA";
     enc::Encoder* T = new enc::Trans_Cipher(key);
     T->encrypt(*original, *encrypted);
     encrypted->print();    
     ASSERT_THAT(true);
 END_TEST
 
-BEGIN_TEST(server_test)
-    std::cout << "Enter text:" << '\n';
+BEGIN_TEST(precious_stone)
+/*     std::cout << "Enter text:" << '\n';
 
     enc::Message* original = new enc::TextMessage();
     comms::ConsoleSource con;
@@ -120,7 +121,14 @@ BEGIN_TEST(server_test)
 
     enc::Message* encrypted = client.recieveMessage();
     encrypted->print();
-    serverThread.join();
+    serverThread.join(); */
+
+    enc::Encoder* s = new enc::Leet;
+    comms::ConsoleSource* input = new comms::ConsoleSource;
+    comms::FileDestination f{"secrets.exe"};
+
+    comms::PreciousStone ps(*input, f ,*s);
+    ps.execute();
 
     ASSERT_THAT(true);
 END_TEST
@@ -136,6 +144,6 @@ IGNORE_TEST(rot13_comp)
 IGNORE_TEST(leet)
 IGNORE_TEST(scytale)
 IGNORE_TEST(trans_cipher)
-TEST(server_test)
+TEST(precious_stone)
 
 END_SUITE

@@ -1,6 +1,3 @@
-#ifndef UDP_SERVER
-#define UDP_SERVER
-
 #include "../inc/UDP_server.hpp"
 #include "../inc/enc_leet.hpp"
 #include "../inc/console_dest.hpp"
@@ -81,4 +78,3 @@ namespace enc
         server_stop = true;
     }    
 }//namespace enc
-#endif

@@ -1,3 +1,6 @@
+#ifndef UDP_SERVER
+#define UDP_SERVER
+
 #include <iostream>
 #include <cstring>
 #include <sys/socket.h>
@@ -20,3 +23,4 @@ private:
     bool server_stop;
 };
 }//namespace enc
+#endif
