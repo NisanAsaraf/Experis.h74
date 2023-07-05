@@ -37,4 +37,21 @@ namespace enc
         return true;
     }
 
+    Message* UDP_client::recieveMessage() 
+    {
+        char buffer[1024];
+        struct sockaddr_in serverAddr;
+        socklen_t serverAddrLength = sizeof(serverAddr);
+
+        ssize_t bytesRead = recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr*)&serverAddr, &serverAddrLength);
+        if (bytesRead < 0)
+        {
+            std::cerr << "Failed to receive message." << '\n';
+            return nullptr;
+        }
+
+        std::string receivedText(buffer, bytesRead);
+        return new TextMessage(receivedText);
+    }
+
 }//namespace enc

@@ -3,6 +3,7 @@
 
 #include "../inc/UDP_server.hpp"
 #include "../inc/enc_leet.hpp"
+#include "inc/console_dest.hpp"
 namespace enc
 {
   UDP_server::UDP_server(int port)
@@ -33,7 +34,7 @@ namespace enc
         close(sockfd);
     }
 
-    bool UDP_server::sendMessage(Message const& m_message, const struct sockaddr_in& clientAddr)//unused for now...
+    bool UDP_server::sendMessage(Message const& m_message, const struct sockaddr_in& clientAddr)
     {
         enc::Message* encrypted = new enc::TextMessage(m_message.getText());
         enc::Encoder* L = new enc::Leet;

@@ -15,6 +15,7 @@ public:
     UDP_client(int serverPort);
     ~UDP_client();
     bool sendMessage(Message const& message);
+    Message* recieveMessage();
 private:
     int sockfd;
     struct sockaddr_in serverAddr;

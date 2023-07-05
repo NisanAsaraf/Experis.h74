@@ -1,3 +1,5 @@
+#ifndef CONSOLE_SRC
+#define CONSOLE_SRC
 #include "enc_message.hpp"
 
 namespace comms
@@ -10,3 +12,4 @@ class ConsoleSource
 };
 
 }//namespace comms
+#endif
