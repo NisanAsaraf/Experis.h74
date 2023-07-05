@@ -9,7 +9,7 @@ class ConsoleSource
 {
 public:
     ConsoleSource() = default;
-    void operator<<(enc::Message&);
+    void operator<<(enc::Message&) const;
 };
 
 }//namespace comms

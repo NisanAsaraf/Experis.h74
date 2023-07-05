@@ -35,7 +35,7 @@ namespace enc
     {
         enc::Message* encrypted = new enc::TextMessage(m_message.getText());
         enc::Encoder* L = new enc::Leet;
-        L->encrypt(m_message, *encrypted);//needs to be decrypt basically
+        L->encrypt(m_message, *encrypted);
         const char* buffer = encrypted->getText().c_str();
 
         if (sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr*)&clientAddr, sizeof(clientAddr)) < 0) 

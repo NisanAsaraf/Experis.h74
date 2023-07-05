@@ -1,11 +1,11 @@
 #ifndef STONE
 #define STONE
-#include "console_source.hpp"
-#include "console_dest.hpp"
-#include "encoder.hpp"
-#include "UDP_server.hpp"
-#include "UDP_client.hpp"
-#include "file_dest.hpp"
+#include "../inc/console_source.hpp"
+#include "../inc/console_dest.hpp"
+#include "../inc/encoder.hpp"
+#include "../inc/UDP_server.hpp"
+#include "../inc/UDP_client.hpp"
+#include "../inc/file_dest.hpp"
 
 namespace comms
 {

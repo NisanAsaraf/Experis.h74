@@ -3,8 +3,7 @@
 
 namespace comms
 {
-
-void ConsoleSource::operator<<(enc::Message& m_message)
+void ConsoleSource::operator<<(enc::Message& m_message) const
 {
     std::string text;
     std::string line;
@@ -15,6 +14,5 @@ void ConsoleSource::operator<<(enc::Message& m_message)
     } while (!line.empty());
     m_message.setText(text);
 }
-
 
 }//namespace comms
