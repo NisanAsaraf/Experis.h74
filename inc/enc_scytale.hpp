@@ -1,6 +1,6 @@
 #ifndef _ENC_SCYTALE_
 #define _ENC_SCYTALE_
-#include "../inc/precious_stone.hpp"
+#include "../inc/encoder.hpp"
 
 namespace enc
 {

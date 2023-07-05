@@ -4,7 +4,7 @@
 #include "../inc/UDP_server.hpp"
 #include "../inc/enc_trans_cipher.hpp"
 #include "../inc/enc_message.hpp"
-#include "../inc/precious_stone.hpp"
+#include "../inc/encoder.hpp"
 #include "../inc/enc_com_rot13.hpp"
 #include "../inc/enc_shifter.hpp"
 #include "../inc/enc_upper.hpp"

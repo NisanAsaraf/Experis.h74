@@ -1,6 +1,6 @@
 #ifndef _ENC_SHIFTER_
 #define _ENC_SHIFTER_
-#include "../inc/precious_stone.hpp"
+#include "../inc/encoder.hpp"
 
 namespace enc
 {

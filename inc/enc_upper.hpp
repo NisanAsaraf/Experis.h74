@@ -1,6 +1,6 @@
 #ifndef _ENC_UPPER_
 #define _ENC_UPPER_
-#include "../inc/precious_stone.hpp"
+#include "../inc/encoder.hpp"
 
 namespace enc
 {

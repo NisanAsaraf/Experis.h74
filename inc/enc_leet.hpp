@@ -1,6 +1,6 @@
 #ifndef _ENC_LEET_
 #define _ENC_LEET_
-#include "../inc/precious_stone.hpp"
+#include "../inc/encoder.hpp"
 
 namespace enc
 {

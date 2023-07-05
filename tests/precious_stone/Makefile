@@ -30,7 +30,7 @@ clang_check: check
 clean:
 	@$(RM) ./$(TARGET) $(OBJS)
 
-utest.o: utest.cpp $(INCLUDES_DIR)/precious_stone.hpp
+utest.o: utest.cpp $(INCLUDES_DIR)/encoder.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 enc_message.o:$(SOURCES_DIR)/enc_message.cpp $(INCLUDES_DIR)/enc_message.hpp
@@ -72,7 +72,7 @@ UDP_client.o: $(SOURCES_DIR)/UDP_client.cpp $(INCLUDES_DIR)/UDP_client.hpp
 console_source.o: $(SOURCES_DIR)/console_source.cpp $(INCLUDES_DIR)/console_source.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-$(TARGET): utest.o enc_message.o enc_shifter.o enc_rot13.o enc_com_rot13.o enc_caesar.o enc_leet.o enc_scytale.o enc_upper.o enc_vowels.o enc_trans_cipher.o UDP_client.o UDP_server.o console_source.o $(INCLUDES_DIR)/precious_stone.hpp
+$(TARGET): utest.o enc_message.o enc_shifter.o enc_rot13.o enc_com_rot13.o enc_caesar.o enc_leet.o enc_scytale.o enc_upper.o enc_vowels.o enc_trans_cipher.o UDP_client.o UDP_server.o console_source.o $(INCLUDES_DIR)/encoder.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
 
 .PHONY: all clean check recheck clang_check

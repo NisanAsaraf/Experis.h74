@@ -1,5 +1,5 @@
 #include "../inc/enc_upper.hpp"
-#include "../inc/precious_stone.hpp"
+#include "../inc/encoder.hpp"
 namespace enc
 {
 void UpperCase::encrypt(Message const& m_original, Message& m_encrypted)

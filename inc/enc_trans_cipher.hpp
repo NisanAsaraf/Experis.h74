@@ -1,6 +1,6 @@
 #ifndef _ENC_TRANS_CIPHER_
 #define _ENC_TRANS_CIPHER_
-#include "../inc/precious_stone.hpp"
+#include "../inc/encoder.hpp"
 
 namespace enc
 {

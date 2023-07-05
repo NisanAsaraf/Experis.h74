@@ -1,6 +1,6 @@
 #ifndef _ENC_VOWELS_
 #define _ENC_VOWELS_
-#include "../inc/precious_stone.hpp"
+#include "../inc/encoder.hpp"
 
 namespace enc
 {
