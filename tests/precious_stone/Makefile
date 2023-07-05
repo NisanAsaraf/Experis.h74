@@ -10,7 +10,7 @@ CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR)
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-OBJS = utest.o enc_message.o enc_shifter.o enc_com_rot13.o enc_rot13.o enc_caesar.o enc_leet.o enc_scytale.o enc_upper.o enc_vowels.o enc_trans_cipher.o UDP_server.o UDP_client.o
+OBJS = utest.o enc_message.o enc_shifter.o enc_com_rot13.o enc_rot13.o enc_caesar.o enc_leet.o enc_scytale.o enc_upper.o enc_vowels.o enc_trans_cipher.o UDP_server.o UDP_client.o console_source.o
 TARGET = utest
 
 all: $(TARGET)
@@ -69,7 +69,10 @@ UDP_server.o: $(SOURCES_DIR)/UDP_server.cpp $(INCLUDES_DIR)/UDP_server.hpp
 UDP_client.o: $(SOURCES_DIR)/UDP_client.cpp $(INCLUDES_DIR)/UDP_client.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-$(TARGET): utest.o enc_message.o enc_shifter.o enc_rot13.o enc_com_rot13.o enc_caesar.o enc_leet.o enc_scytale.o enc_upper.o enc_vowels.o enc_trans_cipher.o UDP_client.o UDP_server.o $(INCLUDES_DIR)/precious_stone.hpp
+console_source.o: $(SOURCES_DIR)/console_source.cpp $(INCLUDES_DIR)/console_source.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+$(TARGET): utest.o enc_message.o enc_shifter.o enc_rot13.o enc_com_rot13.o enc_caesar.o enc_leet.o enc_scytale.o enc_upper.o enc_vowels.o enc_trans_cipher.o UDP_client.o UDP_server.o console_source.o $(INCLUDES_DIR)/precious_stone.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
 
 .PHONY: all clean check recheck clang_check

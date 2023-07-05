@@ -1,6 +1,11 @@
 #include "../inc/enc_message.hpp"
 namespace enc
 {
+TextMessage::TextMessage() 
+:m_text{} 
+{
+}
+
 TextMessage::TextMessage(const char* text) 
 :m_text{text} 
 {

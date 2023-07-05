@@ -13,6 +13,7 @@
 #include "../inc/enc_rot13.hpp"
 #include "../inc/enc_leet.hpp"
 #include "../inc/enc_scytale.hpp"
+#include"console_source.hpp"
 #include <thread>
 #include <iostream>
 #include <fstream>
@@ -100,15 +101,12 @@ BEGIN_TEST(trans_cipher)
 END_TEST
 
 BEGIN_TEST(server_test)
-    std::string text;
-    std::ofstream outputFile("client_source.txt",std::ios::app);
     std::cout << "Enter text:" << '\n';
-    std::cin >> text;
-    outputFile << text << '\n';
-    outputFile.close();
 
+    enc::Message* original = new enc::TextMessage();
+    comms::ConsoleSource con;
+    con << *original;
 
-    enc::Message* original = new enc::TextMessage(text);
     enc::UDP_server server(8080);
 
     std::thread serverThread([&server]()

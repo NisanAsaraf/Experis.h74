@@ -21,6 +21,7 @@ class TextMessage : public Message
 {
 public:
     ~TextMessage() override = default;
+    TextMessage();
     TextMessage(const char* text);
     TextMessage(std::string text);
     std::string::iterator begin() override;
