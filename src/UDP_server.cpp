@@ -66,7 +66,7 @@ namespace enc
 
             buffer[bytesRead] = '\0';
             std::string receivedMessage(buffer);
-            std::cout << "Received message from client: " << receivedMessage << '\n';
+//          std::cout << "Received message from client: " << receivedMessage << '\n';
 
             if (!sendMessage(TextMessage(receivedMessage), clientAddr))
             {

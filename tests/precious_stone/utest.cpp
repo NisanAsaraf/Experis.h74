@@ -118,7 +118,10 @@ BEGIN_TEST(server_test)
     client.sendMessage(*original);  
     server.stop();
 
+    enc::Message* encrypted = client.recieveMessage();
+    encrypted->print();
     serverThread.join();
+
     ASSERT_THAT(true);
 END_TEST
 
