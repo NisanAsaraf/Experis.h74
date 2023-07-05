@@ -125,9 +125,9 @@ BEGIN_TEST(precious_stone)
 
     enc::Encoder* s = new enc::Leet;
     comms::ConsoleSource* input = new comms::ConsoleSource;
-    comms::FileDestination f{"secrets.exe"};
+    comms::FileDestination* f = new comms::FileDestination{"secrets.exe"};
 
-    comms::PreciousStone ps(*input, f ,*s);
+    comms::PreciousStone ps(*input, *f ,*s);
     ps.execute();
 
     ASSERT_THAT(true);
