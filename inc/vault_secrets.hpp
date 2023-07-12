@@ -4,11 +4,11 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-
+#include <optional>
 
 namespace vos
 {
-class Vault
+class Vault 
 {
 public:
     Vault(Vault const&) = delete;
@@ -19,15 +19,26 @@ public:
     void add(std::string const& key, std::string const& value);
     friend std::ostream& operator<<(std::ostream& os, const Vault& vault);
     void save();
-protected:
-    Vault(std::string const&);
+private:
+    Vault() = default;
     void load();
 public:
     static Vault& open(std::string const&);
 private:
-    std::string m_master_key;
+    std::string m_master_key = "LIGMA";
     std::unordered_map<std::string, std::string> m_map;
 };
+
+
+class InvalidPasswordException : public std::exception
+{
+public:
+    const char* what() const noexcept override
+    {
+        return "Invalid password";
+    }
+};
+
 
 }//namespace vos
 #endif
