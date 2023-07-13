@@ -92,26 +92,68 @@ void Vault<Secret>::load()
     file.close();
 }
 
-char caesar_enc(char c)
+char leet_enc(char c)
 {   
-    return 'A' + (c - 'A' + 13) % 26;
+     switch(c) 
+     {
+        case 'A': return '4';
+        case 'a': return '@';
+        case 'B': return '8';
+        case 'c': return '(';
+        case 'D': return ')';
+        case 'e': return '3';
+        case 'g': return '6';
+        case 'G': return '&';
+        case 'h': return '#';
+        case 'i': return '1';
+        case 'v': return '>';
+        case 'V': return '<';
+        case 'l': return '!';
+        case 'o': return '0';
+        case 's': return '5';
+        case 'S': return '$';
+        case 'T': return '7';
+        case 'z': return '2';
+        default: return c;
+    }
 }
 
-char caesar_dec(char c)
-{   
-    return 'A' + ((c - 'A') - 13) % 26;
+char leet_dec(char c) 
+{
+    switch (c) 
+    {
+        case 4: return 'A';
+        case '@': return 'a';
+        case 8: return 'B';
+        case '(': return 'c';
+        case ')': return 'D';
+        case 3: return 'e';
+        case 6: return 'g';
+        case '&': return 'G';
+        case '#': return 'h';
+        case 1: return 'i';
+        case '>': return 'v';
+        case '<': return 'V';
+        case '!': return 'l';
+        case 0: return 'o';
+        case 5: return 's';
+        case '$': return 'S';
+        case 7: return 'T';
+        case 2: return 'z';
+        default: return c;
+    }
 }
 
 template<typename Secret>
 void encrypt_leet(Secret& a_secret)
 {
-    std::transform(a_secret.begin(), a_secret.end(), a_secret.begin(), &caesar_enc);
+    std::transform(a_secret.begin(), a_secret.end(), a_secret.begin(), &leet_enc);
 }
 
 template<typename Secret>
 void decrypt_leet(Secret& a_secret)
 {
-    std::transform(a_secret.begin(), a_secret.end(), a_secret.begin(), &caesar_dec);
+    std::transform(a_secret.begin(), a_secret.end(), a_secret.begin(), &leet_dec);
 }
 
 template<typename Secret>
