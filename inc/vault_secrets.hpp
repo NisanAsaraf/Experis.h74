@@ -10,20 +10,34 @@
 
 namespace vos
 {
-template <typename Secret>
-class Vault 
+template <typename T>
+class Singleton 
 {
+public:
+    Singleton(Singleton const&) = delete;
+    static T& get_instance();
+private:
+    Singleton() = default;
+    ~Singleton() = default;
+};
+
+template <typename Secret>
+class Vault //: Singleton<Vault<Secret>>
+{
+
 public:
     Vault(Vault const&) = delete;
     Vault& operator=(Vault const&) = delete;
 
-    std::string const& get(std::string const& key) const;
+    Secret const& get(std::string const& key) const;
     void add(std::string const& key, Secret const& value);
-    
+
     template<typename T>
     friend std::ostream& operator<<(std::ostream& os, const Vault<T>& vault);
 
     void save();
+    friend class Singleton<Vault<Secret>>;
+
 private:
     Vault() = default;
     ~Vault() = default;
@@ -31,12 +45,15 @@ private:
 
     void encrypt();
     void decrypt();
+
 public:
     static Vault& open(std::string const&);
 private:
     std::string m_master_key = "psi";
     std::unordered_map<std::string, Secret> m_map;
 };
+
+
 
 class InvalidPasswordException : public std::exception
 {
@@ -46,7 +63,6 @@ public:
         return "Invalid password";
     }
 };
-
 
 }//namespace vos
 #endif

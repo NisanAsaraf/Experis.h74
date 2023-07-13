@@ -1,7 +1,20 @@
 #include "../vault_secrets.hpp"
-
 namespace vos
 {
+
+template<typename T>
+T& Singleton<T>::get_instance()
+{
+    static T* instance = nullptr;
+
+    if (!instance) 
+    {
+        instance = new T();
+    }
+
+    return *instance;
+}
+ 
 
 template<typename Secret>
 Vault<Secret>& Vault<Secret>::open(std::string const& master_key)
@@ -26,8 +39,9 @@ Vault<Secret>& Vault<Secret>::open(std::string const& master_key)
     return *instance;
 }
 
+
 template<typename Secret>
-std::string const& Vault<Secret>::get(std::string const& key) const
+Secret const& Vault<Secret>::get(std::string const& key) const
 {
     try 
     {
@@ -122,24 +136,24 @@ char leet_dec(char c)
 {
     switch (c) 
     {
-        case 4: return 'A';
+        case '4': return 'A';
         case '@': return 'a';
-        case 8: return 'B';
+        case '8': return 'B';
         case '(': return 'c';
         case ')': return 'D';
-        case 3: return 'e';
-        case 6: return 'g';
+        case '3': return 'e';
+        case '6': return 'g';
         case '&': return 'G';
         case '#': return 'h';
-        case 1: return 'i';
+        case '1': return 'i';
         case '>': return 'v';
         case '<': return 'V';
         case '!': return 'l';
-        case 0: return 'o';
-        case 5: return 's';
+        case '0': return 'o';
+        case '5': return 's';
         case '$': return 'S';
-        case 7: return 'T';
-        case 2: return 'z';
+        case '7': return 'T';
+        case '2': return 'z';
         default: return c;
     }
 }
