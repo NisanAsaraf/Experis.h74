@@ -5,6 +5,8 @@
 #include <iostream>
 #include <fstream>
 #include <optional>
+#include <algorithm>
+#include <vector>
 
 namespace vos
 {
@@ -14,6 +16,7 @@ class Vault
 public:
     Vault(Vault const&) = delete;
     Vault& operator=(Vault const&) = delete;
+
     std::string const& get(std::string const& key) const;
     void add(std::string const& key, Secret const& value);
     
@@ -25,6 +28,9 @@ private:
     Vault() = default;
     ~Vault() = default;
     void load();
+
+    void encrypt();
+    void decrypt();
 public:
     static Vault& open(std::string const&);
 private:

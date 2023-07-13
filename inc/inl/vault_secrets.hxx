@@ -61,7 +61,7 @@ void Vault<Secret>::save()
 {
     std::string filename = "vault_contents.txt";
     std::ofstream file(filename);
-
+    encrypt();
     for (const auto& kvp : m_map)
     {
         file << kvp.first << ":" << kvp.second << '\n';
@@ -86,7 +86,50 @@ void Vault<Secret>::load()
             m_map[key] = value;
         }
     }
+
+    decrypt();
+    
     file.close();
 }
 
+char caesar_enc(char c)
+{   
+    return 'A' + (c - 'A' + 13) % 26;
+}
+
+char caesar_dec(char c)
+{   
+    return 'A' + ((c - 'A') - 13) % 26;
+}
+
+template<typename Secret>
+void encrypt_leet(Secret& a_secret)
+{
+    std::transform(a_secret.begin(), a_secret.end(), a_secret.begin(), &caesar_enc);
+}
+
+template<typename Secret>
+void decrypt_leet(Secret& a_secret)
+{
+    std::transform(a_secret.begin(), a_secret.end(), a_secret.begin(), &caesar_dec);
+}
+
+template<typename Secret>
+void Vault<Secret>::encrypt()
+{
+    for(auto& kvp : m_map)
+    {
+        encrypt_leet(kvp.second);
+    }
+}
+
+template<typename Secret>
+void Vault<Secret>::decrypt()
+{
+    for(auto& kvp : m_map)
+    {
+        decrypt_leet(kvp.second);
+    }
+}
+    
 } // namespace vos
