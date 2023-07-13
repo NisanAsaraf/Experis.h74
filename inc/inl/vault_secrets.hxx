@@ -1,4 +1,4 @@
-#include "../inc/vault_secrets.hpp"
+#include "../vault_secrets.hpp"
 
 namespace vos
 {

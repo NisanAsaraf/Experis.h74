@@ -1,11 +1,11 @@
-CXX = g++
+CXX = clang++
 CXXFLAGS = -pedantic -Wall -Werror -Wextra -g3 -std=c++17
 CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR)
 
 INCLUDES_DIR = ../../inc
-SOURCES_DIR = ../../src
+SOURCES_DIR = ../../inc/inl
 
-OBJS = utest.o vault.o
+OBJS = utest.o
 TARGET = utest
 
 all: $(TARGET)
@@ -28,8 +28,8 @@ clean:
 utest.o: utest.cpp $(INCLUDES_DIR)/vault_secrets.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-vault.o: $(SOURCES_DIR)/vault_secrets.cpp $(INCLUDES_DIR)/vault_secrets.hpp
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+vault.hxx: $(SOURCES_DIR)/vault_secrets.hxx
+	@echo "Not compiling header file"
 
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
