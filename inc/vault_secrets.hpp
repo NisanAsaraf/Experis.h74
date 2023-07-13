@@ -12,10 +12,10 @@ class Vault
 {
 public:
     Vault(Vault const&) = delete;
-    Vault(Vault&) = delete;
     Vault& operator=(Vault const&) = delete;
+    ~Vault() = default;
 
-    std::string get(std::string const& key);
+    std::string const& get(std::string const& key) const;
     void add(std::string const& key, std::string const& value);
     friend std::ostream& operator<<(std::ostream& os, const Vault& vault);
     void save();
@@ -28,7 +28,6 @@ private:
     std::string m_master_key = "LIGMA";
     std::unordered_map<std::string, std::string> m_map;
 };
-
 
 class InvalidPasswordException : public std::exception
 {

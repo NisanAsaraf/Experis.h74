@@ -5,20 +5,28 @@ namespace vos
 
 Vault& Vault::open(std::string const& master_key)
 {
-    static Vault instance;
-    if(instance.m_master_key != master_key)
+    static Vault* instance = nullptr;
+
+    if (!instance) 
     {
-       throw InvalidPasswordException();
+        instance = new Vault();
     }
 
-    if(instance.m_map.empty())
+    if (instance->m_master_key != master_key) 
     {
-        instance.load();
+        throw InvalidPasswordException();
     }
-    return instance;
+
+    if(instance->m_map.empty())
+    {
+        instance->load();
+    }
+    
+    return *instance;
 }
 
-std::string Vault::get(std::string const& key)
+
+std::string const& Vault::get(std::string const& key) const
 {
     return m_map.at(key);
 }
