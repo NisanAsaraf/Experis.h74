@@ -15,13 +15,16 @@ public:
     const T& operator*() const; 
     T* operator->();
     const T* operator->() const;
-    SmartPtr& operator=(const SmartPtr&); 
-    SmartPtr& operator=(SmartPtr&&) noexcept; 
+    SmartPtr& operator=(const SmartPtr&);
+    SmartPtr& operator=(SmartPtr&&) noexcept;
+    bool operator==(const SmartPtr&); 
+    bool operator==(SmartPtr&);
+    bool operator!() const;
     ~SmartPtr();
 
 private:
     T* ptr;
-    size_t ref_count;
+    size_t* ref_count;
 };
 
 }//namespace ptr_utils
