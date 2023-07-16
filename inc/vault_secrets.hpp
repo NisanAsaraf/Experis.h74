@@ -16,13 +16,17 @@ class Singleton
 public:
     Singleton(Singleton const&) = delete;
     static T& get_instance();
-private:
+    ~Singleton();
+
+protected:
     Singleton() = default;
-    ~Singleton() = default;
+
+private:
+    static T* self_pointer;
 };
 
 template <typename Secret>
-class Vault //: Singleton<Vault<Secret>>
+class Vault : Singleton<Vault<Secret>>
 {
 
 public:

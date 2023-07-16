@@ -2,43 +2,48 @@
 namespace vos
 {
 
-template<typename T>
+template <typename T>
+Singleton<T>::~Singleton()
+{
+    if (self_pointer)
+    {
+        delete self_pointer;
+        self_pointer = nullptr;
+    }
+}
+
+template <typename T>
 T& Singleton<T>::get_instance()
 {
-    static T* instance = nullptr;
-
-    if (!instance) 
+    if (!self_pointer) 
     {
-        instance = new T();
+        self_pointer = new T();
     }
 
-    return *instance;
+    return *self_pointer;
 }
- 
 
-template<typename Secret>
+template <typename T>
+T* Singleton<T>::self_pointer = nullptr;
+
+
+template <typename Secret>
 Vault<Secret>& Vault<Secret>::open(std::string const& master_key)
 {
-    static Vault* instance = nullptr;
+    auto& instance = Singleton<Vault<Secret>>::get_instance();
 
-    if (!instance) 
-    {
-        instance = new Vault();
-    }
-
-    if (instance->m_master_key != master_key) 
+    if (instance.m_master_key != master_key) 
     {
         throw InvalidPasswordException();
     }
 
-    if(instance->m_map.empty())
+    if (instance.m_map.empty())
     {
-        instance->load();
+        instance.load();
     }
-    
-    return *instance;
-}
 
+    return instance;
+}
 
 template<typename Secret>
 Secret const& Vault<Secret>::get(std::string const& key) const

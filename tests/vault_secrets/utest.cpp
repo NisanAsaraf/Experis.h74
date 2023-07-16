@@ -23,7 +23,8 @@ BEGIN_TEST(vault_re_init)
     std::cout<<vault1;
     Vault<std::string> &vault2 = Vault<std::string>::open(PW);
     std::cout<<vault2;
-    ASSERT_THAT(true);
+    ASSERT_EQUAL(&vault1, &vault2);
+    
 END_TEST
 
 BEGIN_TEST(vault_wrong_password)
