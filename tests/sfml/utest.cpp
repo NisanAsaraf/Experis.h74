@@ -16,7 +16,6 @@ namespace sfml_test
             while (window.isOpen())
             {
                 processEvents();
-                // Add your game logic and drawing code here
             }
         }
 
