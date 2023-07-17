@@ -16,16 +16,27 @@ public:
     T* operator->() const noexcept;
     SmartPtr& operator=(const SmartPtr&) = delete;
     SmartPtr& operator=(SmartPtr&&) noexcept;
+    template <typename U>
+    SmartPtr<T>& operator=(SmartPtr<U>&& a_other) noexcept;
+
     bool operator==(const SmartPtr&); 
-/*     bool operator==(SmartPtr&);
-    bool operator!() const; */
+    friend bool operator==(SmartPtr const&, SmartPtr const&);
+    /* 
+    bool operator!() const; 
+    */
     explicit operator bool() const;
     ~SmartPtr();
-
+    /* print , swap */
 private:
     T* ptr;
     size_t* ref_count;
 };
+
+template <typename T>
+bool operator==(SmartPtr<T> const& left, SmartPtr<T> const& right)
+{
+    return left.ptr == right.ptr;
+}
 
 }//namespace ptr_utils
 

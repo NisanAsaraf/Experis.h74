@@ -59,6 +59,17 @@ namespace ptr_utils
         }
         return *this;
     }
+    
+    template <typename T>
+    template <typename U>
+    SmartPtr<T>& SmartPtr<T>::operator=(SmartPtr<U>&& a_other) noexcept
+    {
+        delete ptr;
+        ptr = a_other.ptr;
+        ref_count = a_other.ref_count;
+        a_other.ptr = nullptr;
+        a_other.ref_count = nullptr;
+    }
 
     template <typename T>
     SmartPtr<T>::~SmartPtr() 
