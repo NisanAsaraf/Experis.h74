@@ -20,24 +20,6 @@ namespace ptr_utils
     }
 
     template <typename T>
-    SmartPtr<T>::SmartPtr(const SmartPtr& other) 
-    : ptr(other.ptr)
-    , ref_count(other.ref_count)
-    {
-        try 
-        {
-            if (ref_count) 
-            {
-                ++(*ref_count);
-            }
-        } 
-        catch (...) 
-        {
-            throw;
-        }
-    }
-
-    template <typename T>
     SmartPtr<T>::SmartPtr(SmartPtr&& other) noexcept
     : ptr(other.ptr)
     , ref_count(other.ref_count)
@@ -49,66 +31,19 @@ namespace ptr_utils
     template <typename T>   
     T& SmartPtr<T>::operator*()
     { 
-        if (ptr == nullptr) 
-        {
-            throw std::runtime_error("Dereferencing a null pointer!");
-        }
         return *ptr; 
     }
 
     template <typename T>
-    const T& SmartPtr<T>::operator*() const 
+    T& SmartPtr<T>::operator*() const 
     {
-        if (ptr == nullptr) 
-        {
-            throw std::runtime_error("Dereferencing a null pointer!");
-        }
         return *ptr; 
     }
 
     template <typename T>
-    T* SmartPtr<T>::operator->()
+    T* SmartPtr<T>::operator->()const noexcept
     {
-        if (ptr == nullptr) 
-        {
-            throw std::runtime_error("Dereferencing a null pointer!");
-        }
         return ptr; 
-    }
-
-    template <typename T>
-    const T* SmartPtr<T>::operator->() const
-    { 
-        if (ptr == nullptr) 
-        {
-            throw std::runtime_error("Dereferencing a null pointer!");
-        }
-        return ptr; 
-    }
-
-    template <typename T>
-    SmartPtr<T>& SmartPtr<T>::operator=(const SmartPtr& other) 
-    {
-        if (this != &other) 
-        {
-            try 
-            {
-                if (other.ptr == nullptr) 
-                {
-                    throw std::runtime_error("Dereferencing a null pointer!");
-                }
-
-                ptr = other.ptr;
-                ref_count = other.ref_count;
-
-                ++*ref_count;
-            } 
-            catch (const std::runtime_error& e) 
-            {
-                throw e;
-            }
-        }
-        return *this;
     }
 
     template <typename T>
@@ -143,7 +78,7 @@ namespace ptr_utils
         return this->ptr == other.ptr;
     }
 
-    template <typename T>
+/*     template <typename T>
     bool SmartPtr<T>::operator==(SmartPtr& other)
     {
         return this->ptr == other.ptr;
@@ -153,7 +88,12 @@ namespace ptr_utils
     bool SmartPtr<T>::operator!() const 
     {
         return ptr == nullptr;
+    } 
+ */
+    template <typename T>
+    SmartPtr<T>::operator bool() const
+    {
+        return ptr != nullptr;
     }
-
 }//namespace ptr_utils
 #endif //SMART_PTR_HXX

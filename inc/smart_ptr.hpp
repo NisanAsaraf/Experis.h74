@@ -8,18 +8,18 @@ template<typename T>
 class SmartPtr 
 {
 public:
-    SmartPtr(T* ptr = nullptr);
-    SmartPtr(const SmartPtr&); 
+    explicit SmartPtr(T* ptr = nullptr);
+    SmartPtr(const SmartPtr&) = delete;
     SmartPtr(SmartPtr&&) noexcept; 
     T& operator*();
-    const T& operator*() const; 
-    T* operator->();
-    const T* operator->() const;
-    SmartPtr& operator=(const SmartPtr&);
+    T& operator*() const; 
+    T* operator->() const noexcept;
+    SmartPtr& operator=(const SmartPtr&) = delete;
     SmartPtr& operator=(SmartPtr&&) noexcept;
     bool operator==(const SmartPtr&); 
-    bool operator==(SmartPtr&);
-    bool operator!() const;
+/*     bool operator==(SmartPtr&);
+    bool operator!() const; */
+    explicit operator bool() const;
     ~SmartPtr();
 
 private:
