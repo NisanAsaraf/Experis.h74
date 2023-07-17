@@ -1,10 +1,9 @@
-CXX = clang++
+CXX = g++
 CXXFLAGS = -pedantic -Wall -Werror -Wextra -g3 -std=c++17
 CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR)
 
-# SFML libraries and paths
-SFML_LIBS = -lsfml-graphics -lsfml-window -lsfml-system
-SFML_LIB_DIR = /usr/lib   # Modify this path if SFML is installed in a different location
+SFML_LIBS =  -lsfml-graphics -lsfml-window -lsfml-system
+SFML_LIB_DIR = /usr/lib  
 
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
@@ -23,8 +22,8 @@ valgrind_check: $(TARGET)
 
 recheck: clean check
 
-clang_check: CXX = clang++
-clang_check: check
+g++_check: CXX = g++
+g++_check: check
 
 clean:
 	@$(RM) $(TARGET) $(OBJS)
@@ -35,4 +34,4 @@ utest.o: utest.cpp
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $@ $(SFML_LIBS) -L$(SFML_LIB_DIR)
 
-.PHONY: all clean check recheck clang_check
+.PHONY: all clean check recheck g++_check
