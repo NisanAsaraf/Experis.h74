@@ -7,8 +7,15 @@ namespace sfml_test
     class Make_window
     {
     public:
-        Make_window() : window(sf::VideoMode(800, 600), "SFML Window") 
+        Make_window() : window(sf::VideoMode(800, 600), "Arkanoid", sf::Style::Titlebar | sf::Style::Close) 
         {
+            window.setFramerateLimit(60);
+            window.setVerticalSyncEnabled(true);
+
+            //window.setWindowStyle(sf::Style::Titlebar | sf::Style::Close);
+
+
+            window.clear(sf::Color::Blue);
         }
 
         void run()
