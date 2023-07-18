@@ -1,8 +1,9 @@
-#include <SFML/Graphics.hpp>
+#include "../inc/paddle.hpp"
 #include <vector>
 #include <random>
+#include <iostream>
 
-namespace sfml_test
+namespace arkanoid
 {
 using namespace sf;
 
@@ -18,7 +19,7 @@ public:
     } 
 };
 
-class Ball//
+class Ball
 {
 public:
 
@@ -29,7 +30,7 @@ public:
         Color randomColor = RandomColorGenerator::getRandomColor();
         shape->setFillColor(randomColor);
 
-        std::uniform_real_distribution<float> dist(-0.1f, 0.1f);
+        std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
 
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -37,7 +38,7 @@ public:
         float randomX = dist(gen);
         float randomY = dist(gen);
 
-        Velocity = sf::Vector2f(randomX,randomY);
+        velocity = sf::Vector2f(randomX,randomY);
     }
 
     CircleShape& operator*()
@@ -47,7 +48,7 @@ public:
 
     Vector2f& getVelocity()
     {
-        return Velocity;
+        return velocity;
     }
 
     Vector2f const& getPosition()
@@ -79,15 +80,30 @@ public:
 
 private:
     std::unique_ptr<CircleShape> shape;
-    Vector2f Velocity;
+    Vector2f velocity;
 };
 
 class Game_Window
 {
 public:
     Game_Window() : window(VideoMode(800, 600), "Arkanoid", sf::Style::Titlebar | sf::Style::Close)
+    { 
+        window.setFramerateLimit(60);
+        window.setVerticalSyncEnabled(false);
+        make_border();
+        make_paddle();
+        spawn_ball();
+    }
+
+    ~Game_Window() = default;
+
+    void make_paddle()
     {
-        
+        paddle = std::make_unique<Paddle>();
+    }
+
+    void make_border()
+    {
         float borderWidth = window.getSize().x - 10.0f ;
         float borderHeight = window.getSize().y - 10.0f ;
         sf::Color Teal(0, 128, 128);
@@ -98,11 +114,7 @@ public:
         border->setPosition(5.0f, 5.0f);
         border->setOutlineThickness(5.0f);
         border->setOutlineColor(Teal);
-        spawn_ball();
-    
     }
-
-    ~Game_Window() = default;
 
     void spawn_ball()
     {
@@ -121,13 +133,13 @@ public:
             window.draw(*border);
 
             draw_shapes();
-            animate();
+            animate_balls();
 
             window.display();
         }
     }
 
-    void animate()
+    void animate_balls()
     {
         for (const auto& ballPtr : balls)
         {
@@ -138,8 +150,29 @@ public:
         }
     }
 
+    void animate_paddle_right()
+    {
+        Paddle& pad = *paddle;
+        RectangleShape& shape = *pad;
+        pad.right();
+        Vector2f& velocity = pad.getVelocity();
+        shape.move(velocity);
+    }
+
+    void animate_paddle_left()
+    {
+        Paddle& pad = *paddle;
+        RectangleShape& shape = *pad;
+        pad.left();
+        Vector2f& velocity = pad.getVelocity();
+        shape.move(velocity);
+    }
+
     void draw_shapes()
     {
+        Paddle& pad = *paddle;
+        window.draw(*pad);
+
         for (const auto& ballPtr : balls)
         {
             Ball& ball = *(ballPtr.get());
@@ -157,9 +190,20 @@ public:
                 window.close();
                 break;
             }
+
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space)
             {
                 spawn_ball();
+            }
+
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Right)
+            {
+                animate_paddle_right();
+            }
+
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Left )
+            {
+                animate_paddle_left();
             }
         }
     }
@@ -168,12 +212,13 @@ public:
     {
         for (const auto& ballPtr : balls)
         {
-            sf::Vector2f circlePosition = ballPtr->getPosition();
-            sf::Vector2f& circleVelocity = ballPtr->getVelocity();
+            CircleShape& ball = **ballPtr;
+            Vector2f circlePosition = ballPtr->getPosition();
+            Vector2f& circleVelocity = ballPtr->getVelocity();
             bool collision = false;
             float circleRadius = ballPtr->getRadius();
 
-            sf::Vector2u windowSize = window.getSize();
+            Vector2u windowSize = window.getSize();
 
             if (circlePosition.x <= 0 || circlePosition.x + 2.5 * circleRadius > windowSize.x)
             {
@@ -187,6 +232,12 @@ public:
                 collision = true;
             }
 
+            if (ball.getGlobalBounds().intersects((**paddle).getGlobalBounds()))
+            {
+                circleVelocity.x = -circleVelocity.x;
+                circleVelocity.y = -circleVelocity.y;
+            }
+
             if(collision)
             {
                 Color randomColor = RandomColorGenerator::getRandomColor();
@@ -198,14 +249,15 @@ public:
 private:
     sf::RenderWindow window;
     std::unique_ptr<RectangleShape> border;
+    std::unique_ptr<Paddle> paddle;
     std::vector<std::unique_ptr<Ball>> balls;
 };
 
-} // namespace sfml_test
+} // namespace arkanoid
 
 int main()
 {
-    sfml_test::Game_Window window;
+    arkanoid::Game_Window window;
     window.run();
 
     return 0;
