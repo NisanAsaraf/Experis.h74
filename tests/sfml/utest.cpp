@@ -117,7 +117,7 @@ public:
 
             handleCollisions();
 
-            window.clear(Color::White);
+            window.clear(Color(255, 253, 208));
             window.draw(*border);
 
             draw_shapes();
