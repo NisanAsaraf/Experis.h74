@@ -24,7 +24,6 @@ sf::Vector2f& Paddle::getVelocity()
 
 void Paddle::right()
 {
-
     velocity.x = speed; 
 }
 

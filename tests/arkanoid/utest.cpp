@@ -30,7 +30,7 @@ public:
         Color randomColor = RandomColorGenerator::getRandomColor();
         shape->setFillColor(randomColor);
 
-        std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
+        std::uniform_real_distribution<float> dist(-2.0f, 2.0f);
 
         std::random_device rd;
         std::mt19937 gen(rd());
