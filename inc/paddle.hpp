@@ -17,11 +17,13 @@ public:
 
     void left();
     void right();
+    void stop();
 
 private:
     std::unique_ptr<sf::RectangleShape> paddle;
     sf::Vector2f velocity;
     float speed;
+
 };
 
 }//namespace arkanoid

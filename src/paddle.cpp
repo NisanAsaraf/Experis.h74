@@ -8,8 +8,8 @@ Paddle::Paddle()
 
     paddle->setFillColor(sf::Color::Blue);
     paddle->setPosition(400.0f, 550.0f);
-    speed = 10.0f;
-    velocity = sf::Vector2f(speed, 0.0f);
+    speed = 15.0f;
+    velocity = sf::Vector2f(0.0f, 0.0f);
 }
 
 sf::RectangleShape& Paddle::operator*()
@@ -24,12 +24,18 @@ sf::Vector2f& Paddle::getVelocity()
 
 void Paddle::right()
 {
-    velocity.x = speed;
+
+    velocity.x = speed; 
 }
 
 void Paddle::left()
-{
+{   
     velocity.x = -speed;
+}
+
+void Paddle::stop()
+{
+    velocity.x = 0;
 }
 
 }//namepsace arkanoid

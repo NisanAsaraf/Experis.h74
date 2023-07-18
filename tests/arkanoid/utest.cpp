@@ -25,7 +25,7 @@ public:
 
     Ball()
     {
-        shape = std::make_unique<CircleShape>(20.0f);
+        shape = std::make_unique<CircleShape>(10.0f);
         shape->setPosition(400.0f, 300.0f);
         Color randomColor = RandomColorGenerator::getRandomColor();
         shape->setFillColor(randomColor);
@@ -88,7 +88,7 @@ class Game_Window
 public:
     Game_Window() : window(VideoMode(800, 600), "Arkanoid", sf::Style::Titlebar | sf::Style::Close)
     { 
-        window.setFramerateLimit(60);
+        window.setFramerateLimit(64);
         window.setVerticalSyncEnabled(false);
         make_border();
         make_paddle();
@@ -168,6 +168,15 @@ public:
         shape.move(velocity);
     }
 
+    void animate_paddle_stop()
+    {
+        Paddle& pad = *paddle;
+        RectangleShape& shape = *pad;
+        pad.stop();
+        Vector2f& velocity = pad.getVelocity();
+        shape.move(velocity);
+    }
+
     void draw_shapes()
     {
         Paddle& pad = *paddle;
@@ -191,34 +200,65 @@ public:
                 break;
             }
 
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space)
+            if (event.type == sf::Event::KeyPressed)
             {
-                spawn_ball();
-            }
+                if (event.key.code == sf::Keyboard::Space)
+                {
+                    spawn_ball();
+                }
+                else if (event.key.code == sf::Keyboard::Right)
+                {
 
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Right)
-            {
-                animate_paddle_right();
-            }
+                    animate_paddle_right();
+                }
+                else if (event.key.code == sf::Keyboard::Left)
+                {
 
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Left )
+                    animate_paddle_left();
+                }
+            }
+            else if (event.type == sf::Event::KeyReleased)
             {
-                animate_paddle_left();
+                if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::Left)
+                {
+                    animate_paddle_stop();
+                }
             }
         }
     }
 
     void handleCollisions()
     {
+        Vector2u windowSize = window.getSize();
+        FloatRect borderBounds = (*border).getGlobalBounds();
+        FloatRect windowBounds(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(windowSize.x -5.0f, windowSize.y - 5.0f));
+        FloatRect paddleBounds = (**paddle).getGlobalBounds();
+        float newY = (**paddle).getPosition().y;
+        float newXL = borderBounds.left + 5.0f;
+        float newXR = borderBounds.left + borderBounds.width - paddleBounds.width - 5.0f;
+        if (paddleBounds.left < borderBounds.left)
+        {
+            (**paddle).setPosition(newXL,newY);
+        }
+        else if (paddleBounds.left + paddleBounds.width > borderBounds.left + borderBounds.width)
+        {
+            (**paddle).setPosition(newXR,newY);
+        }
+
         for (const auto& ballPtr : balls)
         {
             CircleShape& ball = **ballPtr;
+            RectangleShape& pad = **paddle;
             Vector2f circlePosition = ballPtr->getPosition();
             Vector2f& circleVelocity = ballPtr->getVelocity();
             bool collision = false;
             float circleRadius = ballPtr->getRadius();
 
-            Vector2u windowSize = window.getSize();
+            FloatRect ballBounds = ball.getGlobalBounds();
+            FloatRect paddleBounds = pad.getGlobalBounds();
+
+            float overlapX = std::min(ballBounds.left + ballBounds.width, paddleBounds.left + paddleBounds.width) - std::max(ballBounds.left, paddleBounds.left);                
+            float overlapY = std::min(ballBounds.top + ballBounds.height, paddleBounds.top + paddleBounds.height) -  std::max(ballBounds.top, paddleBounds.top);            
 
             if (circlePosition.x <= 0 || circlePosition.x + 2.5 * circleRadius > windowSize.x)
             {
@@ -232,10 +272,32 @@ public:
                 collision = true;
             }
 
-            if (ball.getGlobalBounds().intersects((**paddle).getGlobalBounds()))
+            if (ball.getGlobalBounds().intersects(pad.getGlobalBounds()))
             {
-                circleVelocity.x = -circleVelocity.x;
-                circleVelocity.y = -circleVelocity.y;
+                if (overlapX < overlapY)
+                {
+                    if (ballBounds.left < paddleBounds.left)
+                    {
+                        ball.move(-overlapX - 0.1f, 0);
+                    }
+                    else
+                    {
+                        ball.move(overlapX + 0.1f, 0); 
+                    }
+                    circleVelocity.x *= -1.0;
+                }
+                else
+                {
+                    if (ballBounds.top < paddleBounds.top)
+                    {
+                        ball.move(0, -overlapY - 0.1f); 
+                    }
+                    else
+                    {
+                        ball.move(0, overlapY + 0.1f); 
+                    }
+                    circleVelocity.y *= -1.0;
+                }
             }
 
             if(collision)
