@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -pedantic -Wall -Werror -Wextra -g3 -std=c++17
+CXXFLAGS = -pedantic -Wall -Werror -Wextra -g3 -std=c++17 
 CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR)
 
 SFML_LIBS =  -lsfml-graphics -lsfml-window -lsfml-system
