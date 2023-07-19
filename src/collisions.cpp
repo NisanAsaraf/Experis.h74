@@ -6,7 +6,7 @@ namespace arkanoid
     
 
 
-    
+
 bool check_collision(Ball& a_ball, Block& a_block)
 {
     FloatRect ball_bounds = a_ball.getGlobalBounds();
@@ -47,8 +47,16 @@ bool check_window_collision(Shape& a_shape, RenderWindow& a_window , float a_buf
     return (shape_bounds.intersects(window_bounds));
 }
 
+void ball_block_collision_handler(Block& a_block, Ball& a_ball)
+{
+    a_block.Collision();
+    a_ball.elastic_vertical();
+}
 
-
-
+void ball_block_collision_handler(Ball& a_ball, Block& a_block)
+{
+    a_block.Collision();
+    a_ball.elastic_vertical();
+}
 
 }//namespace arkanoid
