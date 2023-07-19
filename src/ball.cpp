@@ -27,6 +27,16 @@ namespace arkanoid
         return *shape;
     }
 
+    void Ball::elastic_horizontal()
+    {
+        velocity.x *= -1;
+    }
+
+    void Ball::elastic_vertical()
+    {
+        velocity.y *= -1;
+    }
+    
     Vector2f& Ball::getVelocity()
     {
         return velocity;
@@ -57,4 +67,5 @@ namespace arkanoid
         return shape->getRadius();
     }
 
+    
 }//namespace arkanoid

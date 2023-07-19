@@ -167,17 +167,13 @@ public:
         }
     }
 
-    void handleCollisions()
+    void paddle_out_of_bounds_handler()
     {
-        Vector2u windowSize = window.getSize();
-        FloatRect borderBounds = (*border).getGlobalBounds();
-        FloatRect windowBounds(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(windowSize.x -5.0f, windowSize.y - 5.0f));
         FloatRect paddleBounds = (**paddle).getGlobalBounds();
+        FloatRect borderBounds = (*border).getGlobalBounds();
         float newY = (**paddle).getPosition().y;
         float newXL = borderBounds.left + 5.0f;
         float newXR = borderBounds.left + borderBounds.width - paddleBounds.width - 5.0f;
-        std::vector<std::unique_ptr<sf::RectangleShape>>& blocks = level->get_blocks(); 
-
 
         if (paddleBounds.left < borderBounds.left)
         {
@@ -187,32 +183,43 @@ public:
         {
             (**paddle).setPosition(newXR,newY);
         }
+    }
+
+    void handleCollisions()
+    {
+        Vector2u windowSize = window.getSize();
+        FloatRect windowBounds(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(windowSize.x -5.0f, windowSize.y - 5.0f));
+        FloatRect paddleBounds = (**paddle).getGlobalBounds();
+        std::vector<std::unique_ptr<sf::RectangleShape>>& blocks = level->get_blocks(); 
+
+        paddle_out_of_bounds_handler();
 
         for (const auto& ballPtr : balls)
         {
             CircleShape& ball = **ballPtr;
             RectangleShape& pad = **paddle;
+
             Vector2f circlePosition = ballPtr->getPosition();
-            Vector2f& circleVelocity = ballPtr->getVelocity();
+
             float circleRadius = ballPtr->getRadius();
 
             FloatRect ballBounds = ball.getGlobalBounds();
-
-            float overlapX = std::min(ballBounds.left + ballBounds.width, paddleBounds.left + paddleBounds.width) - std::max(ballBounds.left, paddleBounds.left);                
-            float overlapY = std::min(ballBounds.top + ballBounds.height, paddleBounds.top + paddleBounds.height) -  std::max(ballBounds.top, paddleBounds.top);            
-
+            
             if (circlePosition.x <= 0 || circlePosition.x + 2.5 * circleRadius > windowSize.x)
             {
-                circleVelocity.x = -circleVelocity.x;
+                (*ballPtr).elastic_horizontal();
             }
 
             if (circlePosition.y <= 0 || circlePosition.y + 2.5 * circleRadius > windowSize.y)
             {
-                circleVelocity.y = -circleVelocity.y;
+                (*ballPtr).elastic_vertical();
             }
 
-            if (check_collision(ball,pad))
+            if (check_collision(ball, pad))
             {
+                float overlapX = std::min(ballBounds.left + ballBounds.width, paddleBounds.left + paddleBounds.width) - std::max(ballBounds.left, paddleBounds.left);                
+                float overlapY = std::min(ballBounds.top + ballBounds.height, paddleBounds.top + paddleBounds.height) -  std::max(ballBounds.top, paddleBounds.top); 
+
                 if (overlapX < overlapY)
                 {
                     if (ballBounds.left < paddleBounds.left)
@@ -223,7 +230,7 @@ public:
                     {
                         ball.move(overlapX + 0.1f, 0); 
                     }
-                    circleVelocity.x *= -1.0;
+                    (*ballPtr).elastic_horizontal();
                 }
                 else
                 {
@@ -235,7 +242,7 @@ public:
                     {
                         ball.move(0, overlapY + 0.1f); 
                     }
-                    circleVelocity.y *= -1.0;
+                    (*ballPtr).elastic_vertical();
                 }
             }
            
@@ -250,7 +257,7 @@ public:
                     (*block).setPosition(0,0);
                     (*block).setFillColor(sf::Color::Transparent);
                     (*block).setSize(sf::Vector2f(0, 0));
-                    circleVelocity.y = -circleVelocity.y;
+                    (*ballPtr).elastic_vertical();
                 }
             }
         }
