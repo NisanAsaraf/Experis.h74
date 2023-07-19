@@ -3,10 +3,7 @@
 
 namespace arkanoid
 {
-    
-
-
-
+ 
 bool check_collision(Ball& a_ball, Block& a_block)
 {
     FloatRect ball_bounds = a_ball.getGlobalBounds();
@@ -57,6 +54,40 @@ void ball_block_collision_handler(Ball& a_ball, Block& a_block)
 {
     a_block.Collision();
     a_ball.elastic_vertical();
+}
+
+void ball_window_collision_handler(Ball& a_ball, RenderWindow& a_window)
+{
+        FloatRect ballBounds = a_ball.getGlobalBounds();
+        auto windowSize = a_window.getSize();
+        float buffer = 10.0f;
+
+        if (ballBounds.left <= buffer || ballBounds.left + ballBounds.width >= windowSize.x - buffer)
+        {
+            a_ball.elastic_horizontal();
+        }
+
+        if (ballBounds.top <= buffer || ballBounds.top + ballBounds.height >= windowSize.y - buffer)
+        {
+            a_ball.elastic_vertical();
+        }
+}
+
+void ball_window_collision_handler(RenderWindow& a_window, Ball& a_ball)
+{
+        FloatRect ballBounds = a_ball.getGlobalBounds();
+        auto windowSize = a_window.getSize();
+        float buffer = 10.0f;
+
+        if (ballBounds.left <= buffer || ballBounds.left + ballBounds.width >= windowSize.x - buffer)
+        {
+            a_ball.elastic_horizontal();
+        }
+
+        if (ballBounds.top <= buffer || ballBounds.top + ballBounds.height >= windowSize.y - buffer)
+        {
+            a_ball.elastic_vertical();
+        }
 }
 
 }//namespace arkanoid

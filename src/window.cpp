@@ -95,14 +95,11 @@ using namespace sf;
     void Game_Window::draw_shapes()
     {
         Paddle& pad = *paddle;
-        draw_shape(pad, window);
-        //window.draw(*pad);
-        
+        draw_shape(pad, window);      
         for (const auto& ballPtr : balls)
         {
             Ball& ball = *ballPtr;
             draw_shape(ball, window);
-            //window.draw(*ball); 
         }
     }
 
@@ -113,7 +110,6 @@ using namespace sf;
         { 
             Block& block = *blockPtr;
             draw_shape(block, window);
-            //window.draw(*block);
         }
     }
 
@@ -185,22 +181,10 @@ using namespace sf;
         for (const auto& ballPtr : balls)
         {
             Ball& ball = *ballPtr;
-            Vector2f ballPosition = ballPtr->getPosition();
-
-            float ballRadius = ballPtr->getRadius();
-
             FloatRect ballBounds = ball.getGlobalBounds();
             
-            if (ballPosition.x <= 0 || ballPosition.x + 2.5 * ballRadius > windowSize.x)
-            {
-                (*ballPtr).elastic_horizontal();
-            }
-
-            if (ballPosition.y <= 0 || ballPosition.y + 2.5 * ballRadius > windowSize.y)
-            {
-                (*ballPtr).elastic_vertical();
-            }
-
+            ball_window_collision_handler(ball, window);
+            
             if (check_collision(ball, pad))
             {
                 float overlapX = std::min(ballBounds.left + ballBounds.width, paddleBounds.left + paddleBounds.width) - std::max(ballBounds.left, paddleBounds.left);                

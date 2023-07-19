@@ -21,10 +21,15 @@ void ball_block_collision_handler(Ball&, Block&);
 
 void ball_block_collision_handler(Block&, Ball&);
 
-bool check_window_collision(Shape& a_shape, RenderWindow& a_window , float a_buffer);
+bool check_window_collision(Shape&, RenderWindow&, float);
 
-void ball_block_collision_handler(Ball& a_ball, Block& a_block);
+void ball_block_collision_handler(Ball&, Block&);
 
-void ball_block_collision_handler(Block& a_block, Ball& a_ball);
+void ball_block_collision_handler(Block&, Ball&);
+
+void ball_window_collision_handler(Ball&, RenderWindow&);
+
+void ball_window_collision_handler(RenderWindow&, Ball&);
+
 }//namespace arkanoid
 #endif
