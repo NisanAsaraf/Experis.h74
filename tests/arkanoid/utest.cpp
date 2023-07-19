@@ -318,7 +318,11 @@ public:
             }
            
             for (auto& block : blocks)
-            { 
+            {   if((*block).getSize() == sf::Vector2f(0,0))
+                {
+                    continue;
+                }
+
                 FloatRect blockBounds = (*block).getGlobalBounds();
                 if(ballBounds.intersects(blockBounds))
                 {
