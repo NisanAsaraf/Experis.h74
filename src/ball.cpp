@@ -1,4 +1,5 @@
 #include "../inc/ball.hpp"
+#include <cmath>
 
 namespace arkanoid
 {
@@ -13,15 +14,16 @@ namespace arkanoid
         Color randomColor = RandomColorGenerator::getRandomColor();
         shape->setFillColor(randomColor);
 
-        std::uniform_real_distribution<float> dist(-2.0f, 2.0f);
-
+        std::uniform_real_distribution<float> dist(60.0f, 120.0f);
         std::random_device rd;
         std::mt19937 gen(rd());
+ 
+        float angle_rad = toRadians(dist(gen));
+        float magnitude = -2.0f;
+        float vx = magnitude * cos(angle_rad);
+        float vy = magnitude * sin(angle_rad);
 
-        float randomX = dist(gen);
-        float randomY = dist(gen);
-
-        velocity = sf::Vector2f(randomX,randomY);
+        velocity = sf::Vector2f(vx,vy);
     }
 
     const CircleShape& Ball::getShape() const 
@@ -98,4 +100,14 @@ namespace arkanoid
         vanished = true;
     }
     
+    float magnitude(const sf::Vector2f& v) 
+    {
+        return std::sqrt(v.x * v.x + v.y * v.y);
+    }
+
+    float toRadians(float degrees) 
+    {
+        return degrees * (3.1416 / 180.0f);
+    }
+
 }//namespace arkanoid

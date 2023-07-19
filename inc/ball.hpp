@@ -47,5 +47,9 @@ private:
     Vector2f velocity;
     bool vanished;
 };
+
+float magnitude(Vector2f const&);
+float toRadians(float);
+
 }//namespace arkanoid
 #endif
