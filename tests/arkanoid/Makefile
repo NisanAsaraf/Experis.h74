@@ -15,7 +15,7 @@ all: $(TARGET)
 
 check: $(TARGET)
 	@./$(TARGET) -v
-	@make clean
+	@make
 
 valgrind_check: $(TARGET)
 	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(TARGET)
