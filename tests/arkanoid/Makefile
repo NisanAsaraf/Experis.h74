@@ -8,7 +8,7 @@ SFML_LIB_DIR = /usr/lib
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-OBJS = utest.o window.o paddle.o ball.o block.o levels.o collisions.o
+OBJS = utest.o window.o player.o paddle.o ball.o block.o levels.o collisions.o
 TARGET = utest
 
 all: $(TARGET)
@@ -32,6 +32,9 @@ utest.o: utest.cpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 window.o: $(SOURCES_DIR)/window.cpp $(INCLUDES_DIR)/window.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+player.o: $(SOURCES_DIR)/player.cpp $(INCLUDES_DIR)/player.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 paddle.o: $(SOURCES_DIR)/paddle.cpp $(INCLUDES_DIR)/paddle.hpp

@@ -4,7 +4,7 @@
 #include "../inc/block.hpp"
 #include "../inc/collisions.hpp"
 #include "../inc/animations.hpp"
-
+#include "../inc/player.hpp"
 #include <vector>
 #include <random>
 
@@ -15,13 +15,15 @@ using namespace sf;
 class Game_Window
 {
 public:
-    Game_Window();
+    Game_Window(std::string const&);
     ~Game_Window() = default;
 
+    void create_player(std::string const&);
     void make_paddle();
     void make_border();
     void spawn_ball();
     void run();
+    void draw_scoreboard();
     void make_level_one();
     void animate_balls();
     void animate_paddle_right();
@@ -34,11 +36,13 @@ public:
     void handleCollisions();
 
 private:
-    sf::RenderWindow window;
+    RenderWindow window;
     std::unique_ptr<RectangleShape> border;
     std::unique_ptr<Paddle> paddle;
     std::vector<std::unique_ptr<Ball>> balls;
+    std::unique_ptr<Player> player;
     std::unique_ptr<Level_One> level;
+    Font font;
 };
 
 } // namespace arkanoid

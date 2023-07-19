@@ -8,7 +8,7 @@
 
 int main()
 {
-    arkanoid::Game_Window window;
+    arkanoid::Game_Window window("Nisan");
     window.run();
 
     return 0;

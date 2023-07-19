@@ -1,17 +1,30 @@
 #include "../inc/window.hpp"
+#include <iostream>
+#include <exception>
 
 namespace arkanoid
 {
 using namespace sf;
 
-    Game_Window::Game_Window() : window(VideoMode(800, 600), "Arkanoid", sf::Style::Titlebar | sf::Style::Close)
+    Game_Window::Game_Window(std::string const& a_name) : window(VideoMode(800, 600), "Arkanoid", sf::Style::Titlebar | sf::Style::Close)
     { 
+        create_player(a_name);
+        if (!font.loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Bold.ttf"))
+        {
+            throw std::runtime_error("Failed to load font from file.");
+        }
+        
         window.setFramerateLimit(64);
         window.setVerticalSyncEnabled(false);
         make_border();
         make_paddle();
         make_level_one();
         spawn_ball();
+    }
+
+    void Game_Window::create_player(std::string const& a_name)
+    {
+        player = std::make_unique<Player>(a_name);
     }
 
     void Game_Window::make_paddle()
@@ -46,13 +59,13 @@ using namespace sf;
 
             handleCollisions();
 
-            window.clear(Color(255, 253, 208));
+            window.clear(Color::Black); //cream color 
             window.draw(*border);
 
             draw_shapes();
             draw_level();
             animate_balls();
-
+            draw_scoreboard();
             window.display();
         }
     }
@@ -111,6 +124,18 @@ using namespace sf;
             Block& block = *blockPtr;
             draw_shape(block, window);
         }
+    }
+
+    void Game_Window::draw_scoreboard()
+    {
+        Text scoreText;
+        scoreText.setFont(font);
+        scoreText.setString("Score: " + std::to_string(player->get_score()));
+
+        scoreText.setCharacterSize(30);
+        scoreText.setFillColor(Color::White);
+        scoreText.setPosition(30, 30);
+        window.draw(scoreText);
     }
 
     void Game_Window::processEvents()
@@ -179,6 +204,7 @@ using namespace sf;
         {
             ball_window_collision_handler(*ballPtr, window);    
             ball_paddle_collision_handler(*ballPtr,pad);
+
             for (auto& block : blocks)
             {   
                 if(block->isVanished())//slight optimization
@@ -187,6 +213,7 @@ using namespace sf;
                 }
                 if(check_collision(*ballPtr, *block))
                 {
+                    player->add_score(40);
                     ball_block_collision_handler(*block, *ballPtr);//will vanish a block
                 }
             }
