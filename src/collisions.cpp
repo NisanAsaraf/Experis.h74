@@ -58,36 +58,108 @@ void ball_block_collision_handler(Ball& a_ball, Block& a_block)
 
 void ball_window_collision_handler(Ball& a_ball, RenderWindow& a_window)
 {
-        FloatRect ballBounds = a_ball.getGlobalBounds();
-        auto windowSize = a_window.getSize();
-        float buffer = 10.0f;
+    FloatRect ballBounds = a_ball.getGlobalBounds();
+    auto windowSize = a_window.getSize();
+    float buffer = 10.0f;
 
-        if (ballBounds.left <= buffer || ballBounds.left + ballBounds.width >= windowSize.x - buffer)
-        {
-            a_ball.elastic_horizontal();
-        }
+    if (ballBounds.left <= buffer || ballBounds.left + ballBounds.width >= windowSize.x - buffer)
+    {
+        a_ball.elastic_horizontal();
+    }
 
-        if (ballBounds.top <= buffer || ballBounds.top + ballBounds.height >= windowSize.y - buffer)
-        {
-            a_ball.elastic_vertical();
-        }
+    if (ballBounds.top <= buffer || ballBounds.top + ballBounds.height >= windowSize.y - buffer)
+    {
+        a_ball.elastic_vertical();
+    }
 }
 
 void ball_window_collision_handler(RenderWindow& a_window, Ball& a_ball)
 {
-        FloatRect ballBounds = a_ball.getGlobalBounds();
-        auto windowSize = a_window.getSize();
-        float buffer = 10.0f;
+    FloatRect ballBounds = a_ball.getGlobalBounds();
+    auto windowSize = a_window.getSize();
+    float buffer = 10.0f;
 
-        if (ballBounds.left <= buffer || ballBounds.left + ballBounds.width >= windowSize.x - buffer)
+    if (ballBounds.left <= buffer || ballBounds.left + ballBounds.width >= windowSize.x - buffer)
+    {
+        a_ball.elastic_horizontal();
+    }
+
+    if (ballBounds.top <= buffer || ballBounds.top + ballBounds.height >= windowSize.y - buffer)
+    {
+        a_ball.elastic_vertical();
+    }
+}
+
+void ball_paddle_collision_handler(Ball& a_ball, Paddle& a_paddle)
+{
+    auto ballBounds = a_ball.getGlobalBounds();
+    auto paddleBounds = a_paddle.getGlobalBounds();
+    if (check_collision(a_ball, a_paddle))
+    {
+        float overlapX = std::min(ballBounds.left + ballBounds.width, paddleBounds.left + paddleBounds.width) - std::max(ballBounds.left, paddleBounds.left);                
+        float overlapY = std::min(ballBounds.top + ballBounds.height, paddleBounds.top + paddleBounds.height) -  std::max(ballBounds.top, paddleBounds.top); 
+
+        if (overlapX < overlapY)
         {
+            if (ballBounds.left < paddleBounds.left)
+            {
+                a_ball.move(-overlapX - 0.1f, 0);
+            }
+            else
+            {
+                a_ball.move(overlapX + 0.1f, 0); 
+            }
             a_ball.elastic_horizontal();
         }
-
-        if (ballBounds.top <= buffer || ballBounds.top + ballBounds.height >= windowSize.y - buffer)
+        else
         {
+            if (ballBounds.top < paddleBounds.top)
+            {
+                a_ball.move(0, -overlapY - 0.1f); 
+            }
+            else
+            {
+                a_ball.move(0, overlapY + 0.1f); 
+            }
             a_ball.elastic_vertical();
         }
+    }
+}
+
+void ball_paddle_collision_handler(Paddle& a_paddle, Ball& a_ball)
+{
+    auto ballBounds = a_ball.getGlobalBounds();
+    auto paddleBounds = a_paddle.getGlobalBounds();
+    if (check_collision(a_ball, a_paddle))
+    {
+        float overlapX = std::min(ballBounds.left + ballBounds.width, paddleBounds.left + paddleBounds.width) - std::max(ballBounds.left, paddleBounds.left);                
+        float overlapY = std::min(ballBounds.top + ballBounds.height, paddleBounds.top + paddleBounds.height) -  std::max(ballBounds.top, paddleBounds.top); 
+
+        if (overlapX < overlapY)
+        {
+            if (ballBounds.left < paddleBounds.left)
+            {
+                a_ball.move(-overlapX - 0.1f, 0);
+            }
+            else
+            {
+                a_ball.move(overlapX + 0.1f, 0); 
+            }
+            a_ball.elastic_horizontal();
+        }
+        else
+        {
+            if (ballBounds.top < paddleBounds.top)
+            {
+                a_ball.move(0, -overlapY - 0.1f); 
+            }
+            else
+            {
+                a_ball.move(0, overlapY + 0.1f); 
+            }
+            a_ball.elastic_vertical();
+        }
+    }
 }
 
 }//namespace arkanoid

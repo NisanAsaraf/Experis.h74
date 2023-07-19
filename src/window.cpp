@@ -171,60 +171,23 @@ using namespace sf;
     void Game_Window::handleCollisions()
     {
         Paddle& pad = *paddle;
-        Vector2u windowSize = window.getSize();
-        FloatRect windowBounds(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(windowSize.x -5.0f, windowSize.y - 5.0f));
-        FloatRect paddleBounds = pad.getGlobalBounds();
         auto& blocks = level->get_blocks(); 
 
         paddle_out_of_bounds_handler();
 
         for (const auto& ballPtr : balls)
         {
-            Ball& ball = *ballPtr;
-            FloatRect ballBounds = ball.getGlobalBounds();
-            
-            ball_window_collision_handler(ball, window);
-            
-            if (check_collision(ball, pad))
-            {
-                float overlapX = std::min(ballBounds.left + ballBounds.width, paddleBounds.left + paddleBounds.width) - std::max(ballBounds.left, paddleBounds.left);                
-                float overlapY = std::min(ballBounds.top + ballBounds.height, paddleBounds.top + paddleBounds.height) -  std::max(ballBounds.top, paddleBounds.top); 
-
-                if (overlapX < overlapY)
-                {
-                    if (ballBounds.left < paddleBounds.left)
-                    {
-                        ball.move(-overlapX - 0.1f, 0);
-                    }
-                    else
-                    {
-                        ball.move(overlapX + 0.1f, 0); 
-                    }
-                    (*ballPtr).elastic_horizontal();
-                }
-                else
-                {
-                    if (ballBounds.top < paddleBounds.top)
-                    {
-                        ball.move(0, -overlapY - 0.1f); 
-                    }
-                    else
-                    {
-                        ball.move(0, overlapY + 0.1f); 
-                    }
-                    (*ballPtr).elastic_vertical();
-                }
-            }
-           
+            ball_window_collision_handler(*ballPtr, window);    
+            ball_paddle_collision_handler(*ballPtr,pad);
             for (auto& block : blocks)
             {   
                 if(block->isVanished())//slight optimization
                 {
                     continue;
                 }
-                if(check_collision(ball, *block))
+                if(check_collision(*ballPtr, *block))
                 {
-                    ball_block_collision_handler(*block, ball);//will vanish a block
+                    ball_block_collision_handler(*block, *ballPtr);//will vanish a block
                 }
             }
         }

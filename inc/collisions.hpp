@@ -31,5 +31,8 @@ void ball_window_collision_handler(Ball&, RenderWindow&);
 
 void ball_window_collision_handler(RenderWindow&, Ball&);
 
+void ball_paddle_collision_handler(Ball&, Paddle&);
+
+void ball_paddle_collision_handler(Paddle&, Ball&);
 }//namespace arkanoid
 #endif
