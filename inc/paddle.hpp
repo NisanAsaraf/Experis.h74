@@ -15,20 +15,22 @@ public:
     Vector2f getPosition();
     void paddle_start();
     bool started();
+    Vector2f getSize();
     void reset();
     const RectangleShape& getShape() const;
     void setPosition(float , float);
     void setPosition(Vector2f);
     void move(Vector2f);
-    void left();
-    void right();
+    void left(Clock&);
+    void right(Clock&);
     void stop();
 
 private:
     std::unique_ptr<RectangleShape> paddle;
     Vector2f velocity;
+    float acceleration;
     bool start;
-    float speed;
+    float max_speed;
 };
 
 }//namespace arkanoid

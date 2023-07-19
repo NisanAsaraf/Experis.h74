@@ -11,8 +11,8 @@ namespace arkanoid
         shape->setPosition(390.0f, 530.0f);
         vanished = false;
 
-        Color randomColor = RandomColorGenerator::getRandomColor();
-        shape->setFillColor(randomColor);
+        //Color randomColor = RandomColorGenerator::getRandomColor();
+        shape->setFillColor(Color::White);
         velocity = sf::Vector2f(0,0);
         start = false;
     }
@@ -61,6 +61,11 @@ namespace arkanoid
     void Ball::elastic_horizontal()
     {
         velocity.x *= -1;
+    }
+
+    void Ball::setVelocity(Vector2f a_v)
+    {   
+        velocity = a_v;
     }
 
     void Ball::elastic_vertical()

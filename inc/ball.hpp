@@ -27,6 +27,7 @@ class Ball
 public:
     Ball();
     Vector2f& getVelocity();
+    void setVelocity(Vector2f);
     FloatRect getGlobalBounds();
     Vector2f const& getPosition();
     void vanish();

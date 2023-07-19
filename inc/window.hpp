@@ -45,6 +45,7 @@ public:
 
 private:
     RenderWindow window;
+    Clock clock;
     std::unique_ptr<RectangleShape> border;
     std::unique_ptr<RectangleShape> kill_zone;
     std::unique_ptr<Paddle> paddle;

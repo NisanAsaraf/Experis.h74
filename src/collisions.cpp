@@ -121,6 +121,13 @@ void ball_paddle_collision_handler(Ball& a_ball, Paddle& a_paddle)
             {
                 a_ball.move(0, overlapY + 0.1f); 
             }
+
+            float relativePosition = (a_ball.getPosition().x + a_ball.getRadius()) - (a_paddle.getPosition().x + a_paddle.getSize().x / 2);
+            float normalizedPosition = relativePosition / (a_paddle.getSize().x / 2);
+            float xVelocityChange = normalizedPosition * 3.0f; 
+
+            Vector2f new_v(a_ball.getVelocity().x + xVelocityChange, a_ball.getVelocity().y);
+            a_ball.setVelocity(new_v);
             a_ball.elastic_vertical();
         }
     }

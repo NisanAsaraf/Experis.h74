@@ -105,17 +105,16 @@ using namespace sf;
         scoreText.setString("YOU WIN!");
         scoreText.setCharacterSize(100);
         scoreText.setFillColor(Color::Green);
-        scoreText.setPosition(200, 200);
+        scoreText.setPosition(220, 200);
         Clock clock;
-        
-        while(clock.getElapsedTime().asSeconds() < 3)//TODO change to 30 later
+        Event event;
+        while(clock.getElapsedTime().asSeconds() < 15)//TODO change to 30 later
         {
             window.draw(scoreText);
             window.display();
-            Event event;
             while (window.pollEvent(event))
             {
-                if(event.type == Event::KeyPressed)
+                if(event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
                 {
                     break;
                 }
@@ -144,7 +143,7 @@ using namespace sf;
         scoreText.setPosition(180, 200);
         Clock clock;
         
-        while(clock.getElapsedTime().asSeconds() < 3)//TODO change to 30 later
+        while(clock.getElapsedTime().asSeconds() < 30)//TODO change to 30 later
         {
             window.draw(scoreText);
             window.display();
@@ -174,14 +173,14 @@ using namespace sf;
     void Game_Window::animate_paddle_right()
     {
         Paddle& pad = *paddle;
-        pad.right();
+        pad.right(clock);
         pad.move(pad.getVelocity());
     }
 
     void Game_Window::animate_paddle_left()
     {
         Paddle& pad = *paddle;
-        pad.left();
+        pad.left(clock);
         pad.move(pad.getVelocity());
     }
 
