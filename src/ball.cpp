@@ -8,22 +8,39 @@ namespace arkanoid
     Ball::Ball()
     {
         shape = std::make_unique<CircleShape>(10.0f);
-        shape->setPosition(400.0f, 300.0f);
+        shape->setPosition(390.0f, 530.0f);
         vanished = false;
 
         Color randomColor = RandomColorGenerator::getRandomColor();
         shape->setFillColor(randomColor);
+        velocity = sf::Vector2f(0,0);
+        start = false;
+    }
 
+    void Ball::ball_start()
+    {
         std::uniform_real_distribution<float> dist(60.0f, 120.0f);
         std::random_device rd;
         std::mt19937 gen(rd());
- 
+
         float angle_rad = toRadians(dist(gen));
         float magnitude = -2.0f;
         float vx = magnitude * cos(angle_rad);
         float vy = magnitude * sin(angle_rad);
 
         velocity = sf::Vector2f(vx,vy);
+        start = true;
+    }
+
+    bool Ball::started()
+    {
+        return start;
+    }
+
+    void Ball::reset()
+    {
+        shape->setPosition(400.0f, 550.0f);
+        start = false;
     }
 
     const CircleShape& Ball::getShape() const 

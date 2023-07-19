@@ -59,6 +59,11 @@ using namespace sf;
         balls.emplace_back(std::make_unique<Ball>());
     }
 
+    void Game_Window::paddle_reset()
+    {
+        paddle->reset();
+    }
+
     void Game_Window::run()
     {
         while (window.isOpen())
@@ -180,20 +185,24 @@ using namespace sf;
     {
         if (event.type == sf::Event::KeyPressed)
         {
-            if (event.key.code == sf::Keyboard::Space)
+            if (event.key.code == sf::Keyboard::Space && !(paddle->started()))
             {
-                spawn_ball();
+                for(auto& ballPtr : balls)
+                {
+                    ballPtr->ball_start();
+                }
+                paddle->paddle_start();
             }
-            else if (event.key.code == sf::Keyboard::Right)
+            else if (event.key.code == sf::Keyboard::Right && paddle->started())
             {
                 animate_paddle_right();
             }
-            else if (event.key.code == sf::Keyboard::Left)
+            else if (event.key.code == sf::Keyboard::Left && paddle->started())
             {
                 animate_paddle_left();
             }
         }
-        else if (event.type == sf::Event::KeyReleased)
+        else if (event.type == sf::Event::KeyReleased && paddle->started())
         {
             if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::Left)
             {
@@ -244,17 +253,6 @@ using namespace sf;
                 continue;
             }
 
-            ball_window_collision_handler(*ballPtr, window);    
-            ball_paddle_collision_handler(*ballPtr,pad);
-            if(ball_kill_zone_collision_handler(*ballPtr, *kill_zone))// will vanish a ball , wont delete it from the vector
-            {
-                player->hit();
-                if(player->is_dead())
-                {
-                    game_over_screen();
-                }
-            }
-
             for (auto& block : blocks)
             {   
                 if(block->isVanished())//slight optimization
@@ -266,6 +264,22 @@ using namespace sf;
                     player->add_score(40);
                     ball_block_collision_handler(*block, *ballPtr);//will vanish a block
                 }
+            }
+
+            ball_window_collision_handler(*ballPtr, window);    
+            ball_paddle_collision_handler(*ballPtr,pad);
+
+            if(ball_kill_zone_collision_handler(*ballPtr, *kill_zone))// will vanish a ball , wont delete it from the vector
+            {
+
+                player->hit();
+                if(player->is_dead())
+                {
+                    game_over_screen();
+                }
+                 
+                spawn_ball();
+                paddle_reset();
             }
         }
     }

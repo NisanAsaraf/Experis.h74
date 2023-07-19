@@ -5,11 +5,27 @@ namespace arkanoid
 Paddle::Paddle()
 {
     paddle = std::make_unique<RectangleShape>(Vector2f(100.0f, 20.0f));
-
+    start = false;
     paddle->setFillColor(Color::Blue);
-    paddle->setPosition(400.0f, 550.0f);
+    paddle->setPosition(350.0f, 550.0f);
     speed = 15.0f;
     velocity = Vector2f(0.0f, 0.0f);
+}
+
+void Paddle::paddle_start()
+{
+    start = true;
+}
+
+bool Paddle::started()
+{
+    return start;
+}
+
+void Paddle::reset()
+{
+    paddle->setPosition(350.0f, 550.0f);
+    start = false;
 }
 
 Vector2f& Paddle::getVelocity()

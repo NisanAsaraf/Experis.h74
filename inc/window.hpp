@@ -23,6 +23,7 @@ public:
     void make_border();
     void make_kill_zone();
     void spawn_ball();
+    void paddle_reset();
     void paddle_movement_control(Event const&);
     void close_window_check(Event const&);
     void run();

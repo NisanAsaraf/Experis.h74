@@ -13,6 +13,9 @@ public:
     Vector2f& getVelocity();
     FloatRect getGlobalBounds();
     Vector2f getPosition();
+    void paddle_start();
+    bool started();
+    void reset();
     const RectangleShape& getShape() const;
     void setPosition(float , float);
     void setPosition(Vector2f);
@@ -24,6 +27,7 @@ public:
 private:
     std::unique_ptr<RectangleShape> paddle;
     Vector2f velocity;
+    bool start;
     float speed;
 };
 

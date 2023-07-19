@@ -31,6 +31,9 @@ public:
     Vector2f const& getPosition();
     void vanish();
     const CircleShape& getShape() const;
+    void ball_start();
+    bool started();
+    void reset();
     void elastic_vertical();
     void elastic_horizontal();
     bool isVanished();
@@ -45,6 +48,7 @@ public:
 private:
     std::unique_ptr<CircleShape> shape;
     Vector2f velocity;
+    bool start;
     bool vanished;
 };
 
