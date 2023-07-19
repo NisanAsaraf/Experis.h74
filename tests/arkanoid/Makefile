@@ -8,7 +8,7 @@ SFML_LIB_DIR = /usr/lib
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-OBJS = utest.o paddle.o
+OBJS = utest.o paddle.o levels.o
 TARGET = utest
 
 all: $(TARGET)
@@ -33,7 +33,10 @@ utest.o: utest.cpp
 
 paddle.o: $(SOURCES_DIR)/paddle.cpp $(INCLUDES_DIR)/paddle.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
-	
+
+levels.o: $(SOURCES_DIR)/levels.cpp $(INCLUDES_DIR)/levels.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@	
+
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $@ $(SFML_LIBS) -L$(SFML_LIB_DIR)
 

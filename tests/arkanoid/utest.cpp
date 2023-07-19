@@ -2,6 +2,7 @@
 #include <vector>
 #include <random>
 #include <iostream>
+#include "../inc/levels.hpp"
 
 namespace arkanoid
 {
@@ -92,6 +93,7 @@ public:
         window.setVerticalSyncEnabled(false);
         make_border();
         make_paddle();
+        make_level_one();
         spawn_ball();
     }
 
@@ -133,10 +135,16 @@ public:
             window.draw(*border);
 
             draw_shapes();
+            draw_level();
             animate_balls();
 
             window.display();
         }
+    }
+
+    void make_level_one()
+    {
+        level = std::make_unique<Level_One>(5, 3);
     }
 
     void animate_balls()
@@ -181,11 +189,20 @@ public:
     {
         Paddle& pad = *paddle;
         window.draw(*pad);
-
+        
         for (const auto& ballPtr : balls)
         {
             Ball& ball = *(ballPtr.get());
             window.draw(*ball); 
+        }
+    }
+
+    void draw_level()
+    {
+        std::vector<std::unique_ptr<sf::RectangleShape>> const& blocks = level->get_blocks(); 
+        for (auto& block : blocks)
+        { 
+            window.draw(*block);
         }
     }
 
@@ -208,12 +225,10 @@ public:
                 }
                 else if (event.key.code == sf::Keyboard::Right)
                 {
-
                     animate_paddle_right();
                 }
                 else if (event.key.code == sf::Keyboard::Left)
                 {
-
                     animate_paddle_left();
                 }
             }
@@ -236,6 +251,8 @@ public:
         float newY = (**paddle).getPosition().y;
         float newXL = borderBounds.left + 5.0f;
         float newXR = borderBounds.left + borderBounds.width - paddleBounds.width - 5.0f;
+
+        
         if (paddleBounds.left < borderBounds.left)
         {
             (**paddle).setPosition(newXL,newY);
@@ -313,6 +330,8 @@ private:
     std::unique_ptr<RectangleShape> border;
     std::unique_ptr<Paddle> paddle;
     std::vector<std::unique_ptr<Ball>> balls;
+    std::unique_ptr<Level_One> level;
+
 };
 
 } // namespace arkanoid
