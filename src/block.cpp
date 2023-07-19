@@ -21,6 +21,11 @@ FloatRect Block::getGlobalBounds()
     return shape->getGlobalBounds();
 }
 
+void Block::Collision()
+{
+    vanish();
+}
+
 void Block::vanish()
 {
     shape->setPosition(0,0);

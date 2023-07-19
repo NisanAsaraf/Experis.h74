@@ -1,36 +1,27 @@
 #include "../inc/collisions.hpp"
-#include "../inc/block.hpp"
-#include "../inc/ball.hpp"
+#include <SFML/Graphics.hpp>
 
 namespace arkanoid
 {
-
-void ball_block_collision_handler(Block& a_block, Ball& a_ball)
+    
+void ball_block_collision_handler(Collidable& a_shape_1, Collidable& a_shape_2)
 {
-    if(check_collision(a_ball, a_block)) //better to not delete from the vector so to not handle all the memory problems...
+    if(check_collision(a_shape_1, a_shape_2)) //better to not delete from the vector so to not handle all the memory problems...
     {
-        a_block.vanish();
-        a_ball.elastic_vertical();
+        a_shape_1.Collision();
+        a_shape_2.Collision();
     }
 }
 
-bool check_collision(Ball& a_ball, Block& a_block)
+bool check_collision(Collidable& a_shape_1, Collidable& a_shape_2)
 {
-    FloatRect ball_bounds = a_ball.getGlobalBounds();
-    FloatRect block_bounds = a_block.getGlobalBounds();
+    FloatRect bounds1 = a_shape_1.getGlobalBounds();
+    FloatRect bounds2 = a_shape_2.getGlobalBounds();
 
-    return (ball_bounds.intersects(block_bounds));
+    return (bounds1.intersects(bounds2));
 }
 
-bool check_collision(Shape& a_shape1,Shape& a_shape2)
-{
-    FloatRect shape1_bounds = a_shape1.getGlobalBounds();
-    FloatRect shape2_bounds = a_shape2.getGlobalBounds();
-
-    return (shape1_bounds.intersects(shape2_bounds));
-}
-
-bool check_collision(Shape& a_shape, RenderWindow& a_window , float a_buffer)
+bool check_window_collision(Collidable& a_shape, RenderWindow& a_window , float a_buffer)
 {
     FloatRect shape_bounds = a_shape.getGlobalBounds();
     FloatRect window_bounds(Vector2f(a_buffer, a_buffer), Vector2f(a_window.getSize().x - a_buffer, a_window.getSize().y - a_buffer));
@@ -38,6 +29,4 @@ bool check_collision(Shape& a_shape, RenderWindow& a_window , float a_buffer)
     return (shape_bounds.intersects(window_bounds));
 }
 
-
-
-}
+}//namespace arkanoid

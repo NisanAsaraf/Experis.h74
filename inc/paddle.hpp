@@ -2,11 +2,12 @@
 #define PADDLE_H
 
 #include <SFML/Graphics.hpp>
+#include "collisions.hpp"
 
 namespace arkanoid
 {
 using namespace sf;
-class Paddle
+class Paddle : Collidable
 {
 public:
     Paddle();

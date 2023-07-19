@@ -2,8 +2,10 @@
 #define BALL_H
 
 #include <SFML/Graphics.hpp>
+#include "collisions.hpp"
 #include <vector>
 #include <random>
+
 
 namespace arkanoid
 {
@@ -21,12 +23,13 @@ public:
     } 
 };
 
-class Ball
+class Ball : Collidable
 {
 public:
     Ball();
     Vector2f& getVelocity();
-    FloatRect getGlobalBounds();
+    FloatRect getGlobalBounds() override;
+    void Collision() override;
     Vector2f const& getPosition();
     const CircleShape& getShape() const;
     void elastic_vertical();

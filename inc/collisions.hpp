@@ -1,13 +1,21 @@
 #ifndef COLLISIONS_H
 #define COLLISIONS_H
-#include <SFML/Graphics.hpp>
+
 namespace arkanoid
 {
 using namespace sf;
 
-bool check_collision(sf::Shape& ,sf::Shape& );
-bool check_collision(sf::Shape&, sf::RenderWindow&);
-void ball_block_collision_handler(sf::RectangleShape& , sf::CircleShape&);
+class Collidable 
+{
+public:
+    virtual ~Collidable() = default;
+    virtual FloatRect getGlobalBounds() = 0;
+    virtual void Collision() = 0;
+};
+
+bool check_collision(Collidable&, Collidable&);
+
+void ball_block_collision_handler(Collidable&, Collidable& );
 
 }//namespace arkanoid
 #endif

@@ -121,17 +121,18 @@ public:
 
     void draw_level()
     {
-        std::vector<std::unique_ptr<sf::RectangleShape>> const& blocks = level->get_blocks(); 
+        auto const& blocks = level->get_blocks(); 
         for (auto& blockPtr : blocks)
         { 
             Block& block = *blockPtr;
-            window.draw(*block);
+            draw_shape(block, window);
+            //window.draw(*block);
         }
     }
 
     void processEvents()
     {
-        sf::Event event;
+        Event event;
         while (window.pollEvent(event))
         {
             if (event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
@@ -186,18 +187,17 @@ public:
 
     void handleCollisions()
     {
+        Paddle& pad = *paddle;
         Vector2u windowSize = window.getSize();
         FloatRect windowBounds(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(windowSize.x -5.0f, windowSize.y - 5.0f));
-        FloatRect paddleBounds = (**paddle).getGlobalBounds();
-        std::vector<std::unique_ptr<sf::RectangleShape>>& blocks = level->get_blocks(); 
+        FloatRect paddleBounds = pad.getGlobalBounds();
+        auto& blocks = level->get_blocks(); 
 
         paddle_out_of_bounds_handler();
 
         for (const auto& ballPtr : balls)
         {
             Ball& ball = *ballPtr;
-            RectangleShape& pad = **paddle;
-
             Vector2f ballPosition = ballPtr->getPosition();
 
             float ballRadius = ballPtr->getRadius();
