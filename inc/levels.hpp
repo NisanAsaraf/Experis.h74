@@ -20,6 +20,7 @@ public:
     Level_One(size_t row, size_t col);
 
     std::vector<std::unique_ptr<Block>>& get_blocks();
+    void reset();
 
     ~Level_One() = default;
 

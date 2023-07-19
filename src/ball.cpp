@@ -24,7 +24,7 @@ namespace arkanoid
         std::mt19937 gen(rd());
 
         float angle_rad = toRadians(dist(gen));
-        float magnitude = -2.0f;
+        float magnitude = -5.0f;
         float vx = magnitude * cos(angle_rad);
         float vy = magnitude * sin(angle_rad);
 

@@ -35,6 +35,11 @@ Level_One::Level_One(size_t row, size_t col)
     }
 }
 
+void Level_One::reset()
+{
+    blocks.clear();
+}
+
 std::vector<std::unique_ptr<Block>>& Level_One::get_blocks()
 {
     return blocks;

@@ -20,6 +20,12 @@ std::string const& Player::get_name()
     return m_name;
 }
 
+void Player::reset()
+{
+    m_score = 0;
+    m_lives = 3;
+}
+
 size_t const& Player::get_score()
 {
     return m_score;

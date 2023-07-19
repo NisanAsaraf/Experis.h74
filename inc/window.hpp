@@ -26,8 +26,11 @@ public:
     void paddle_reset();
     void paddle_movement_control(Event const&);
     void close_window_check(Event const&);
+    void win_condition();
     void run();
+    void restart();
     void game_over_screen();
+    void game_win_screen();
     void draw_scoreboard();
     void make_level_one();
     void animate_balls();

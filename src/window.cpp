@@ -69,9 +69,7 @@ using namespace sf;
         while (window.isOpen())
         {
             processEvents();
-
             handleCollisions();
-
             window.clear(Color::Black);
             window.draw(*border);
             window.draw(*kill_zone);
@@ -79,7 +77,16 @@ using namespace sf;
             draw_level();
             animate_balls();
             draw_scoreboard();
+            win_condition();
             window.display();
+        }
+    }
+
+    void Game_Window::win_condition()
+    {
+        if(player->get_score() == 600)
+        {
+            game_win_screen();
         }
     }
 
@@ -89,6 +96,42 @@ using namespace sf;
         {
             window.close();
         }
+    }
+
+    void Game_Window::game_win_screen()
+    {
+        Text scoreText;
+        scoreText.setFont(font);
+        scoreText.setString("YOU WIN!");
+        scoreText.setCharacterSize(100);
+        scoreText.setFillColor(Color::Green);
+        scoreText.setPosition(200, 200);
+        Clock clock;
+        
+        while(clock.getElapsedTime().asSeconds() < 3)//TODO change to 30 later
+        {
+            window.draw(scoreText);
+            window.display();
+            Event event;
+            while (window.pollEvent(event))
+            {
+                if(event.type == Event::KeyPressed)
+                {
+                    break;
+                }
+            }
+        }
+        restart();
+    }
+
+    void Game_Window::restart()
+    {
+        player->reset();
+        paddle_reset();
+        balls.clear();
+        level->reset();
+        make_level_one();
+        spawn_ball();
     }
 
     void Game_Window::game_over_screen()
@@ -269,17 +312,18 @@ using namespace sf;
             ball_window_collision_handler(*ballPtr, window);    
             ball_paddle_collision_handler(*ballPtr,pad);
 
-            if(ball_kill_zone_collision_handler(*ballPtr, *kill_zone))// will vanish a ball , wont delete it from the vector
+            if(ball_kill_zone_collision_handler(*ballPtr, *kill_zone))  // will vanish a ball , wont delete it from the vector
             {
-
                 player->hit();
                 if(player->is_dead())
                 {
                     game_over_screen();
                 }
-                 
-                spawn_ball();
+                ballPtr->reset();
                 paddle_reset();
+
+                balls.erase(balls.begin()); // will delete the pointer from the vector, the smart pointer will handle the memory
+                spawn_ball();
             }
         }
     }
