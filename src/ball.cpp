@@ -36,7 +36,7 @@ namespace arkanoid
     {
         velocity.y *= -1;
     }
-    
+
     Vector2f& Ball::getVelocity()
     {
         return velocity;
@@ -45,6 +45,11 @@ namespace arkanoid
     Vector2f const& Ball::getPosition()
     {
         return shape->getPosition();
+    }
+
+    FloatRect Ball::getGlobalBounds()
+    {
+        return shape->getGlobalBounds();
     }
 
     void Ball::set_color(Color a_color)

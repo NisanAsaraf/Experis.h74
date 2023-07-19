@@ -5,16 +5,20 @@
 
 namespace arkanoid
 {
+using namespace sf;
 
 class Block
 {
 public:
-    Block(sf::Color, float , float);
+    Block(Color, float , float);
 
-    sf::RectangleShape& operator*();
+    RectangleShape& operator*();
+    FloatRect getGlobalBounds();
+    void vanish();
 
 private:
-    std::unique_ptr<sf::RectangleShape> block;
+    std::unique_ptr<RectangleShape> shape;
+    bool vanished;
 
 };
 

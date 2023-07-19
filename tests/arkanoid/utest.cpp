@@ -199,18 +199,18 @@ public:
             CircleShape& ball = **ballPtr;
             RectangleShape& pad = **paddle;
 
-            Vector2f circlePosition = ballPtr->getPosition();
+            Vector2f ballPosition = ballPtr->getPosition();
 
-            float circleRadius = ballPtr->getRadius();
+            float ballRadius = ballPtr->getRadius();
 
             FloatRect ballBounds = ball.getGlobalBounds();
             
-            if (circlePosition.x <= 0 || circlePosition.x + 2.5 * circleRadius > windowSize.x)
+            if (ballPosition.x <= 0 || ballPosition.x + 2.5 * ballRadius > windowSize.x)
             {
                 (*ballPtr).elastic_horizontal();
             }
 
-            if (circlePosition.y <= 0 || circlePosition.y + 2.5 * circleRadius > windowSize.y)
+            if (ballPosition.y <= 0 || ballPosition.y + 2.5 * ballRadius > windowSize.y)
             {
                 (*ballPtr).elastic_vertical();
             }
@@ -247,7 +247,8 @@ public:
             }
            
             for (auto& block : blocks)
-            {   if((*block).getSize() == sf::Vector2f(0,0))//slight optimization
+            {   
+                if((*block).getSize() == sf::Vector2f(0,0))//slight optimization
                 {
                     continue;
                 }
@@ -255,8 +256,8 @@ public:
                 if(check_collision(ball, *block))//better to not delete from the vector so to not handle all the memory problems...
                 {
                     (*block).setPosition(0,0);
-                    (*block).setFillColor(sf::Color::Transparent);
-                    (*block).setSize(sf::Vector2f(0, 0));
+                    (*block).setFillColor(Color::Transparent);
+                    (*block).setSize(Vector2f(0, 0));
                     (*ballPtr).elastic_vertical();
                 }
             }

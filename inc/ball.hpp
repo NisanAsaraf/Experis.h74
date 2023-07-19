@@ -27,9 +27,11 @@ public:
     Ball();
     CircleShape& operator*();
     Vector2f& getVelocity();
+    FloatRect getGlobalBounds();
     Vector2f const& getPosition();
     void elastic_vertical();
     void elastic_horizontal();
+    
     void set_color(Color a_color);
     void setPosition(Vector2f vel);
     void setPosition(float x, float y);
