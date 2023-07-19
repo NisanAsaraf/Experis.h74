@@ -1,6 +1,7 @@
 #include "../inc/paddle.hpp"
 #include "../inc/levels.hpp"
 #include "../inc/ball.hpp"
+#include "../inc/collisions.hpp"
 #include <vector>
 #include <random>
 
@@ -193,7 +194,6 @@ public:
             RectangleShape& pad = **paddle;
             Vector2f circlePosition = ballPtr->getPosition();
             Vector2f& circleVelocity = ballPtr->getVelocity();
-            bool collision = false;
             float circleRadius = ballPtr->getRadius();
 
             FloatRect ballBounds = ball.getGlobalBounds();
@@ -204,16 +204,14 @@ public:
             if (circlePosition.x <= 0 || circlePosition.x + 2.5 * circleRadius > windowSize.x)
             {
                 circleVelocity.x = -circleVelocity.x;
-                collision = true;
             }
 
             if (circlePosition.y <= 0 || circlePosition.y + 2.5 * circleRadius > windowSize.y)
             {
                 circleVelocity.y = -circleVelocity.y;
-                collision = true;
             }
 
-            if (ball.getGlobalBounds().intersects(pad.getGlobalBounds()))
+            if (check_collision(ball,pad))
             {
                 if (overlapX < overlapY)
                 {
@@ -242,25 +240,18 @@ public:
             }
            
             for (auto& block : blocks)
-            {   if((*block).getSize() == sf::Vector2f(0,0))
+            {   if((*block).getSize() == sf::Vector2f(0,0))//slight optimization
                 {
                     continue;
                 }
 
-                FloatRect blockBounds = (*block).getGlobalBounds();
-                if(ballBounds.intersects(blockBounds))
+                if(check_collision(ball, *block))//better to not delete from the vector so to not handle all the memory problems...
                 {
                     (*block).setPosition(0,0);
                     (*block).setFillColor(sf::Color::Transparent);
                     (*block).setSize(sf::Vector2f(0, 0));
                     circleVelocity.y = -circleVelocity.y;
                 }
-            }
-        
-            if(collision)
-            {
-                Color randomColor = RandomColorGenerator::getRandomColor();
-                ballPtr->set_color(randomColor);
             }
         }
     }
