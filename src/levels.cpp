@@ -1,5 +1,6 @@
 #include "../inc/levels.hpp"
 #include <memory>
+#include <iostream>
 
 namespace arkanoid
 {
@@ -19,7 +20,7 @@ Level_One::Level_One(size_t row, size_t col)
     const int spacingY = 1;
 
     blocks.reserve(row * col);
-
+    
     for (size_t i = 0; i < row; ++i)
     {
         for (size_t j = 0; j < col; ++j)
@@ -28,10 +29,7 @@ Level_One::Level_One(size_t row, size_t col)
             int y = 100 + spacingY + i * (blockHeight + spacingY);
             Color brick_color = block_colors.at(i);
 
-            //std::unique_ptr<RectangleShape> block = std::make_unique<RectangleShape>(Vector2f(blockWidth, blockHeight));
-
             std::unique_ptr<Block> block = std::make_unique<Block>(brick_color, x, y);
-            
             blocks.emplace_back(std::move(block)); 
         }
     }

@@ -247,12 +247,14 @@ public:
            
             for (auto& block : blocks)
             {   
-                if((*block).getSize() == sf::Vector2f(0,0))//slight optimization
+                if(block->isVanished())//slight optimization
                 {
                     continue;
                 }
-
-                ball_block_collision_handler(*block, ball);//-----------------------------------------------------------------------------
+                if(check_collision(ball, *block))
+                {
+                    ball_block_collision_handler(*block, ball);
+                }
             }
         }
     }

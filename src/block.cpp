@@ -1,5 +1,4 @@
 #include "../inc/block.hpp"
-
 namespace arkanoid
 {
 
@@ -31,11 +30,17 @@ void Block::Collision()
     vanish();
 }
 
+bool Block::isVanished()
+{
+    return vanished;
+}
+
 void Block::vanish()
 {
     shape->setPosition(0,0);
     shape->setFillColor(Color::Transparent);
     shape->setSize(Vector2f(0, 0));
+    vanished = true;
 }
 
 }//namespace arkanoid
