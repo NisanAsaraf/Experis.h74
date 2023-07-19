@@ -34,5 +34,8 @@ void ball_window_collision_handler(RenderWindow&, Ball&);
 void ball_paddle_collision_handler(Ball&, Paddle&);
 
 void ball_paddle_collision_handler(Paddle&, Ball&);
+
+bool ball_kill_zone_collision_handler(Ball&, RectangleShape&);
+
 }//namespace arkanoid
 #endif

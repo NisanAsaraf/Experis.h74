@@ -162,4 +162,17 @@ void ball_paddle_collision_handler(Paddle& a_paddle, Ball& a_ball)
     }
 }
 
+bool ball_kill_zone_collision_handler(Ball& a_ball, RectangleShape& a_kill_zone)
+{
+    auto ballBounds = a_ball.getGlobalBounds();
+    auto killBounds = a_kill_zone.getGlobalBounds();
+
+    if(ballBounds.intersects(killBounds))
+    {
+        a_ball.vanish();
+        return true;
+    }
+    return false;
+}
+
 }//namespace arkanoid

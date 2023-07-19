@@ -13,10 +13,11 @@ using namespace sf;
         {
             throw std::runtime_error("Failed to load font from file.");
         }
-        
+
         window.setFramerateLimit(64);
         window.setVerticalSyncEnabled(false);
         make_border();
+        make_kill_zone();
         make_paddle();
         make_level_one();
         spawn_ball();
@@ -30,6 +31,13 @@ using namespace sf;
     void Game_Window::make_paddle()
     {
         paddle = std::make_unique<Paddle>();
+    }
+
+    void Game_Window::make_kill_zone()
+    {
+        kill_zone = std::make_unique<sf::RectangleShape>(Vector2f(window.getSize()));
+        kill_zone->setPosition(0, window.getSize().y - 10);
+        kill_zone->setFillColor(Color::Transparent);
     }
 
     void Game_Window::make_border()
@@ -59,15 +67,46 @@ using namespace sf;
 
             handleCollisions();
 
-            window.clear(Color::Black); //cream color 
+            window.clear(Color::Black);
             window.draw(*border);
-
+            window.draw(*kill_zone);
             draw_shapes();
             draw_level();
             animate_balls();
             draw_scoreboard();
             window.display();
         }
+    }
+
+    void Game_Window::close_window_check(Event const& event)
+    {
+        if (event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
+        {
+            window.close();
+        }
+    }
+
+    void Game_Window::game_over_screen()
+    {
+        Text scoreText;
+        scoreText.setFont(font);
+        scoreText.setString("GAME OVER!");
+        scoreText.setCharacterSize(100);
+        scoreText.setFillColor(Color::Red);
+        scoreText.setPosition(180, 200);
+        Clock clock;
+        
+        while(clock.getElapsedTime().asSeconds() < 3)//TODO change to 30 later
+        {
+            window.draw(scoreText);
+            window.display();
+            Event event;
+            while (window.pollEvent(event))
+            {
+                close_window_check(event);
+            }
+        }
+        window.close();
     }
 
     void Game_Window::make_level_one()
@@ -137,40 +176,38 @@ using namespace sf;
         scoreText.setPosition(30, 30);
         window.draw(scoreText);
     }
-
+    void Game_Window::paddle_movement_control(Event const& event)
+    {
+        if (event.type == sf::Event::KeyPressed)
+        {
+            if (event.key.code == sf::Keyboard::Space)
+            {
+                spawn_ball();
+            }
+            else if (event.key.code == sf::Keyboard::Right)
+            {
+                animate_paddle_right();
+            }
+            else if (event.key.code == sf::Keyboard::Left)
+            {
+                animate_paddle_left();
+            }
+        }
+        else if (event.type == sf::Event::KeyReleased)
+        {
+            if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::Left)
+            {
+                animate_paddle_stop();
+            }
+        }
+    }
     void Game_Window::processEvents()
     {
         Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
-            {
-                window.close();
-                break;
-            }
-
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if (event.key.code == sf::Keyboard::Space)
-                {
-                    spawn_ball();
-                }
-                else if (event.key.code == sf::Keyboard::Right)
-                {
-                    animate_paddle_right();
-                }
-                else if (event.key.code == sf::Keyboard::Left)
-                {
-                    animate_paddle_left();
-                }
-            }
-            else if (event.type == sf::Event::KeyReleased)
-            {
-                if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::Left)
-                {
-                    animate_paddle_stop();
-                }
-            }
+            close_window_check(event);
+            paddle_movement_control(event);
         }
     }
 
@@ -202,8 +239,21 @@ using namespace sf;
 
         for (const auto& ballPtr : balls)
         {
+            if(ballPtr->isVanished())
+            {
+                continue;
+            }
+
             ball_window_collision_handler(*ballPtr, window);    
             ball_paddle_collision_handler(*ballPtr,pad);
+            if(ball_kill_zone_collision_handler(*ballPtr, *kill_zone))// will vanish a ball , wont delete it from the vector
+            {
+                player->hit();
+                if(player->is_dead())
+                {
+                    game_over_screen();
+                }
+            }
 
             for (auto& block : blocks)
             {   

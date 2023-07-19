@@ -8,6 +8,8 @@ namespace arkanoid
     {
         shape = std::make_unique<CircleShape>(10.0f);
         shape->setPosition(400.0f, 300.0f);
+        vanished = false;
+
         Color randomColor = RandomColorGenerator::getRandomColor();
         shape->setFillColor(randomColor);
 
@@ -82,5 +84,18 @@ namespace arkanoid
         return shape->getRadius();
     }
 
+    bool Ball::isVanished()
+    {
+        return vanished;
+    }
+
+    void Ball::vanish()
+    {
+        shape->setFillColor(Color::Transparent);
+        shape->setRadius(0);
+        shape->setPosition(0,0);
+        velocity = Vector2f(0,0);
+        vanished = true;
+    }
     
 }//namespace arkanoid

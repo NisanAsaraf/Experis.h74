@@ -4,8 +4,9 @@ namespace arkanoid
 {
 
 Player::Player(std::string const& a_name)
-:m_name(a_name)
+:m_name{a_name}
 ,m_score{0}
+,m_lives{3}
 {
 }
 
@@ -22,6 +23,16 @@ std::string const& Player::get_name()
 size_t const& Player::get_score()
 {
     return m_score;
+}
+
+void Player::hit()
+{
+    m_lives--;
+}
+
+bool Player::is_dead()
+{
+    return !m_lives;
 }
 
 }//namepsace arkanoid

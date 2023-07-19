@@ -21,8 +21,12 @@ public:
     void create_player(std::string const&);
     void make_paddle();
     void make_border();
+    void make_kill_zone();
     void spawn_ball();
+    void paddle_movement_control(Event const&);
+    void close_window_check(Event const&);
     void run();
+    void game_over_screen();
     void draw_scoreboard();
     void make_level_one();
     void animate_balls();
@@ -38,6 +42,7 @@ public:
 private:
     RenderWindow window;
     std::unique_ptr<RectangleShape> border;
+    std::unique_ptr<RectangleShape> kill_zone;
     std::unique_ptr<Paddle> paddle;
     std::vector<std::unique_ptr<Ball>> balls;
     std::unique_ptr<Player> player;

@@ -10,6 +10,8 @@ class Player
 public:
     Player(std::string const&);
     void add_score(size_t);
+    void hit();
+    bool is_dead();
     std::string const& get_name();
     size_t const& get_score();
 private:

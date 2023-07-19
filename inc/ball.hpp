@@ -29,9 +29,11 @@ public:
     Vector2f& getVelocity();
     FloatRect getGlobalBounds();
     Vector2f const& getPosition();
+    void vanish();
     const CircleShape& getShape() const;
     void elastic_vertical();
     void elastic_horizontal();
+    bool isVanished();
     void move(Vector2f);
     void move(float, float);
     void set_color(Color);
@@ -39,9 +41,11 @@ public:
     void setPosition(float, float);
     float getRadius();
     ~Ball() = default;
+    
 private:
     std::unique_ptr<CircleShape> shape;
     Vector2f velocity;
+    bool vanished;
 };
 }//namespace arkanoid
 #endif
