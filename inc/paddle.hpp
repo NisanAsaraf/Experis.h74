@@ -5,23 +5,26 @@
 
 namespace arkanoid
 {
-
+using namespace sf;
 class Paddle
 {
 public:
     Paddle();
+    Vector2f& getVelocity();
+    FloatRect getGlobalBounds();
+    Vector2f getPosition();
+    const RectangleShape& getShape() const;
 
-    sf::RectangleShape& operator*();
-
-    sf::Vector2f& getVelocity();
-
+    void setPosition(float , float);
+    void setPosition(Vector2f);
+    void move(Vector2f);
     void left();
     void right();
     void stop();
 
 private:
-    std::unique_ptr<sf::RectangleShape> paddle;
-    sf::Vector2f velocity;
+    std::unique_ptr<RectangleShape> paddle;
+    Vector2f velocity;
     float speed;
 };
 

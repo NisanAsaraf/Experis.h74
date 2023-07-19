@@ -11,9 +11,6 @@ Level_One::Level_One(size_t row, size_t col)
     block_colors.push_back(sf::Color::Green);
     block_colors.push_back(sf::Color::Magenta);
     block_colors.push_back(sf::Color::Cyan);
-    block_colors.push_back(sf::Color::Green);
-    block_colors.push_back(sf::Color::Magenta);
-    block_colors.push_back(sf::Color::Cyan);
 
     const int blockWidth = 100;
     const int blockHeight = 40;
@@ -29,24 +26,18 @@ Level_One::Level_One(size_t row, size_t col)
         {
             int x = 150 + spacingX + j * (blockWidth + spacingX);
             int y = 100 + spacingY + i * (blockHeight + spacingY);
-            sf::Color brick_color = block_colors.at(i);
+            Color brick_color = block_colors.at(i);
 
-            std::unique_ptr<sf::RectangleShape> block = std::make_unique<sf::RectangleShape>(sf::Vector2f(blockWidth, blockHeight));
-            block->setPosition(x, y);
-            
-            block->setFillColor(brick_color);
+            //std::unique_ptr<RectangleShape> block = std::make_unique<RectangleShape>(Vector2f(blockWidth, blockHeight));
+
+            std::unique_ptr<Block> block = std::make_unique<Block>(brick_color, x, y);
             
             blocks.emplace_back(std::move(block)); 
         }
     }
 }
 
-std::vector<std::unique_ptr<sf::RectangleShape>>& Level_One::operator*()
-{
-    return blocks;
-}
-
-std::vector<std::unique_ptr<sf::RectangleShape>>& Level_One::get_blocks()
+std::vector<std::unique_ptr<Block>>& Level_One::get_blocks()
 {
     return blocks;
 }

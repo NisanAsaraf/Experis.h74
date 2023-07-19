@@ -22,9 +22,14 @@ namespace arkanoid
         velocity = sf::Vector2f(randomX,randomY);
     }
 
-    CircleShape& Ball::operator*()
+    const CircleShape& Ball::getShape() const 
     {
         return *shape;
+    }
+    
+    void Ball::move(Vector2f a_v)
+    {
+        shape->move(a_v);
     }
 
     void Ball::elastic_horizontal()

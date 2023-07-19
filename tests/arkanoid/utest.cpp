@@ -1,7 +1,10 @@
 #include "../inc/paddle.hpp"
 #include "../inc/levels.hpp"
 #include "../inc/ball.hpp"
+#include "../inc/block.hpp"
 #include "../inc/collisions.hpp"
+#include "../inc/animations.hpp"
+
 #include <vector>
 #include <random>
 
@@ -76,57 +79,52 @@ public:
     {
         for (const auto& ballPtr : balls)
         {
-            Ball& ball = *(ballPtr.get());
-            CircleShape& shape = *ball;
-            Vector2f& velocity = ball.getVelocity();
-            shape.move(velocity);
+            Ball& ball = *ballPtr;
+            ball.move(ball.getVelocity());
         }
     }
 
     void animate_paddle_right()
     {
         Paddle& pad = *paddle;
-        RectangleShape& shape = *pad;
         pad.right();
-        Vector2f& velocity = pad.getVelocity();
-        shape.move(velocity);
+        pad.move(pad.getVelocity());
     }
 
     void animate_paddle_left()
     {
         Paddle& pad = *paddle;
-        RectangleShape& shape = *pad;
         pad.left();
-        Vector2f& velocity = pad.getVelocity();
-        shape.move(velocity);
+        pad.move(pad.getVelocity());
     }
 
     void animate_paddle_stop()
     {
         Paddle& pad = *paddle;
-        RectangleShape& shape = *pad;
         pad.stop();
-        Vector2f& velocity = pad.getVelocity();
-        shape.move(velocity);
+        pad.move(pad.getVelocity());
     }
 
     void draw_shapes()
     {
         Paddle& pad = *paddle;
-        window.draw(*pad);
+        draw_shape(pad, window);
+        //window.draw(*pad);
         
         for (const auto& ballPtr : balls)
         {
-            Ball& ball = *(ballPtr.get());
-            window.draw(*ball); 
+            Ball& ball = *ballPtr;
+            draw_shape(ball, window);
+            //window.draw(*ball); 
         }
     }
 
     void draw_level()
     {
         std::vector<std::unique_ptr<sf::RectangleShape>> const& blocks = level->get_blocks(); 
-        for (auto& block : blocks)
+        for (auto& blockPtr : blocks)
         { 
+            Block& block = *blockPtr;
             window.draw(*block);
         }
     }
@@ -169,19 +167,20 @@ public:
 
     void paddle_out_of_bounds_handler()
     {
-        FloatRect paddleBounds = (**paddle).getGlobalBounds();
+        Paddle& pad = *paddle;
+        FloatRect paddleBounds = pad.getGlobalBounds();
         FloatRect borderBounds = (*border).getGlobalBounds();
-        float newY = (**paddle).getPosition().y;
+        float newY = pad.getPosition().y;
         float newXL = borderBounds.left + 5.0f;
         float newXR = borderBounds.left + borderBounds.width - paddleBounds.width - 5.0f;
 
         if (paddleBounds.left < borderBounds.left)
         {
-            (**paddle).setPosition(newXL,newY);
+            pad.setPosition(newXL,newY);
         }
         else if (paddleBounds.left + paddleBounds.width > borderBounds.left + borderBounds.width)
         {
-            (**paddle).setPosition(newXR,newY);
+            pad.setPosition(newXR,newY);
         }
     }
 
@@ -196,7 +195,7 @@ public:
 
         for (const auto& ballPtr : balls)
         {
-            CircleShape& ball = **ballPtr;
+            Ball& ball = *ballPtr;
             RectangleShape& pad = **paddle;
 
             Vector2f ballPosition = ballPtr->getPosition();
@@ -253,13 +252,7 @@ public:
                     continue;
                 }
 
-                if(check_collision(ball, *block))//better to not delete from the vector so to not handle all the memory problems...
-                {
-                    (*block).setPosition(0,0);
-                    (*block).setFillColor(Color::Transparent);
-                    (*block).setSize(Vector2f(0, 0));
-                    (*ballPtr).elastic_vertical();
-                }
+                ball_block_collision_handler(*block, ball);//-----------------------------------------------------------------------------
             }
         }
     }
@@ -270,7 +263,6 @@ private:
     std::unique_ptr<Paddle> paddle;
     std::vector<std::unique_ptr<Ball>> balls;
     std::unique_ptr<Level_One> level;
-
 };
 
 } // namespace arkanoid

@@ -25,16 +25,16 @@ class Ball
 {
 public:
     Ball();
-    CircleShape& operator*();
     Vector2f& getVelocity();
     FloatRect getGlobalBounds();
     Vector2f const& getPosition();
+    const CircleShape& getShape() const;
     void elastic_vertical();
     void elastic_horizontal();
-    
-    void set_color(Color a_color);
-    void setPosition(Vector2f vel);
-    void setPosition(float x, float y);
+    void move(Vector2f);
+    void set_color(Color);
+    void setPosition(Vector2f);
+    void setPosition(float, float);
     float getRadius();
     ~Ball() = default;
 private:

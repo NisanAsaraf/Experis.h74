@@ -5,6 +5,15 @@
 namespace arkanoid
 {
 
+void ball_block_collision_handler(Block& a_block, Ball& a_ball)
+{
+    if(check_collision(a_ball, a_block)) //better to not delete from the vector so to not handle all the memory problems...
+    {
+        a_block.vanish();
+        a_ball.elastic_vertical();
+    }
+}
+
 bool check_collision(Ball& a_ball, Block& a_block)
 {
     FloatRect ball_bounds = a_ball.getGlobalBounds();
@@ -29,12 +38,6 @@ bool check_collision(Shape& a_shape, RenderWindow& a_window , float a_buffer)
     return (shape_bounds.intersects(window_bounds));
 }
 
-void ball_block_collision_handler(Block& a_block, Ball& a_ball)
-{
-    if(check_collision(a_ball, a_block)) //better to not delete from the vector so to not handle all the memory problems...
-    {
-        a_block.vanish();
-    }
-}
+
 
 }

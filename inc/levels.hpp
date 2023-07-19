@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 #include <SFML/Graphics.hpp>
+#include "block.hpp"
 #include <vector>
 
 namespace arkanoid
@@ -15,12 +16,15 @@ public:
 class Level_One //: Level
 {
 public:
+
     Level_One(size_t row, size_t col);
-    std::vector<std::unique_ptr<sf::RectangleShape>>& operator*();
-    std::vector<std::unique_ptr<sf::RectangleShape>>& get_blocks();
+
+    std::vector<std::unique_ptr<Block>>& get_blocks();
+
     ~Level_One() = default;
+
 private:
-    std::vector<std::unique_ptr<sf::RectangleShape>> blocks;
+    std::vector<std::unique_ptr<Block>> blocks;
 };
 
 }

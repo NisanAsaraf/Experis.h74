@@ -11,9 +11,8 @@ class Block
 {
 public:
     Block(Color, float , float);
-
-    RectangleShape& operator*();
     FloatRect getGlobalBounds();
+    const RectangleShape& getShape() const;
     void vanish();
 
 private:
