@@ -1,88 +1,12 @@
 #include "../inc/paddle.hpp"
+#include "../inc/levels.hpp"
+#include "../inc/ball.hpp"
 #include <vector>
 #include <random>
-#include <iostream>
-#include "../inc/levels.hpp"
 
 namespace arkanoid
 {
 using namespace sf;
-
-class RandomColorGenerator
-{
-public:
-    static Color getRandomColor()
-    {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, 255);
-        return Color(dis(gen), dis(gen), dis(gen));
-    } 
-};
-
-class Ball
-{
-public:
-
-    Ball()
-    {
-        shape = std::make_unique<CircleShape>(10.0f);
-        shape->setPosition(400.0f, 300.0f);
-        Color randomColor = RandomColorGenerator::getRandomColor();
-        shape->setFillColor(randomColor);
-
-        std::uniform_real_distribution<float> dist(-2.0f, 2.0f);
-
-        std::random_device rd;
-        std::mt19937 gen(rd());
-
-        float randomX = dist(gen);
-        float randomY = dist(gen);
-
-        velocity = sf::Vector2f(randomX,randomY);
-    }
-
-    CircleShape& operator*()
-    {
-        return *shape;
-    }
-
-    Vector2f& getVelocity()
-    {
-        return velocity;
-    }
-
-    Vector2f const& getPosition()
-    {
-        return shape->getPosition();
-    }
-
-    void set_color(Color a_color)
-    {
-        shape->setFillColor(a_color);
-    }
-
-    void setPosition(Vector2f vel)
-    {
-        shape->setPosition(vel.x ,vel.y);
-    }
-
-    void setPosition(float x, float y)
-    {
-        shape->setPosition(x ,y);
-    }
-    
-    float getRadius()
-    {
-        return shape->getRadius();
-    }
-
-    ~Ball() = default;
-
-private:
-    std::unique_ptr<CircleShape> shape;
-    Vector2f velocity;
-};
 
 class Game_Window
 {

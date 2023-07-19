@@ -1,5 +1,5 @@
-#ifndef LEVEL_
-#define LEVEL_
+#ifndef LEVEL_H
+#define LEVEL_H
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -24,4 +24,4 @@ private:
 };
 
 }
-#endif //LEVEL_
+#endif //LEVEL_H
