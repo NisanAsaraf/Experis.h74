@@ -2,7 +2,6 @@
 #define BALL_H
 
 #include <SFML/Graphics.hpp>
-#include "collisions.hpp"
 #include <vector>
 #include <random>
 
@@ -23,18 +22,18 @@ public:
     } 
 };
 
-class Ball : Collidable
+class Ball
 {
 public:
     Ball();
     Vector2f& getVelocity();
-    FloatRect getGlobalBounds() override;
-    void Collision() override;
+    FloatRect getGlobalBounds();
     Vector2f const& getPosition();
     const CircleShape& getShape() const;
     void elastic_vertical();
     void elastic_horizontal();
     void move(Vector2f);
+    void move(float, float);
     void set_color(Color);
     void setPosition(Vector2f);
     void setPosition(float, float);

@@ -2,19 +2,19 @@
 #define BLOCK_H
 
 #include <SFML/Graphics.hpp>
-#include "collisions.hpp"
 
 namespace arkanoid
 {
 using namespace sf;
 
-class Block : Collidable
+class Block
 {
 public:
     Block(Color, float , float);
-    FloatRect getGlobalBounds() override;
+    FloatRect getGlobalBounds();
+    Vector2f getSize();
     const RectangleShape& getShape() const;
-    void Collision() override;
+    void Collision() ;
 private:
     void vanish();
 

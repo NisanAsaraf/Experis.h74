@@ -1,21 +1,26 @@
 #ifndef COLLISIONS_H
 #define COLLISIONS_H
 
-namespace arkanoid
+#include "paddle.hpp"
+#include "block.hpp"
+#include "ball.hpp"
+
+namespace arkanoid//TODO: tried an abstraction of a collidable class, problematic...  
 {
 using namespace sf;
 
-class Collidable 
-{
-public:
-    virtual ~Collidable() = default;
-    virtual FloatRect getGlobalBounds() = 0;
-    virtual void Collision() = 0;
-};
+bool check_collision(Ball&, Block&);
 
-bool check_collision(Collidable&, Collidable&);
+bool check_collision(Block&, Ball&);
 
-void ball_block_collision_handler(Collidable&, Collidable& );
+bool check_collision(Ball&, Paddle&);
 
+bool check_collision(Paddle&, Ball&);
+
+void ball_block_collision_handler(Ball&, Block&);
+
+void ball_block_collision_handler(Block&, Ball&);
+
+bool check_window_collision(Shape& a_shape, RenderWindow& a_window , float a_buffer);
 }//namespace arkanoid
 #endif

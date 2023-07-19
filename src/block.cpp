@@ -16,6 +16,11 @@ const RectangleShape& Block::getShape() const
     return *shape;
 }
 
+Vector2f Block::getSize()
+{
+    return shape->getSize();
+}
+
 FloatRect Block::getGlobalBounds()
 {
     return shape->getGlobalBounds();

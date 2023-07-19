@@ -2,12 +2,11 @@
 #define PADDLE_H
 
 #include <SFML/Graphics.hpp>
-#include "collisions.hpp"
 
 namespace arkanoid
 {
 using namespace sf;
-class Paddle : Collidable
+class Paddle
 {
 public:
     Paddle();
@@ -15,7 +14,6 @@ public:
     FloatRect getGlobalBounds();
     Vector2f getPosition();
     const RectangleShape& getShape() const;
-
     void setPosition(float , float);
     void setPosition(Vector2f);
     void move(Vector2f);
