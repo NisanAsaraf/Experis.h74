@@ -27,9 +27,9 @@ Level_One::Level_One(size_t row, size_t col)
     {
         for (size_t j = 0; j < col; ++j)
         {
-            int x = spacingX + j * (blockWidth + spacingX);
-            int y = spacingY + i * (blockHeight + spacingY);
-            sf::Color brick_color = block_colors.at(j);
+            int x = 150 + spacingX + j * (blockWidth + spacingX);
+            int y = 100 + spacingY + i * (blockHeight + spacingY);
+            sf::Color brick_color = block_colors.at(i);
 
             std::unique_ptr<sf::RectangleShape> block = std::make_unique<sf::RectangleShape>(sf::Vector2f(blockWidth, blockHeight));
             block->setPosition(x, y);
@@ -41,12 +41,12 @@ Level_One::Level_One(size_t row, size_t col)
     }
 }
 
-std::vector<std::unique_ptr<sf::RectangleShape>> const& Level_One::operator*()
+std::vector<std::unique_ptr<sf::RectangleShape>>& Level_One::operator*()
 {
     return blocks;
 }
 
-std::vector<std::unique_ptr<sf::RectangleShape>> const& Level_One::get_blocks()
+std::vector<std::unique_ptr<sf::RectangleShape>>& Level_One::get_blocks()
 {
     return blocks;
 }

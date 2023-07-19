@@ -144,7 +144,7 @@ public:
 
     void make_level_one()
     {
-        level = std::make_unique<Level_One>(5, 3);
+        level = std::make_unique<Level_One>(3, 5);
     }
 
     void animate_balls()
@@ -251,8 +251,9 @@ public:
         float newY = (**paddle).getPosition().y;
         float newXL = borderBounds.left + 5.0f;
         float newXR = borderBounds.left + borderBounds.width - paddleBounds.width - 5.0f;
+        std::vector<std::unique_ptr<sf::RectangleShape>>& blocks = level->get_blocks(); 
 
-        
+
         if (paddleBounds.left < borderBounds.left)
         {
             (**paddle).setPosition(newXL,newY);
@@ -272,7 +273,6 @@ public:
             float circleRadius = ballPtr->getRadius();
 
             FloatRect ballBounds = ball.getGlobalBounds();
-            FloatRect paddleBounds = pad.getGlobalBounds();
 
             float overlapX = std::min(ballBounds.left + ballBounds.width, paddleBounds.left + paddleBounds.width) - std::max(ballBounds.left, paddleBounds.left);                
             float overlapY = std::min(ballBounds.top + ballBounds.height, paddleBounds.top + paddleBounds.height) -  std::max(ballBounds.top, paddleBounds.top);            
@@ -316,7 +316,19 @@ public:
                     circleVelocity.y *= -1.0;
                 }
             }
-
+           
+            for (auto& block : blocks)
+            { 
+                FloatRect blockBounds = (*block).getGlobalBounds();
+                if(ballBounds.intersects(blockBounds))
+                {
+                    (*block).setPosition(0,0);
+                    (*block).setFillColor(sf::Color::Transparent);
+                    (*block).setSize(sf::Vector2f(0, 0));
+                    circleVelocity.y = -circleVelocity.y;
+                }
+            }
+        
             if(collision)
             {
                 Color randomColor = RandomColorGenerator::getRandomColor();

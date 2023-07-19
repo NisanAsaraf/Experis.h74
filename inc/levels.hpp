@@ -16,8 +16,8 @@ class Level_One //: Level
 {
 public:
     Level_One(size_t row, size_t col);
-    std::vector<std::unique_ptr<sf::RectangleShape>> const& operator*();
-    std::vector<std::unique_ptr<sf::RectangleShape>> const& get_blocks();
+    std::vector<std::unique_ptr<sf::RectangleShape>>& operator*();
+    std::vector<std::unique_ptr<sf::RectangleShape>>& get_blocks();
     ~Level_One() = default;
 private:
     std::vector<std::unique_ptr<sf::RectangleShape>> blocks;
