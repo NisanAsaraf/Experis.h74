@@ -108,7 +108,7 @@ using namespace sf;
         scoreText.setPosition(220, 200);
         Clock clock;
         Event event;
-        while(clock.getElapsedTime().asSeconds() < 15)//TODO change to 30 later
+        while(clock.getElapsedTime().asSeconds() < 15)
         {
             window.draw(scoreText);
             window.display();
@@ -143,7 +143,7 @@ using namespace sf;
         scoreText.setPosition(180, 200);
         Clock clock;
         
-        while(clock.getElapsedTime().asSeconds() < 30)//TODO change to 30 later
+        while(clock.getElapsedTime().asSeconds() < 30)
         {
             window.draw(scoreText);
             window.display();
