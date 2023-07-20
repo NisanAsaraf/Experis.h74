@@ -12,9 +12,11 @@ class Button
 public:
     Button(Vector2f, std::string const&, Font&);
     FloatRect getBounds();
+    Text const& getText();
     void setPosition(Vector2f);
     void setText(std::string const&);
     void setButtonColor(Color);
+    const RectangleShape& getShape() const;
 private:
     std::unique_ptr<RectangleShape> m_button;
     Text m_button_text;

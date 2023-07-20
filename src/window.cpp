@@ -1,6 +1,7 @@
 #include "../inc/window.hpp"
 #include <exception>
 #include <memory>
+#include <iostream>
 
 namespace arkanoid
 {
@@ -19,7 +20,7 @@ using namespace sf;
 
         window.setFramerateLimit(64);
         window.setVerticalSyncEnabled(false);
-        make_level_one();
+        make_title_screen();
     }
 
     void Game_Window::make_level_one()
@@ -37,6 +38,9 @@ using namespace sf;
     
     void Game_Window::make_title_screen()
     {
+        scene = std::make_unique<Title_Screen>();
+        Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
+        title_scrn->create();
     }
 
     void Game_Window::create_player()
@@ -97,6 +101,9 @@ using namespace sf;
     void Game_Window::run_title_screen()
     {
         handleCollisions();
+        window.clear(Color::Black);
+        draw_scene();
+        window.display();
     }
 
     void Game_Window::run()
@@ -108,10 +115,12 @@ using namespace sf;
             switch (currentGameState)
             {
                 case GameState::TitleScreen:
-                    //run_title_screen();
+                    run_title_screen();
+                    break;
 
                 case GameState::Level1:
                     run_level_one();
+                    break;
             }
         }
     }
@@ -201,7 +210,6 @@ using namespace sf;
         spawn_ball();
     }
 
-
     void Game_Window::animate_balls()
     {
         for (const auto& ballPtr : balls)
@@ -247,7 +255,7 @@ using namespace sf;
     {
         Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
 
-        auto const& blocks = level_1->get_vector(); 
+        auto const& blocks = level_1->get_vector();
         for (auto& blockPtr : blocks)
         { 
             Block& block = *blockPtr;
@@ -257,7 +265,16 @@ using namespace sf;
 
     void Game_Window::draw_title_screen()
     {
+        Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
+        auto const& buttons = title_scrn->get_vector();
+        window.draw(title_scrn->getTitleText());
 
+        for (auto& buttonPtr : buttons)
+        {
+            Button& button = *buttonPtr;
+            draw_shape(button, window);
+            window.draw(button.getText());
+        }
     }
 
     void Game_Window::draw_scene()
@@ -265,10 +282,11 @@ using namespace sf;
         switch (currentGameState)
         {
             case GameState::TitleScreen:
-                //draw_title_screen();
-
+                draw_title_screen();
+                break;
             case GameState::Level1:
                 draw_level_one();
+                break;
         }
     }
 
@@ -313,13 +331,46 @@ using namespace sf;
             }
         }
     }
+
+    void Game_Window::title_screen_button_click_handler(Event& event)
+    {
+        if (event.type == sf::Event::MouseButtonPressed)
+        {
+            Vector2f mousePosition(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
+
+            Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
+            auto const& buttons = title_scrn->get_vector(); 
+
+            Button& button1 = *buttons.at(0);
+            Button& button2 = *buttons.at(1);
+
+            if (button1.getBounds().contains(mousePosition))
+            {                    
+                currentGameState = GameState::Level1;
+                make_level_one();
+            }
+            else if (button2.getBounds().contains(mousePosition))
+            {
+                window.close();
+            }
+        }
+    }
     void Game_Window::processEvents()
     {
         Event event;
         while (window.pollEvent(event))
-        {
+        {   
             close_window_check(event);
-            paddle_movement_control(event);
+
+            switch (currentGameState)
+            {
+                case GameState::TitleScreen:
+                    title_screen_button_click_handler(event);
+                    break;
+                case GameState::Level1:
+                    paddle_movement_control(event);
+                    break;
+            }
         }
     }
 
@@ -394,10 +445,11 @@ using namespace sf;
         switch (currentGameState)
         {
             case GameState::TitleScreen:
-                //draw_title_screen();
-
+                break;
             case GameState::Level1:
                 level_one_collisions_handler();
+                break;
         }
     }
+
 } // namespace arkanoid

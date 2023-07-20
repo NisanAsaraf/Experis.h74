@@ -21,10 +21,11 @@ public:
     Title_Screen();
     void create() override;
     void reset() override;
-    
+    Text const& getTitleText();
+    std::vector<std::unique_ptr<Button>>& get_vector();
+
 private:
-    std::unique_ptr<Button> m_start_game;
-    std::unique_ptr<Button> m_quit_game;
+    std::vector<std::unique_ptr<Button>> buttons;
     Font m_font;
     Text m_title_screen_text;
 };

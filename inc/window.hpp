@@ -26,6 +26,7 @@ public:
     void make_paddle();
     void make_border();
     void make_kill_zone();
+    void title_screen_button_click_handler(Event& event);
     void spawn_ball();
     void paddle_reset();
     void draw_level_one();
