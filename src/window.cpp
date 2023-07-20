@@ -75,7 +75,7 @@ using namespace sf;
             window.draw(*border);
             window.draw(*kill_zone);
             draw_shapes();
-            draw_level();
+            draw_scene();
             animate_balls();
             draw_scoreboard();
             win_condition();
@@ -141,7 +141,7 @@ using namespace sf;
         scoreText.setString("GAME OVER!");
         scoreText.setCharacterSize(100);
         scoreText.setFillColor(Color::Red);
-        scoreText.setPosition(SCREEN_WIDTH/4 - 20, SCREEN_HEIGHT/30);
+        scoreText.setPosition(SCREEN_WIDTH/4 - 20, SCREEN_HEIGHT/3 );
         Clock clock;
         
         while(clock.getElapsedTime().asSeconds() < 30)
@@ -152,9 +152,9 @@ using namespace sf;
             while (window.pollEvent(event))
             {
                 close_window_check(event);
-            }
+            }      
         }
-        window.close();
+
     }
 
     void Game_Window::make_level_one()
@@ -203,7 +203,7 @@ using namespace sf;
         }
     }
 
-    void Game_Window::draw_level()
+    void Game_Window::draw_scene()
     {
         auto const& blocks = level->get_blocks(); 
         for (auto& blockPtr : blocks)

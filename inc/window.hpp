@@ -39,7 +39,7 @@ public:
     void animate_paddle_left();
     void animate_paddle_stop();
     void draw_shapes();
-    void draw_level();
+    void draw_scene();
     void processEvents();
     void paddle_out_of_bounds_handler();
     void handleCollisions();
