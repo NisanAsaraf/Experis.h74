@@ -8,7 +8,7 @@ namespace arkanoid
 class Player
 {
 public:
-    Player(std::string const&);
+    Player();
     void add_score(size_t);
     void hit();
     void reset();

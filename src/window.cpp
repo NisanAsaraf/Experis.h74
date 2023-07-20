@@ -6,9 +6,9 @@ namespace arkanoid
 {
 using namespace sf;
 
-    Game_Window::Game_Window(std::string const& a_name) : window(VideoMode(800, 600), "Arkanoid", sf::Style::Titlebar | sf::Style::Close)
+    Game_Window::Game_Window() : window(VideoMode(800, 600), "Arkanoid", sf::Style::Titlebar | sf::Style::Close)
     { 
-        create_player(a_name);
+        create_player();
         if (!font.loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Bold.ttf"))
         {
             throw std::runtime_error("Failed to load font from file.");
@@ -23,9 +23,9 @@ using namespace sf;
         spawn_ball();
     }
 
-    void Game_Window::create_player(std::string const& a_name)
+    void Game_Window::create_player()
     {
-        player = std::make_unique<Player>(a_name);
+        player = std::make_unique<Player>();
     }
 
     void Game_Window::make_paddle()

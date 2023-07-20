@@ -15,10 +15,10 @@ using namespace sf;
 class Game_Window
 {
 public:
-    Game_Window(std::string const&);
+    Game_Window();
     ~Game_Window() = default;
 
-    void create_player(std::string const&);
+    void create_player();
     void make_paddle();
     void make_border();
     void make_kill_zone();

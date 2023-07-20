@@ -3,8 +3,8 @@
 namespace arkanoid
 {
 
-Player::Player(std::string const& a_name)
-:m_name{a_name}
+Player::Player()
+:m_name{}
 ,m_score{0}
 ,m_lives{3}
 {
