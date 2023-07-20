@@ -1,5 +1,5 @@
 #include "../inc/paddle.hpp"
-#include "../inc/levels.hpp"
+#include "../inc/scenes.hpp"
 #include "../inc/ball.hpp"
 #include "../inc/block.hpp"
 #include "../inc/collisions.hpp"
@@ -19,6 +19,9 @@ public:
     Game_Window();
     ~Game_Window() = default;
 
+    void run();
+    void run_title_screen();
+    void run_level_one();
     void create_player();
     void make_paddle();
     void make_border();
@@ -26,13 +29,13 @@ public:
     void spawn_ball();
     void paddle_reset();
     void paddle_movement_control(Event const&);
-    void close_window_check(Event const&);
+    bool close_window_check(Event const&);
     void win_condition();
-    void run();
     void restart();
     void game_over_screen();
     void game_win_screen();
     void draw_scoreboard();
+    void make_title_screen();
     void make_level_one();
     void animate_balls();
     void animate_paddle_right();
@@ -43,9 +46,15 @@ public:
     void processEvents();
     void paddle_out_of_bounds_handler();
     void handleCollisions();
-
+private:
+    enum class GameState
+    {
+        TitleScreen,
+        Level1,
+    };
 private:
     RenderWindow window;
+    GameState currentGameState;
     Clock clock;
     std::unique_ptr<RectangleShape> border;
     std::unique_ptr<RectangleShape> kill_zone;

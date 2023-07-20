@@ -1,5 +1,5 @@
-#ifndef LEVEL_H
-#define LEVEL_H
+#ifndef SCENE_H
+#define SCENE_H
 #include <SFML/Graphics.hpp>
 #include "block.hpp"
 #include <vector>
@@ -12,7 +12,8 @@ namespace arkanoid
 public:
     virtual ~Level();
 };
- */
+*/
+
 class Level_One //: Level
 {
 public:
@@ -29,4 +30,4 @@ private:
 };
 
 }
-#endif //LEVEL_H
+#endif //SCENE_H

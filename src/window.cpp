@@ -8,6 +8,7 @@ using namespace sf;
     Game_Window::Game_Window()
     : window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT)
     ,"Arkanoid",Style::Titlebar | Style::Close)
+    ,currentGameState(GameState::TitleScreen)
     { 
         create_player();
         if (!font.loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Bold.ttf"))
@@ -17,11 +18,21 @@ using namespace sf;
 
         window.setFramerateLimit(64);
         window.setVerticalSyncEnabled(false);
+        make_level_one();
+    }
+
+    void Game_Window::make_level_one()
+    {
+        level = std::make_unique<Level_One>(3, 5);
+        currentGameState = GameState::Level1;
         make_border();
         make_kill_zone();
         make_paddle();
-        make_level_one();
         spawn_ball();
+    }
+    
+    void Game_Window::make_title_screen()
+    {
     }
 
     void Game_Window::create_player()
@@ -36,7 +47,7 @@ using namespace sf;
 
     void Game_Window::make_kill_zone()
     {
-        kill_zone = std::make_unique<sf::RectangleShape>(Vector2f(window.getSize()));
+        kill_zone = std::make_unique<RectangleShape>(Vector2f(window.getSize()));
         kill_zone->setPosition(0, window.getSize().y - 10);
         kill_zone->setFillColor(Color::Transparent);
     }
@@ -65,21 +76,39 @@ using namespace sf;
         paddle->reset();
     }
 
+    void Game_Window::run_level_one()
+    {
+        handleCollisions();
+        window.clear(Color::Black);
+        window.draw(*border);
+        window.draw(*kill_zone);
+        draw_shapes();
+        draw_scene();
+        animate_balls();
+        draw_scoreboard();
+        win_condition();
+        window.display();
+    }
+
+    void Game_Window::run_title_screen()
+    {
+        handleCollisions();
+    }
+
     void Game_Window::run()
     {
         while (window.isOpen())
-        {
+        {   
             processEvents();
-            handleCollisions();
-            window.clear(Color::Black);
-            window.draw(*border);
-            window.draw(*kill_zone);
-            draw_shapes();
-            draw_scene();
-            animate_balls();
-            draw_scoreboard();
-            win_condition();
-            window.display();
+            
+            switch (currentGameState)
+            {
+                case GameState::TitleScreen:
+                    //run_title_screen();
+
+                case GameState::Level1:
+                    run_level_one();
+            }
         }
     }
 
@@ -91,37 +120,73 @@ using namespace sf;
         }
     }
 
-    void Game_Window::close_window_check(Event const& event)
+    bool Game_Window::close_window_check(Event const& event)
     {
         if (event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
         {
             window.close();
+            return true;
         }
+        return false;
     }
 
     void Game_Window::game_win_screen()
     {
-        Text scoreText;
-        scoreText.setFont(font);
-        scoreText.setString("YOU WIN!");
-        scoreText.setCharacterSize(100);
-        scoreText.setFillColor(Color::Green);
-        scoreText.setPosition(SCREEN_WIDTH/4 + 20, SCREEN_HEIGHT/3);
+        Text text;
         Clock clock;
         Event event;
+        bool quit;
+
+        text.setFont(font);
+        text.setString("YOU WIN!");
+        text.setCharacterSize(100);
+        text.setFillColor(Color::Green);
+        text.setPosition(SCREEN_WIDTH/4 + 20, SCREEN_HEIGHT/3);
+
         while(clock.getElapsedTime().asSeconds() < 15)
         {
-            window.draw(scoreText);
+            window.draw(text);
             window.display();
             while (window.pollEvent(event))
             {
-                if(event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
-                {
-                    break;
-                }
+                quit = close_window_check(event);
+                break;
             }
+            if(quit)
+            {
+                break;
+            }  
         }
         restart();
+    }
+
+    void Game_Window::game_over_screen()
+    {
+        Text text;
+        Clock clock;
+        Event event;
+        bool quit;
+
+        text.setFont(font);
+        text.setString("GAME OVER!");
+        text.setCharacterSize(100);
+        text.setFillColor(Color::Red);
+        text.setPosition(SCREEN_WIDTH/4 - 20, SCREEN_HEIGHT/3 );
+
+        while(clock.getElapsedTime().asSeconds() < 30)
+        {
+            window.draw(text);
+            window.display();
+            while (window.pollEvent(event))
+            {
+                quit = close_window_check(event);
+                break;
+            }
+            if(quit)
+            {
+                break;
+            }          
+        }
     }
 
     void Game_Window::restart()
@@ -134,33 +199,6 @@ using namespace sf;
         spawn_ball();
     }
 
-    void Game_Window::game_over_screen()
-    {
-        Text scoreText;
-        scoreText.setFont(font);
-        scoreText.setString("GAME OVER!");
-        scoreText.setCharacterSize(100);
-        scoreText.setFillColor(Color::Red);
-        scoreText.setPosition(SCREEN_WIDTH/4 - 20, SCREEN_HEIGHT/3 );
-        Clock clock;
-        
-        while(clock.getElapsedTime().asSeconds() < 30)
-        {
-            window.draw(scoreText);
-            window.display();
-            Event event;
-            while (window.pollEvent(event))
-            {
-                close_window_check(event);
-            }      
-        }
-
-    }
-
-    void Game_Window::make_level_one()
-    {
-        level = std::make_unique<Level_One>(3, 5);
-    }
 
     void Game_Window::animate_balls()
     {
@@ -224,6 +262,7 @@ using namespace sf;
         scoreText.setPosition(30, 30);
         window.draw(scoreText);
     }
+
     void Game_Window::paddle_movement_control(Event const& event)
     {
         if (event.type == sf::Event::KeyPressed)
