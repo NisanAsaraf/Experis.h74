@@ -2,6 +2,7 @@
 #define BALL_H
 
 #include <SFML/Graphics.hpp>
+#include "config.hpp"
 #include <vector>
 #include <random>
 

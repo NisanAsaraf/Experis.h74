@@ -7,7 +7,7 @@ Paddle::Paddle()
     paddle = std::make_unique<RectangleShape>(Vector2f(100.0f, 20.0f));
     start = false;
     paddle->setFillColor(Color::Blue);
-    paddle->setPosition(350.0f, 550.0f);
+    paddle->setPosition(SCREEN_WIDTH/2 - 50, SCREEN_HEIGHT - 50);
     max_speed = 25.0f;
     acceleration = 50.0f;
     velocity = Vector2f(0.0f, 0.0f);

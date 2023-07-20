@@ -8,12 +8,12 @@ namespace arkanoid
     Ball::Ball()
     {
         shape = std::make_unique<CircleShape>(10.0f);
-        shape->setPosition(390.0f, 530.0f);
+        shape->setPosition(SCREEN_WIDTH/2 - 10, SCREEN_HEIGHT - 70);
         vanished = false;
 
         //Color randomColor = RandomColorGenerator::getRandomColor();
         shape->setFillColor(Color::White);
-        velocity = sf::Vector2f(0,0);
+        velocity = Vector2f(0,0);
         start = false;
     }
 

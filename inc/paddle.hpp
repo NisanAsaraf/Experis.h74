@@ -2,7 +2,7 @@
 #define PADDLE_H
 
 #include <SFML/Graphics.hpp>
-
+#include "config.hpp"
 namespace arkanoid
 {
 using namespace sf;

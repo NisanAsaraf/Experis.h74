@@ -5,6 +5,7 @@
 #include "../inc/collisions.hpp"
 #include "../inc/animations.hpp"
 #include "../inc/player.hpp"
+#include "../inc/config.hpp"
 #include <vector>
 #include <random>
 

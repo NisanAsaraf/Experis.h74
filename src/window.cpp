@@ -1,12 +1,13 @@
 #include "../inc/window.hpp"
-#include <iostream>
 #include <exception>
 
 namespace arkanoid
 {
 using namespace sf;
 
-    Game_Window::Game_Window() : window(VideoMode(800, 600), "Arkanoid", sf::Style::Titlebar | sf::Style::Close)
+    Game_Window::Game_Window()
+    : window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT)
+    ,"Arkanoid",Style::Titlebar | Style::Close)
     { 
         create_player();
         if (!font.loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Bold.ttf"))
@@ -84,7 +85,7 @@ using namespace sf;
 
     void Game_Window::win_condition()
     {
-        if(player->get_score() == 600)
+        if(player->get_score() == WIN_SCORE)
         {
             game_win_screen();
         }
@@ -105,7 +106,7 @@ using namespace sf;
         scoreText.setString("YOU WIN!");
         scoreText.setCharacterSize(100);
         scoreText.setFillColor(Color::Green);
-        scoreText.setPosition(220, 200);
+        scoreText.setPosition(SCREEN_WIDTH/4 + 20, SCREEN_HEIGHT/3);
         Clock clock;
         Event event;
         while(clock.getElapsedTime().asSeconds() < 15)
@@ -140,7 +141,7 @@ using namespace sf;
         scoreText.setString("GAME OVER!");
         scoreText.setCharacterSize(100);
         scoreText.setFillColor(Color::Red);
-        scoreText.setPosition(180, 200);
+        scoreText.setPosition(SCREEN_WIDTH/4 - 20, SCREEN_HEIGHT/30);
         Clock clock;
         
         while(clock.getElapsedTime().asSeconds() < 30)

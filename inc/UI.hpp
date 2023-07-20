@@ -9,9 +9,11 @@ using namespace sf;
 class Button
 {
 public:
+    Button(Vector2f, std::string const&);
     FloatRect getBounds();
     void setPosition(Vector2f);
-    void setText(std::string) const&;
+    void setText(std::string const&);
+    void setButtonColor(Color);
 private:
     std::unique_ptr<RectangleShape> m_button;
     Text m_button_text;
@@ -27,6 +29,7 @@ public:
 class Title_Screen : public Scene
 {
 public:
+    Title_Screen();
     void Create() const override;
     
 private:
