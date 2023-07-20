@@ -133,9 +133,9 @@ using namespace sf;
     void Game_Window::game_win_screen()
     {
         Text text;
-        Clock clock;
+        Clock clk;
         Event event;
-        bool quit;
+        bool quit = false;
 
         text.setFont(font);
         text.setString("YOU WIN!");
@@ -143,14 +143,13 @@ using namespace sf;
         text.setFillColor(Color::Green);
         text.setPosition(SCREEN_WIDTH/4 + 20, SCREEN_HEIGHT/3);
 
-        while(clock.getElapsedTime().asSeconds() < 15)
+        while(clk.getElapsedTime().asSeconds() < 15)
         {
             window.draw(text);
             window.display();
             while (window.pollEvent(event))
             {
                 quit = close_window_check(event);
-                break;
             }
             if(quit)
             {
@@ -163,9 +162,9 @@ using namespace sf;
     void Game_Window::game_over_screen()
     {
         Text text;
-        Clock clock;
+        Clock clk;
         Event event;
-        bool quit;
+        bool quit = false;
 
         text.setFont(font);
         text.setString("GAME OVER!");
@@ -173,14 +172,13 @@ using namespace sf;
         text.setFillColor(Color::Red);
         text.setPosition(SCREEN_WIDTH/4 - 20, SCREEN_HEIGHT/3 );
 
-        while(clock.getElapsedTime().asSeconds() < 30)
+        while(clk.getElapsedTime().asSeconds() < 30)
         {
             window.draw(text);
             window.display();
             while (window.pollEvent(event))
             {
                 quit = close_window_check(event);
-                break;
             }
             if(quit)
             {

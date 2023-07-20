@@ -20,25 +20,5 @@ private:
     Text m_button_text;
 };
 
-class Scene
-{
-public:
-    virtual void Create() = 0;
-    virtual ~Scene() = default;
-};
-
-class Title_Screen : public Scene
-{
-public:
-    Title_Screen();
-    void Create() override;
-    
-private:
-    std::unique_ptr<Button> m_start_game;
-    std::unique_ptr<Button> m_quit_game;
-    Font m_font;
-    Text m_title_screen_text;
-};
-
 }//namespace arkanoid
 #endif
