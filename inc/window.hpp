@@ -34,12 +34,14 @@ public:
     void paddle_movement_control(Event const&);
     bool close_window_check(Event const&);
     void win_condition();
+    void pause_game();
     void restart();
     void level_one_collisions_handler();
     void game_over_screen();
     void game_win_screen();
     void draw_scoreboard();
     void make_title_screen();
+    void draw_pause_text();
     void make_level_one();
     void animate_balls();
     void animate_paddle_right();
@@ -67,6 +69,7 @@ private:
     std::unique_ptr<Player> player;
     std::unique_ptr<Scene> scene;
     Font font;
+    bool paused;
 };
 
 } // namespace arkanoid

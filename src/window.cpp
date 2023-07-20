@@ -11,6 +11,7 @@ using namespace sf;
     : window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT)
     ,"Arkanoid",Style::Titlebar | Style::Close)
     ,currentGameState(GameState::TitleScreen)
+    ,paused(false)
     { 
         create_player();
         if (!font.loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Bold.ttf"))
@@ -29,7 +30,7 @@ using namespace sf;
         Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
 
         level_1->create();
-        currentGameState = GameState::Level1;
+        currentGameState = GameState::Level1;    
         make_border();
         make_kill_zone();
         make_paddle();
@@ -302,6 +303,38 @@ using namespace sf;
         window.draw(scoreText);
     }
 
+    void Game_Window::draw_pause_text()
+    {
+        Text text;
+        text.setFont(font);
+        text.setString("PAUSED");
+
+        text.setCharacterSize(100);
+        text.setFillColor(Color::White);
+        text.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3);
+        window.draw(text);
+    }
+
+    void Game_Window::pause_game()
+    {
+        Event event;
+        while(paused)
+        {
+            draw_pause_text();
+            window.display();
+            while (window.pollEvent(event))
+            {   
+                close_window_check(event);
+
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
+                {
+                    paused = false;
+                    break;
+                }
+            }
+        }
+    }
+
     void Game_Window::paddle_movement_control(Event const& event)
     {
         if (event.type == sf::Event::KeyPressed)
@@ -313,6 +346,11 @@ using namespace sf;
                     ballPtr->ball_start();
                 }
                 paddle->paddle_start();
+            }
+            else if (event.key.code == sf::Keyboard::Space && (paddle->started()) && paused == false)
+            {
+                paused = true;
+                pause_game();
             }
             else if (event.key.code == sf::Keyboard::Right && paddle->started())
             {
