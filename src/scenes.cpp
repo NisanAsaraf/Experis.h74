@@ -10,9 +10,10 @@ Title_Screen::Title_Screen()
     {
         throw std::runtime_error("Failed to load font from file.");
     }
+    create();
 }
 
-void Title_Screen::Create()
+void Title_Screen::create()
 {
     m_start_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), "Start Game", m_font);
     m_quit_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2, SCREEN_HEIGHT/4), "Quit Game" , m_font);
@@ -24,9 +25,18 @@ void Title_Screen::Create()
     m_title_screen_text.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3); 
 }
 
-Level_One::Level_One(size_t row, size_t col)
+Level_One::Level_One()
+{
+    create();
+}
+
+void Level_One::create()
 {
     std::vector<sf::Color> block_colors;
+    size_t row, col;
+
+    row = 3;
+    col = 5;
 
     block_colors.push_back(sf::Color::Green);
     block_colors.push_back(sf::Color::Magenta);

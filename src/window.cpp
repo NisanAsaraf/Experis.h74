@@ -23,7 +23,7 @@ using namespace sf;
 
     void Game_Window::make_level_one()
     {
-        level = std::make_unique<Level_One>(3, 5);
+        level = std::make_unique<Level_One>();
         currentGameState = GameState::Level1;
         make_border();
         make_kill_zone();

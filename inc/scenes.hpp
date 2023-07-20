@@ -11,15 +11,14 @@ namespace arkanoid
 class Scene
 {
 public:
-    virtual void Create() = 0;
-    virtual ~Scene() = default;
+    virtual void create() = 0;
 };
 
 class Title_Screen : public Scene
 {
 public:
     Title_Screen();
-    void Create() override;
+    void create() override;
     
 private:
     std::unique_ptr<Button> m_start_game;
@@ -28,16 +27,13 @@ private:
     Text m_title_screen_text;
 };
 
-class Level_One //: Level
+class Level_One //: public Scene
 {
 public:
-
-    Level_One(size_t row, size_t col);
-
+    Level_One();
+    void create();
     std::vector<std::unique_ptr<Block>>& get_blocks();
     void reset();
-
-    ~Level_One() = default;
 
 private:
     std::vector<std::unique_ptr<Block>> blocks;
