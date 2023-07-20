@@ -28,10 +28,13 @@ public:
     void make_kill_zone();
     void spawn_ball();
     void paddle_reset();
+    void draw_level_one();
+    void draw_title_screen();
     void paddle_movement_control(Event const&);
     bool close_window_check(Event const&);
     void win_condition();
     void restart();
+    void level_one_collisions_handler();
     void game_over_screen();
     void game_win_screen();
     void draw_scoreboard();
@@ -61,7 +64,7 @@ private:
     std::unique_ptr<Paddle> paddle;
     std::vector<std::unique_ptr<Ball>> balls;
     std::unique_ptr<Player> player;
-    std::unique_ptr<Level_One> level;
+    std::unique_ptr<Scene> scene;
     Font font;
 };
 

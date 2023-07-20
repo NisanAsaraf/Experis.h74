@@ -12,6 +12,7 @@ class Scene
 {
 public:
     virtual void create() = 0;
+    virtual void reset() = 0;
 };
 
 class Title_Screen : public Scene
@@ -19,6 +20,7 @@ class Title_Screen : public Scene
 public:
     Title_Screen();
     void create() override;
+    void reset() override;
     
 private:
     std::unique_ptr<Button> m_start_game;
@@ -27,14 +29,14 @@ private:
     Text m_title_screen_text;
 };
 
-class Level_One //: public Scene
+class Level_One : public Scene
 {
 public:
     Level_One();
-    void create();
-    std::vector<std::unique_ptr<Block>>& get_blocks();
-    void reset();
-
+    void create() override;
+    void reset() override;
+    std::vector<std::unique_ptr<Block>>& get_vector();
+    
 private:
     std::vector<std::unique_ptr<Block>> blocks;
 };

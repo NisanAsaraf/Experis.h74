@@ -1,5 +1,6 @@
 #include "../inc/window.hpp"
 #include <exception>
+#include <memory>
 
 namespace arkanoid
 {
@@ -23,7 +24,10 @@ using namespace sf;
 
     void Game_Window::make_level_one()
     {
-        level = std::make_unique<Level_One>();
+        scene = std::make_unique<Level_One>();
+        Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
+
+        level_1->create();
         currentGameState = GameState::Level1;
         make_border();
         make_kill_zone();
@@ -192,7 +196,7 @@ using namespace sf;
         player->reset();
         paddle_reset();
         balls.clear();
-        level->reset();
+        scene->reset();
         make_level_one();
         spawn_ball();
     }
@@ -239,13 +243,32 @@ using namespace sf;
         }
     }
 
-    void Game_Window::draw_scene()
+    void Game_Window::draw_level_one()
     {
-        auto const& blocks = level->get_blocks(); 
+        Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
+
+        auto const& blocks = level_1->get_vector(); 
         for (auto& blockPtr : blocks)
         { 
             Block& block = *blockPtr;
             draw_shape(block, window);
+        }
+    }
+
+    void Game_Window::draw_title_screen()
+    {
+
+    }
+
+    void Game_Window::draw_scene()
+    {  
+        switch (currentGameState)
+        {
+            case GameState::TitleScreen:
+                //draw_title_screen();
+
+            case GameState::Level1:
+                draw_level_one();
         }
     }
 
@@ -319,10 +342,11 @@ using namespace sf;
         }
     }
 
-    void Game_Window::handleCollisions()
+    void Game_Window::level_one_collisions_handler()
     {
         Paddle& pad = *paddle;
-        auto& blocks = level->get_blocks(); 
+        Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
+        auto& blocks = level_1->get_vector(); 
 
         paddle_out_of_bounds_handler();
 
@@ -362,6 +386,18 @@ using namespace sf;
                 balls.erase(balls.begin()); // will delete the pointer from the vector, the smart pointer will handle the memory
                 spawn_ball();
             }
+        }
+    }
+
+    void Game_Window::handleCollisions()
+    {
+        switch (currentGameState)
+        {
+            case GameState::TitleScreen:
+                //draw_title_screen();
+
+            case GameState::Level1:
+                level_one_collisions_handler();
         }
     }
 } // namespace arkanoid

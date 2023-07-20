@@ -25,9 +25,13 @@ void Title_Screen::create()
     m_title_screen_text.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3); 
 }
 
-Level_One::Level_One()
+void Title_Screen::reset()
 {
     create();
+}
+
+Level_One::Level_One()
+{
 }
 
 void Level_One::create()
@@ -69,7 +73,7 @@ void Level_One::reset()
     blocks.clear();
 }
 
-std::vector<std::unique_ptr<Block>>& Level_One::get_blocks()
+std::vector<std::unique_ptr<Block>>& Level_One::get_vector()
 {
     return blocks;
 }
