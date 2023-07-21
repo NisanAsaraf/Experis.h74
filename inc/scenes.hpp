@@ -60,6 +60,7 @@ private:
     std::vector<PlayerData> m_players;
     std::unique_ptr<Texture> backgroundTexture;
     std::unique_ptr<Font> m_font;
+    std::unique_ptr<Text> m_header;
     std::vector<Text> m_texts;
 };
 

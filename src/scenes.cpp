@@ -129,6 +129,7 @@ Score_Board::Score_Board(std::vector<PlayerData>& a_players)
 {
     m_players = a_players;
     backgroundTexture = std::make_unique<Texture>();
+    m_header = std::make_unique<Text>();
     m_font = std::make_unique<Font>();
     if(!backgroundTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/ScoreBoard_BG.jpg"))
     {
