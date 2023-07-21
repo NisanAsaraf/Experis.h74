@@ -23,11 +23,13 @@ public:
     void reset() override;
     Text const& getTitleText();
     std::vector<std::unique_ptr<Button>>& get_vector();
+    std::unique_ptr<Texture> const& get_BG();
 
 private:
     std::vector<std::unique_ptr<Button>> buttons;
     Font m_font;
     Text m_title_screen_text;
+    std::unique_ptr<Texture> backgroundTexture;
 };
 
 class Level_One : public Scene
@@ -37,9 +39,11 @@ public:
     void create() override;
     void reset() override;
     std::vector<std::unique_ptr<Block>>& get_vector();
+    std::unique_ptr<Texture> const& get_BG();
     
 private:
     std::vector<std::unique_ptr<Block>> blocks;
+    std::unique_ptr<Texture> backgroundTexture;
 };
 
 }

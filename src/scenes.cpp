@@ -10,6 +10,12 @@ Title_Screen::Title_Screen()
     {
         throw std::runtime_error("Failed to load font from file.");
     }
+    backgroundTexture = std::make_unique<Texture>();
+
+    if (!(*backgroundTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/titleBG.jpg"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
 }
 
 void Title_Screen::create()
@@ -20,7 +26,7 @@ void Title_Screen::create()
     m_title_screen_text.setFont(m_font);
     m_title_screen_text.setString("Arkanoid - Nisan");
     m_title_screen_text.setCharacterSize(100);
-    m_title_screen_text.setFillColor(Color::Green);
+    m_title_screen_text.setFillColor(Color::White);
     m_title_screen_text.setPosition(SCREEN_WIDTH/8, SCREEN_HEIGHT/4);
 
     buttons.emplace_back(std::move(m_start_game));
@@ -42,8 +48,14 @@ void Title_Screen::reset()
     create();
 }
 
+std::unique_ptr<Texture> const& Title_Screen::get_BG()
+{
+    return backgroundTexture;
+}
+
 Level_One::Level_One()
 {
+
 }
 
 void Level_One::create()
@@ -53,6 +65,12 @@ void Level_One::create()
     row = 3;
     col = 5;
     Texture b1,b2,b3;
+    backgroundTexture = std::make_unique<Texture>();
+
+    if (!(*backgroundTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/neon.jpg"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
 
     if (!b1.loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/01-Breakout-Tiles.png"))
     {
@@ -66,6 +84,7 @@ void Level_One::create()
     {
         throw std::runtime_error("Failed to load font from file.");
     }
+
     std::vector<Texture> textures;
     textures.push_back(b1);
     textures.push_back(b2);
@@ -99,6 +118,11 @@ void Level_One::reset()
 std::vector<std::unique_ptr<Block>>& Level_One::get_vector()
 {
     return blocks;
+}
+
+std::unique_ptr<Texture> const& Level_One::get_BG()
+{
+    return backgroundTexture;
 }
 
 } // namespace arkanoid

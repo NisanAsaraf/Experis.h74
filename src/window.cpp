@@ -88,7 +88,7 @@ using namespace sf;
     void Game_Window::run_level_one()
     {
         handleCollisions();
-        window.clear(Color::Black);
+        draw_background();
         window.draw(*border);
         window.draw(*kill_zone);
         draw_shapes();
@@ -99,10 +99,44 @@ using namespace sf;
         window.display();
     }
 
+    void Game_Window::draw_background_level_one()
+    {
+        Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
+        Sprite backgroundSprite;
+        backgroundSprite.setTexture(*(level_1->get_BG()));     
+        window.clear();
+        backgroundSprite.setScale(0.2f, 0.2f);
+        window.draw(backgroundSprite);
+    }
+
+    void Game_Window::draw_background()
+    {
+        switch (currentGameState)
+        {
+            case GameState::TitleScreen:
+                draw_background_title_screen();
+                break;
+
+            case GameState::Level1:
+                draw_background_level_one();
+                break;
+        }
+    }
+
+    void Game_Window::draw_background_title_screen()
+    {
+        Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
+        Sprite backgroundSprite;
+        backgroundSprite.setTexture(*(title_scrn->get_BG()));     
+        window.clear();
+        backgroundSprite.setScale(0.2f, 0.2f);
+        window.draw(backgroundSprite);
+    }
+
     void Game_Window::run_title_screen()
     {
         handleCollisions();
-        window.clear(Color::Black);
+        draw_background();
         draw_scene();
         window.display();
     }

@@ -32,11 +32,14 @@ public:
     void paddle_reset();
     void draw_level_one();
     void draw_title_screen();
+    void draw_background_title_screen();
+    void draw_background_level_one();
     void paddle_movement_control(Event const&);
     bool close_window_check(Event const&);
     void win_condition();
     void pause_game();
     void restart();
+    void draw_background();
     void level_one_collisions_handler();
     void game_over_screen();
     void game_win_screen();
