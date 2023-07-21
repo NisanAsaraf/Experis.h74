@@ -286,16 +286,26 @@ using namespace sf;
         }
     }
 
+    void Game_Window::draw_hearts()
+    {
+        size_t lives = player->get_lives();
+        for (size_t i = 1; i <= lives; i++)
+        {
+            Life life(Vector2f(30*i, 70));
+            window.draw(*(life.get()));
+        }
+    }
+
     void Game_Window::draw_level_one()
     {
         Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
-
         auto const& blocks = level_1->get_vector();
         for (auto& blockPtr : blocks)
         { 
             Block& block = *blockPtr;
             draw_shape(block, window);
         }
+        draw_hearts();
     }
 
     void Game_Window::draw_title_screen()

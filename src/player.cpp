@@ -31,6 +31,11 @@ size_t const& Player::get_score()
     return m_score;
 }
 
+size_t Player::get_lives()
+{
+    return m_lives;
+}
+
 void Player::hit()
 {
     m_lives--;

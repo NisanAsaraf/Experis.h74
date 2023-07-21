@@ -13,6 +13,7 @@ public:
     void hit();
     void reset();
     bool is_dead();
+    size_t get_lives();
     std::string const& get_name();
     size_t const& get_score();
 private:

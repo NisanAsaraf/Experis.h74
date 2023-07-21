@@ -38,6 +38,7 @@ public:
     bool close_window_check(Event const&);
     void win_condition();
     void pause_game();
+    void draw_hearts();
     void restart();
     void draw_background();
     void level_one_collisions_handler();
