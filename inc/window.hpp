@@ -1,11 +1,12 @@
-#include "../inc/paddle.hpp"
-#include "../inc/scenes.hpp"
-#include "../inc/ball.hpp"
-#include "../inc/block.hpp"
-#include "../inc/collisions.hpp"
-#include "../inc/animations.hpp"
-#include "../inc/player.hpp"
-#include "../inc/config.hpp"
+#include "paddle.hpp"
+#include "scenes.hpp"
+#include "ball.hpp"
+#include "block.hpp"
+#include "collisions.hpp"
+#include "animations.hpp"
+#include "player.hpp"
+#include "leaderboard.hpp"
+#include "config.hpp"
 #include <vector>
 #include <random>
 
@@ -42,7 +43,8 @@ public:
     void draw_scoreboard();
     void make_title_screen();
     void draw_pause_text();
-    void make_level_one();
+    void make_level_one();   
+    void top_10_handler();
     void animate_balls();
     void animate_paddle_right();
     void animate_paddle_left();

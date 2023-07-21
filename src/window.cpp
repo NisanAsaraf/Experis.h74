@@ -2,7 +2,7 @@
 #include <exception>
 #include <memory>
 #include <iostream>
-
+#include <fstream>
 namespace arkanoid
 {
 using namespace sf;
@@ -313,6 +313,13 @@ using namespace sf;
         text.setFillColor(Color::White);
         text.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3);
         window.draw(text);
+    }
+
+    void Game_Window::top_10_handler()
+    {
+        LeaderBoard leader_board;
+        PlayerData p_data = {player->get_name(), player->get_score(), clock.getElapsedTime()};
+        leader_board.top_10_handler(p_data);
     }
 
     void Game_Window::pause_game()
