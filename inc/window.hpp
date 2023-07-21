@@ -23,10 +23,12 @@ public:
     void run();
     void run_title_screen();
     void run_level_one();
+    void run_scoreboard_screen();
     void create_player();
     void make_paddle();
     void make_border();
     void make_kill_zone();
+    void make_scoreBoard_screen();
     void title_screen_button_click_handler(Event& event);
     void spawn_ball();
     void paddle_reset();
@@ -34,21 +36,23 @@ public:
     void draw_title_screen();
     void draw_background_title_screen();
     void draw_background_level_one();
+    void draw_background_score_board();
     void paddle_movement_control(Event const&);
     bool close_window_check(Event const&);
     void win_condition();
     void pause_game();
     void draw_hearts();
     void restart();
+    void draw_scoreboard();
     void draw_background();
     void level_one_collisions_handler();
     void game_over_screen();
     void game_win_screen();
-    void draw_scoreboard();
+    void draw_score();
     void make_title_screen();
     void draw_pause_text();
     void make_level_one();   
-    void top_10_handler();
+    void update_top_scores();
     void animate_balls();
     void animate_paddle_right();
     void animate_paddle_left();
@@ -63,6 +67,7 @@ private:
     {
         TitleScreen,
         Level1,
+        ScoreBoard,
     };
 private:
     RenderWindow window;

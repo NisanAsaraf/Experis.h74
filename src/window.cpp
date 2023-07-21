@@ -26,11 +26,12 @@ using namespace sf;
 
     void Game_Window::make_level_one()
     {
+        currentGameState = GameState::Level1;
+
         scene = std::make_unique<Level_One>();
         Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
 
         level_1->create();
-        currentGameState = GameState::Level1;    
         make_border();
         make_kill_zone();
         make_paddle();
@@ -39,9 +40,23 @@ using namespace sf;
     
     void Game_Window::make_title_screen()
     {
+        currentGameState = GameState::TitleScreen;
         scene = std::make_unique<Title_Screen>();
         Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
         title_scrn->create();
+    }
+
+    void Game_Window::make_scoreBoard_screen()
+    {
+        currentGameState = GameState::ScoreBoard;
+
+        std::vector<PlayerData> top_players;
+        ScoresFileManager sc_manager;
+        sc_manager.load_scores(top_players);
+
+        scene = std::make_unique<Score_Board>(top_players);
+        Score_Board* score_scrn = dynamic_cast<Score_Board*>(scene.get());
+        score_scrn->create();
     }
 
     void Game_Window::create_player()
@@ -94,7 +109,7 @@ using namespace sf;
         draw_shapes();
         draw_scene();
         animate_balls();
-        draw_scoreboard();
+        draw_score();
         win_condition();
         window.display();
     }
@@ -111,6 +126,7 @@ using namespace sf;
 
     void Game_Window::draw_background()
     {
+        
         switch (currentGameState)
         {
             case GameState::TitleScreen:
@@ -120,6 +136,10 @@ using namespace sf;
             case GameState::Level1:
                 draw_background_level_one();
                 break;
+
+            case GameState::ScoreBoard:
+                draw_background_score_board();
+                break;    
         }
     }
 
@@ -127,8 +147,8 @@ using namespace sf;
     {
         Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
         Sprite backgroundSprite;
-        backgroundSprite.setTexture(*(title_scrn->get_BG()));     
         window.clear();
+        backgroundSprite.setTexture(*(title_scrn->get_BG()));     
         backgroundSprite.setScale(0.2f, 0.2f);
         window.draw(backgroundSprite);
     }
@@ -136,6 +156,13 @@ using namespace sf;
     void Game_Window::run_title_screen()
     {
         handleCollisions();
+        draw_background();
+        draw_scene();
+        window.display();
+    }
+
+    void Game_Window::run_scoreboard_screen()
+    {
         draw_background();
         draw_scene();
         window.display();
@@ -155,6 +182,10 @@ using namespace sf;
 
                 case GameState::Level1:
                     run_level_one();
+                    break;
+
+                case GameState::ScoreBoard:
+                    run_scoreboard_screen();
                     break;
             }
         }
@@ -184,27 +215,31 @@ using namespace sf;
         Clock clk;
         Event event;
         bool quit = false;
-
         text.setFont(font);
         text.setString("YOU WIN!");
         text.setCharacterSize(100);
         text.setFillColor(Color::Green);
         text.setPosition(SCREEN_WIDTH/4 + 20, SCREEN_HEIGHT/3);
 
-        while(clk.getElapsedTime().asSeconds() < 15)
+        while(clk.getElapsedTime().asSeconds() < 10)
         {
             window.draw(text);
             window.display();
             while (window.pollEvent(event))
             {
-                quit = close_window_check(event);
+                if (event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
+                {
+                    quit = true;
+                    break;
+                }
             }
             if(quit)
             {
                 break;
-            }  
+            }
         }
-        restart();
+        currentGameState = GameState::ScoreBoard;
+        make_scoreBoard_screen();
     }
 
     void Game_Window::game_over_screen()
@@ -220,7 +255,7 @@ using namespace sf;
         text.setFillColor(Color::Red);
         text.setPosition(SCREEN_WIDTH/4 - 20, SCREEN_HEIGHT/3 );
 
-        while(clk.getElapsedTime().asSeconds() < 30)
+        while(clk.getElapsedTime().asSeconds() < 20)
         {
             window.draw(text);
             window.display();
@@ -307,6 +342,13 @@ using namespace sf;
         }
         draw_hearts();
     }
+    
+    void Game_Window::Game_Window::draw_background_score_board()
+    {
+        Score_Board* score_scrn = dynamic_cast<Score_Board*>(scene.get());
+        Illustrator illustrator;
+        illustrator.draw_BG_scoreboard(*score_scrn,window);
+    }
 
     void Game_Window::draw_title_screen()
     {
@@ -322,6 +364,13 @@ using namespace sf;
         }
     }
 
+    void Game_Window::draw_scoreboard()
+    {
+        Score_Board* score_scrn = dynamic_cast<Score_Board*>(scene.get());
+        Illustrator ilustrator;
+        ilustrator.draw_scoreboard(*score_scrn, window);
+    }
+
     void Game_Window::draw_scene()
     {  
         switch (currentGameState)
@@ -332,10 +381,13 @@ using namespace sf;
             case GameState::Level1:
                 draw_level_one();
                 break;
+            case GameState::ScoreBoard:
+                draw_scoreboard();
+                break;
         }
     }
 
-    void Game_Window::draw_scoreboard()
+    void Game_Window::draw_score()
     {
         Text scoreText;
         scoreText.setFont(font);
@@ -359,11 +411,11 @@ using namespace sf;
         window.draw(text);
     }
 
-    void Game_Window::top_10_handler()
+    void Game_Window::update_top_scores()
     {
-        LeaderBoard leader_board;
+        ScoresFileManager sc_manager;
         PlayerData p_data = {player->get_name(), player->get_score(), clock.getElapsedTime()};
-        leader_board.top_10_handler(p_data);
+        sc_manager.top_10_handler(p_data);
     }
 
     void Game_Window::pause_game()
@@ -459,6 +511,8 @@ using namespace sf;
                 case GameState::Level1:
                     paddle_movement_control(event);
                     break;
+                case GameState::ScoreBoard:
+                    break;
             }
         }
     }
@@ -537,6 +591,8 @@ using namespace sf;
                 break;
             case GameState::Level1:
                 level_one_collisions_handler();
+                break;
+            case GameState::ScoreBoard:
                 break;
         }
     }

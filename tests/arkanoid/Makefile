@@ -8,7 +8,7 @@ SFML_LIB_DIR = /usr/lib
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-OBJS = utest.o window.o player.o UI.o paddle.o ball.o block.o scenes.o collisions.o
+OBJS = utest.o window.o animations.o player.o UI.o paddle.o ball.o block.o scenes.o collisions.o leaderboard.o
 TARGET = utest
 
 all: $(TARGET)
@@ -34,6 +34,9 @@ utest.o: utest.cpp
 window.o: $(SOURCES_DIR)/window.cpp $(INCLUDES_DIR)/window.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
+animations.o: $(SOURCES_DIR)/animations.cpp $(INCLUDES_DIR)/animations.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@	
+
 player.o: $(SOURCES_DIR)/player.cpp $(INCLUDES_DIR)/player.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
@@ -53,6 +56,9 @@ scenes.o: $(SOURCES_DIR)/scenes.cpp $(INCLUDES_DIR)/scenes.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@	
 
 collisions.o: $(SOURCES_DIR)/collisions.cpp $(INCLUDES_DIR)/collisions.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@	
+
+leaderboard.o: $(SOURCES_DIR)/leaderboard.cpp $(INCLUDES_DIR)/leaderboard.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@	
 
 $(TARGET): $(OBJS)

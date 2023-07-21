@@ -125,4 +125,48 @@ std::unique_ptr<Texture> const& Level_One::get_BG()
     return backgroundTexture;
 }
 
+Score_Board::Score_Board(std::vector<PlayerData>& a_players)
+{
+    m_players = a_players;
+    backgroundTexture = std::make_unique<Texture>();
+    m_font = std::make_unique<Font>();
+    if(!backgroundTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/ScoreBoard_BG.jpg"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+    if(!m_font->loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Regular.ttf"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+}
+
+std::vector<Text> const& Score_Board::getTexts()
+{
+    return m_texts;
+}
+
+std::unique_ptr<Texture> const& Score_Board::getBG()
+{
+    return backgroundTexture;
+}
+
+void Score_Board::reset()
+{
+
+}
+
+void Score_Board::create()
+{
+    for(size_t i = m_players.size(); i > 0; i--)
+    {
+        Text text;
+        text.setFont(*m_font);
+        text.setCharacterSize(30);
+        text.setFillColor(Color::White);
+        text.setPosition(SCREEN_WIDTH / 2 - 50, 50*i);
+        text.setString(m_players.at(i - 1).name + "    " + std::to_string(m_players.at(i - 1).score));
+        m_texts.push_back(text);
+    }
+}
+
 } // namespace arkanoid

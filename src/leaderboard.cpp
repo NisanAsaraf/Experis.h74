@@ -1,7 +1,7 @@
 #include "../inc/leaderboard.hpp"
 namespace arkanoid
 {
-    void LeaderBoard::top_10_handler(PlayerData const& a_player)
+    void ScoresFileManager::top_10_handler(PlayerData const& a_player)
     {
         std::vector<PlayerData> top_10;
     
@@ -12,9 +12,9 @@ namespace arkanoid
         save_scores(top_10);
     }
 
-    void LeaderBoard::load_scores(std::vector<PlayerData>& a_top_10)
+    void ScoresFileManager::load_scores(std::vector<PlayerData>& a_top_10)
     {
-        std::ifstream file("top_scores.txt");
+        std::ifstream file("/home/nisan/Experis.h74/assets/scoreboard/top_scores.txt");
         if (file.is_open())
             {
                 std::string line;
@@ -36,13 +36,13 @@ namespace arkanoid
             }
             else
             {
-                throw std::runtime_error("Error: Unable to open file for reading.");
+                throw std::runtime_error("Error: Unable to load file for reading.");
             }
     }
 
-    void LeaderBoard::save_scores(std::vector<PlayerData>& a_top_10)
+    void ScoresFileManager::save_scores(std::vector<PlayerData>& a_top_10)
     {
-        std::ofstream outputFile("top_scores.txt");
+        std::ofstream outputFile("/home/nisan/Experis.h74/assets/scoreBoard/top_scores.txt");
         if (outputFile.is_open())
         {
             for (const PlayerData& player : a_top_10)
@@ -57,7 +57,7 @@ namespace arkanoid
         }
     }
 
-    void LeaderBoard::scoreboard_recalculation(std::vector<PlayerData>& a_top_10)
+    void ScoresFileManager::scoreboard_recalculation(std::vector<PlayerData>& a_top_10)
     {
         std::sort(a_top_10.begin(), a_top_10.end(), [](PlayerData const& p1, PlayerData const& p2) 
         {

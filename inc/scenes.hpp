@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "block.hpp"
 #include "UI.hpp"
+#include "leaderboard.hpp"
 #include <vector>
 
 namespace arkanoid
@@ -44,6 +45,22 @@ public:
 private:
     std::vector<std::unique_ptr<Block>> blocks;
     std::unique_ptr<Texture> backgroundTexture;
+};
+
+class Score_Board : public Scene
+{
+public:
+    Score_Board(std::vector<PlayerData>&);
+    void create() override;
+    void reset() override;
+    std::vector<Text> const& getTexts();
+    std::unique_ptr<Texture> const& getBG();
+
+private:
+    std::vector<PlayerData> m_players;
+    std::unique_ptr<Texture> backgroundTexture;
+    std::unique_ptr<Font> m_font;
+    std::vector<Text> m_texts;
 };
 
 }
