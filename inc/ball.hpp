@@ -49,6 +49,7 @@ public:
     
 private:
     std::unique_ptr<CircleShape> shape;
+    std::unique_ptr<Texture> ballTexture;
     Vector2f velocity;
     bool start;
     bool vanished;

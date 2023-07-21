@@ -10,9 +10,13 @@ namespace arkanoid
         shape = std::make_unique<CircleShape>(10.0f);
         shape->setPosition(SCREEN_WIDTH/2 - 10, SCREEN_HEIGHT - 70);
         vanished = false;
+        ballTexture = std::make_unique<Texture>();
+        if (!(*ballTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/58-Breakout-Tiles.png"))
+        {
+            throw std::runtime_error("Failed to load font from file.");
+        }
 
-        //Color randomColor = RandomColorGenerator::getRandomColor();
-        shape->setFillColor(Color::White);
+        shape->setTexture(&(*ballTexture));
         velocity = Vector2f(0,0);
         start = false;
     }

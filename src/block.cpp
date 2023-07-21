@@ -2,10 +2,11 @@
 namespace arkanoid
 {
 
-Block::Block(Color a_color, float a_x, float a_y)
+Block::Block(Texture a_blockTexture, float a_x, float a_y)
 {
     shape = std::make_unique<RectangleShape>(Vector2f(100.0f, 40.0f));
-    shape->setFillColor(a_color);
+    blockTexture = std::make_unique<Texture>(a_blockTexture);
+    shape->setTexture(&(*blockTexture));
     shape->setPosition(a_x, a_y);
     vanished = false;
 }

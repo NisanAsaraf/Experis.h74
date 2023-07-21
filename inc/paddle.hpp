@@ -27,6 +27,7 @@ public:
 
 private:
     std::unique_ptr<RectangleShape> paddle;
+    std::unique_ptr<Texture> paddleTexture;
     Vector2f velocity;
     float acceleration;
     bool start;

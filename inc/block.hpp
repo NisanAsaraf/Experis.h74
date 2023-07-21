@@ -10,7 +10,7 @@ using namespace sf;
 class Block
 {
 public:
-    Block(Color, float , float);
+    Block(Texture, float , float);
     FloatRect getGlobalBounds();
     Vector2f getSize();
     bool isVanished();
@@ -21,6 +21,7 @@ private:
 
 private:
     std::unique_ptr<RectangleShape> shape;
+    std::unique_ptr<Texture> blockTexture;
     bool vanished;
 
 };

@@ -6,7 +6,13 @@ Paddle::Paddle()
 {
     paddle = std::make_unique<RectangleShape>(Vector2f(100.0f, 20.0f));
     start = false;
-    paddle->setFillColor(Color::Blue);
+    paddleTexture    = std::make_unique<Texture>();
+
+    if (!(*paddleTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/49-Breakout-Tiles.png"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+    paddle->setTexture(&(*paddleTexture));
     paddle->setPosition(SCREEN_WIDTH/2 - 50, SCREEN_HEIGHT - 50);
     max_speed = 25.0f;
     acceleration = 50.0f;

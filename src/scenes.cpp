@@ -48,15 +48,28 @@ Level_One::Level_One()
 
 void Level_One::create()
 {
-    std::vector<sf::Color> block_colors;
     size_t row, col;
 
     row = 3;
     col = 5;
+    Texture b1,b2,b3;
 
-    block_colors.push_back(sf::Color::Green);
-    block_colors.push_back(sf::Color::Magenta);
-    block_colors.push_back(sf::Color::Cyan);
+    if (!b1.loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/01-Breakout-Tiles.png"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+    if (!b2.loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/03-Breakout-Tiles.png"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+    if (!b3.loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/05-Breakout-Tiles.png"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+    std::vector<Texture> textures;
+    textures.push_back(b1);
+    textures.push_back(b2);
+    textures.push_back(b3);
 
     const int blockWidth = 100;
     const int blockHeight = 40;
@@ -72,9 +85,7 @@ void Level_One::create()
         {
             int x = 150 + spacingX + j * (blockWidth + spacingX);
             int y = 100 + spacingY + i * (blockHeight + spacingY);
-            Color brick_color = block_colors.at(i);
-
-            std::unique_ptr<Block> block = std::make_unique<Block>(brick_color, x, y);
+            std::unique_ptr<Block> block = std::make_unique<Block>(textures.at(i), x, y);
             blocks.emplace_back(std::move(block)); 
         }
     }
