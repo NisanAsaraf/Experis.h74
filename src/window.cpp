@@ -22,6 +22,8 @@ using namespace sf;
         window.setFramerateLimit(64);
         window.setVerticalSyncEnabled(false);
         make_title_screen();
+        //make_level_one()
+        //make_scoreBoard_screen();
     }
 
     void Game_Window::make_level_one()

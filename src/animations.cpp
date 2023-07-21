@@ -17,6 +17,7 @@ void Illustrator::draw_BG_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_w
 void Illustrator::draw_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_window)
 {
     std::vector<Text> texts = a_scoreBoard.getTexts();
+    a_window.draw(*a_scoreBoard.getHeader());
     for(auto& text: texts)
     {   
         a_window.draw(text);

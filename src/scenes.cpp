@@ -130,6 +130,7 @@ Score_Board::Score_Board(std::vector<PlayerData>& a_players)
     m_players = a_players;
     backgroundTexture = std::make_unique<Texture>();
     m_header = std::make_unique<Text>();
+
     m_font = std::make_unique<Font>();
     if(!backgroundTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/ScoreBoard_BG.jpg"))
     {
@@ -151,6 +152,11 @@ std::unique_ptr<Texture> const& Score_Board::getBG()
     return backgroundTexture;
 }
 
+std::unique_ptr<Text> const& Score_Board::getHeader()
+{
+    return m_header;
+}
+
 void Score_Board::reset()
 {
 
@@ -158,13 +164,19 @@ void Score_Board::reset()
 
 void Score_Board::create()
 {
+    m_header->setFont(*m_font);
+    m_header->setCharacterSize(60);
+    m_header->setFillColor(Color::White);
+    m_header->setPosition(SCREEN_WIDTH/3, 10);
+    m_header->setString("LEADERBOARD");
+
     for(size_t i = m_players.size(); i > 0; i--)
     {
         Text text;
         text.setFont(*m_font);
         text.setCharacterSize(30);
         text.setFillColor(Color::White);
-        text.setPosition(SCREEN_WIDTH / 2 - 50, 50*i);
+        text.setPosition(SCREEN_WIDTH / 2 - 50, 100 + 40*i);
         text.setString(m_players.at(i - 1).name + "    " + std::to_string(m_players.at(i - 1).score));
         m_texts.push_back(text);
     }

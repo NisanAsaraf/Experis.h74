@@ -55,6 +55,7 @@ public:
     void reset() override;
     std::vector<Text> const& getTexts();
     std::unique_ptr<Texture> const& getBG();
+    std::unique_ptr<Text> const& getHeader();
 
 private:
     std::vector<PlayerData> m_players;
