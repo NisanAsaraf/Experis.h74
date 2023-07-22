@@ -278,6 +278,24 @@ using namespace sf;
         }
     }
 
+    void Game_Window::restart()
+    {
+        window.clear();
+        player->reset();
+        paddle_reset();
+        balls.clear();
+        scene->reset();
+    }
+
+    void Game_Window::restart_game_handler(Event const& event)
+    {
+        if ((event.type == Event::KeyPressed && event.key.code != Keyboard::Escape))
+        {
+            restart();
+            make_title_screen();
+        }
+    }
+
     void Game_Window::win_condition()
     {
         if(player->get_score() == WIN_SCORE)
@@ -306,7 +324,7 @@ using namespace sf;
         text.setString("YOU WIN!");
         text.setCharacterSize(100);
         text.setFillColor(Color::Green);
-        text.setPosition(SCREEN_WIDTH/4 + 20, SCREEN_HEIGHT/3);
+        text.setPosition(SCREEN_WIDTH/4 + 40, SCREEN_HEIGHT/3);
 
         while(clk.getElapsedTime().asSeconds() < 10)
         {
@@ -355,15 +373,6 @@ using namespace sf;
                 break;
             }          
         }
-    }
-
-    void Game_Window::restart()
-    {
-        window.clear();
-        player->reset();
-        paddle_reset();
-        balls.clear();
-        scene->reset();
     }
 
     void Game_Window::animate_balls()
@@ -563,12 +572,22 @@ using namespace sf;
         }
     }
 
-    void Game_Window::restart_game_handler(Event const& event)
+    void Game_Window::paddle_out_of_bounds_handler()
     {
-        if ((event.type == Event::KeyPressed && event.key.code != Keyboard::Escape))
+        Paddle& pad = *paddle;
+        FloatRect paddleBounds = pad.getGlobalBounds();
+        FloatRect borderBounds = (*border).getGlobalBounds();
+        float newY = pad.getPosition().y;
+        float newXL = borderBounds.left + 5.0f;
+        float newXR = borderBounds.left + borderBounds.width - paddleBounds.width - 5.0f;
+
+        if (paddleBounds.left < borderBounds.left)
         {
-            restart();
-            make_title_screen();
+            pad.setPosition(newXL,newY);
+        }
+        else if (paddleBounds.left + paddleBounds.width > borderBounds.left + borderBounds.width)
+        {
+            pad.setPosition(newXR,newY);
         }
     }
 
@@ -592,25 +611,6 @@ using namespace sf;
                     restart_game_handler(event);
                     break;
             }
-        }
-    }
-
-    void Game_Window::paddle_out_of_bounds_handler()
-    {
-        Paddle& pad = *paddle;
-        FloatRect paddleBounds = pad.getGlobalBounds();
-        FloatRect borderBounds = (*border).getGlobalBounds();
-        float newY = pad.getPosition().y;
-        float newXL = borderBounds.left + 5.0f;
-        float newXR = borderBounds.left + borderBounds.width - paddleBounds.width - 5.0f;
-
-        if (paddleBounds.left < borderBounds.left)
-        {
-            pad.setPosition(newXL,newY);
-        }
-        else if (paddleBounds.left + paddleBounds.width > borderBounds.left + borderBounds.width)
-        {
-            pad.setPosition(newXR,newY);
         }
     }
 
