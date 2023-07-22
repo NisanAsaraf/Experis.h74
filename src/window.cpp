@@ -321,32 +321,29 @@ using namespace sf;
 
     void Game_Window::animate_balls()
     {
+        Animator anima;
         for (const auto& ballPtr : balls)
         {
-            Ball& ball = *ballPtr;
-            ball.move(ball.getVelocity());
+            anima.animate_ball(*ballPtr);
         }
     }
 
     void Game_Window::animate_paddle_right()
     {
-        Paddle& pad = *paddle;
-        pad.right(clock);
-        pad.move(pad.getVelocity());
+        Animator anima;
+        anima.animate_paddle_right(*paddle, clock);
     }
 
     void Game_Window::animate_paddle_left()
     {
-        Paddle& pad = *paddle;
-        pad.left(clock);
-        pad.move(pad.getVelocity());
+        Animator anima;
+        anima.animate_paddle_left(*paddle, clock);
     }
 
     void Game_Window::animate_paddle_stop()
     {
-        Paddle& pad = *paddle;
-        pad.stop();
-        pad.move(pad.getVelocity());
+        Animator anima;
+        anima.animate_paddle_stop(*paddle);
     }
 
     void Game_Window::update_top_scores()

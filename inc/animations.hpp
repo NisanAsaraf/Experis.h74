@@ -2,8 +2,11 @@
 #define ANIME_H
 #include <SFML/Graphics.hpp>
 #include "leaderboard.hpp"
-#include "scenes.hpp"
 #include <string>
+#include "scenes.hpp"
+#include "ball.hpp"
+#include "paddle.hpp"
+
 
 namespace arkanoid
 {
@@ -23,6 +26,14 @@ public:
     void draw_game_over_screen(Font&, RenderWindow&);
 };
 
+class Animator
+{
+public:
+    void animate_ball(Ball&);
+    void animate_paddle_right(Paddle&, Clock&);
+    void animate_paddle_left(Paddle&, Clock&);
+    void animate_paddle_stop(Paddle&);
+};
 
 }//namespace arkanoid
 #include "inl/animations.hxx"
