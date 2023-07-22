@@ -6,10 +6,6 @@ namespace arkanoid
 
 Title_Screen::Title_Screen()
 {
-    if (!m_font.loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Regular.ttf"))
-    {
-        throw std::runtime_error("Failed to load font from file.");
-    }
     backgroundTexture = std::make_unique<Texture>();
 
     if (!(*backgroundTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/titleBG.jpg"))
@@ -27,19 +23,8 @@ void Title_Screen::create()
     std::unique_ptr<Button> m_start_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.3, SCREEN_HEIGHT/1.9), startButton);
     std::unique_ptr<Button> m_quit_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.13, SCREEN_HEIGHT/1.5), quitButton);
 
-    m_title_screen_text.setFont(m_font);
-    m_title_screen_text.setString("Arkanoid - Nisan");
-    m_title_screen_text.setCharacterSize(100);
-    m_title_screen_text.setFillColor(Color::White);
-    m_title_screen_text.setPosition(SCREEN_WIDTH/8, SCREEN_HEIGHT/4);
-
     buttons.emplace_back(std::move(m_start_game));
     buttons.emplace_back(std::move(m_quit_game));
-}
-
-Text const& Title_Screen::getTitleText()
-{
-    return m_title_screen_text;
 }
 
 std::vector<std::unique_ptr<Button>>& Title_Screen::get_vector()
