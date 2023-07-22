@@ -287,15 +287,6 @@ using namespace sf;
         scene->reset();
     }
 
-    void Game_Window::restart_game_handler(Event const& event)
-    {
-        if ((event.type == Event::KeyPressed && event.key.code != Keyboard::Escape))
-        {
-            restart();
-            make_title_screen();
-        }
-    }
-
     void Game_Window::win_condition()
     {
         if(player->get_score() == WIN_SCORE)
@@ -316,63 +307,16 @@ using namespace sf;
 
     void Game_Window::game_win_screen()
     {
-        Text text;
-        Clock clk;
-        Event event;
-        bool quit = false;
-        text.setFont(font);
-        text.setString("YOU WIN!");
-        text.setCharacterSize(100);
-        text.setFillColor(Color::Green);
-        text.setPosition(SCREEN_WIDTH/4 + 40, SCREEN_HEIGHT/3);
-
-        while(clk.getElapsedTime().asSeconds() < 10)
-        {
-            window.draw(text);
-            window.display();
-            while (window.pollEvent(event))
-            {
-                if (event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
-                {
-                    quit = true;
-                    break;
-                }
-            }
-            if(quit)
-            {
-                break;
-            }
-        }
+        Illustrator illustrator;
+        illustrator.draw_win_screen(font , window);
         currentGameState = GameState::ScoreBoard;
         make_scoreBoard_screen();
     }
 
     void Game_Window::game_over_screen()
     {
-        Text text;
-        Clock clk;
-        Event event;
-        bool quit = false;
-
-        text.setFont(font);
-        text.setString("GAME OVER!");
-        text.setCharacterSize(100);
-        text.setFillColor(Color::Red);
-        text.setPosition(SCREEN_WIDTH/4 - 20, SCREEN_HEIGHT/3 );
-
-        while(clk.getElapsedTime().asSeconds() < 20)
-        {
-            window.draw(text);
-            window.display();
-            while (window.pollEvent(event))
-            {
-                quit = close_window_check(event);
-            }
-            if(quit)
-            {
-                break;
-            }          
-        }
+        Illustrator illustrator;
+        illustrator.draw_game_over_screen(font , window);
     }
 
     void Game_Window::animate_balls()
@@ -554,6 +498,25 @@ using namespace sf;
         return playerName;
     }        
 
+    void Game_Window::paddle_out_of_bounds_handler()
+    {
+        Paddle& pad = *paddle;
+        FloatRect paddleBounds = pad.getGlobalBounds();
+        FloatRect borderBounds = (*border).getGlobalBounds();
+        float newY = pad.getPosition().y;
+        float newXL = borderBounds.left + 5.0f;
+        float newXR = borderBounds.left + borderBounds.width - paddleBounds.width - 5.0f;
+
+        if (paddleBounds.left < borderBounds.left)
+        {
+            pad.setPosition(newXL,newY);
+        }
+        else if (paddleBounds.left + paddleBounds.width > borderBounds.left + borderBounds.width)
+        {
+            pad.setPosition(newXR,newY);
+        }
+    }
+
     void Game_Window::new_high_score_check()
     {
         uint32_t score = static_cast<uint32_t>(player->get_score());
@@ -572,22 +535,12 @@ using namespace sf;
         }
     }
 
-    void Game_Window::paddle_out_of_bounds_handler()
+   void Game_Window::restart_game_handler(Event const& event)
     {
-        Paddle& pad = *paddle;
-        FloatRect paddleBounds = pad.getGlobalBounds();
-        FloatRect borderBounds = (*border).getGlobalBounds();
-        float newY = pad.getPosition().y;
-        float newXL = borderBounds.left + 5.0f;
-        float newXR = borderBounds.left + borderBounds.width - paddleBounds.width - 5.0f;
-
-        if (paddleBounds.left < borderBounds.left)
+        if ((event.type == Event::KeyPressed && event.key.code != Keyboard::Escape))
         {
-            pad.setPosition(newXL,newY);
-        }
-        else if (paddleBounds.left + paddleBounds.width > borderBounds.left + borderBounds.width)
-        {
-            pad.setPosition(newXR,newY);
+            restart();
+            make_title_screen();
         }
     }
 

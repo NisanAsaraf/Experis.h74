@@ -66,4 +66,69 @@ void Illustrator::draw_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_wind
         a_window.draw(text);
     }
 }
+
+void Illustrator::draw_win_screen(Font& a_font, RenderWindow& a_window)
+{
+    Text text;
+    Clock clk;
+    Event event;
+    bool quit = false;
+    
+    text.setFont(a_font);
+    text.setString("YOU WIN!");
+    text.setCharacterSize(100);
+    text.setFillColor(Color::Green);
+    text.setPosition(SCREEN_WIDTH/4 + 40, SCREEN_HEIGHT/3);
+
+    while(clk.getElapsedTime().asSeconds() < 10)
+    {
+        a_window.draw(text);
+        a_window.display();
+        while (a_window.pollEvent(event))
+        {
+            if (event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
+            {
+                quit = true;
+                break;
+            }
+        }
+        if(quit)
+        {
+            break;
+        }
+    }
+}
+
+void Illustrator::draw_game_over_screen(Font& a_font, RenderWindow& a_window)
+{
+    Text text;
+    Clock clk;
+    Event event;
+    bool quit = false;
+
+    text.setFont(a_font);
+    text.setString("GAME OVER!");
+    text.setCharacterSize(100);
+    text.setFillColor(Color::Red);
+    text.setPosition(SCREEN_WIDTH/4 - 20, SCREEN_HEIGHT/3 );
+
+    while(clk.getElapsedTime().asSeconds() < 20)
+    {
+        a_window.draw(text);
+        a_window.display();
+        while (a_window.pollEvent(event))
+        {
+            if (event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
+            {
+                a_window.close();
+                quit = true;
+            }
+        }
+        if(quit)
+        {
+            break;
+        }          
+    }
+}
+
 }//namespace arkanoid

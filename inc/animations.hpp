@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "leaderboard.hpp"
 #include "scenes.hpp"
+#include <string>
 
 namespace arkanoid
 {
@@ -17,6 +18,9 @@ public:
     void draw_title_screen(Title_Screen&, RenderWindow&);
     void draw_level_one(Level_One&, RenderWindow&);
     void draw_scoreboard(Score_Board&, RenderWindow&);
+
+    void draw_win_screen(Font&, RenderWindow&);
+    void draw_game_over_screen(Font&, RenderWindow&);
 };
 
 
