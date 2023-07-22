@@ -39,7 +39,6 @@ void Paddle::left(Clock& a_clock)
         float newVelocity = velocity.x - (acceleration * timeDeltaSeconds);
         velocity.x = std::max(newVelocity, -max_speed);
     }
-    
 }
 
 Vector2f Paddle::getSize()

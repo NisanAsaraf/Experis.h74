@@ -20,6 +20,11 @@ std::string const& Player::get_name()
     return m_name;
 }
 
+void Player::set_name(std::string a_name)
+{
+    m_name = a_name;
+}
+
 void Player::reset()
 {
     m_score = 0;

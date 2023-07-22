@@ -15,6 +15,7 @@ public:
     bool is_dead();
     size_t get_lives();
     std::string const& get_name();
+    void set_name(std::string);
     size_t const& get_score();
 private:
     std::string m_name;

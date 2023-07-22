@@ -12,6 +12,7 @@ using namespace sf;
     ,"Arkanoid",Style::Titlebar | Style::Close)
     ,currentGameState(GameState::TitleScreen)
     ,paused(false)
+    ,high_score(false)
     { 
         create_player();
         if (!font.loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Bold.ttf"))
@@ -21,9 +22,9 @@ using namespace sf;
 
         window.setFramerateLimit(64);
         window.setVerticalSyncEnabled(false);
-        make_title_screen();
+        //make_title_screen();
         //make_level_one()
-        //make_scoreBoard_screen();
+        make_scoreBoard_screen();
     }
 
     void Game_Window::make_level_one()
@@ -416,8 +417,10 @@ using namespace sf;
     void Game_Window::update_top_scores()
     {
         ScoresFileManager sc_manager;
-        PlayerData p_data = {player->get_name(), player->get_score(), clock.getElapsedTime()};
-        sc_manager.top_10_handler(p_data);
+        std::unique_ptr<PlayerData> p_data = std::make_unique<PlayerData>();
+        *p_data = {player->get_name(), player->get_score(), clock.getElapsedTime()};
+        std::cout<<player->get_name()<<'\n';
+        sc_manager.update_top10_file(*p_data);
     }
 
     void Game_Window::pause_game()
@@ -498,6 +501,68 @@ using namespace sf;
             }
         }
     }
+
+    std::string Game_Window::input_name()
+    {
+        Text text("New high score!\n input name:", font, 50);
+        text.setFillColor(Color::White);
+        text.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/4);
+        Text inputText("", font, 30);
+        std::string playerName;
+        inputText.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3 + 100);
+        inputText.setFillColor(Color::Cyan);
+
+        bool quit = false;
+        Event event;
+        while(window.isOpen())
+        {
+            while (window.pollEvent(event)) 
+            {
+                close_window_check(event);
+                if (event.type == Event::KeyPressed && event.key.code == Keyboard::Enter)
+                {
+                    quit = true;
+                }
+                else if (event.type == sf::Event::TextEntered) 
+                {
+                    if (event.text.unicode < 128 && playerName.size() <= 16 && event.text.unicode != '\b') 
+                    {
+                        playerName += static_cast<char>(event.text.unicode);
+                        inputText.setString(playerName);
+                    } else if (event.text.unicode == '\b' && !playerName.empty()) 
+                    {
+                        playerName.pop_back();
+                        inputText.setString(playerName);
+                    }
+                }
+            }
+            window.clear(Color::Black);
+            window.draw(text);
+            window.draw(inputText);
+            window.display();
+
+            if(quit)
+            {
+                break;
+            }
+        }
+        return playerName;
+    }        
+
+    void Game_Window::new_high_score_check()
+    {
+        std::vector<PlayerData> top_10;
+        PlayerData new_player{"", player->get_score(), clock.getElapsedTime()};
+        //ScoresFileManager score_manager;
+
+        if(true /* score_manager.check_new_high_score(new_player) */)
+        {
+            high_score = true;
+            player->set_name(input_name());
+            update_top_scores();
+        }
+    }
+
     void Game_Window::processEvents()
     {
         Event event;
@@ -514,6 +579,7 @@ using namespace sf;
                     paddle_movement_control(event);
                     break;
                 case GameState::ScoreBoard:
+                    new_high_score_check();//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                     break;
             }
         }

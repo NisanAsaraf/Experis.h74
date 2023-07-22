@@ -20,8 +20,9 @@ struct PlayerData
 class ScoresFileManager
 {
 public:
-    void top_10_handler(PlayerData const& a_player);
+    void update_top10_file(PlayerData const& a_player);
     void load_scores(std::vector<PlayerData>& a_top_10);
+    bool check_new_high_score(PlayerData const&);
 private:
     void save_scores(std::vector<PlayerData>& a_top_10);
     void scoreboard_recalculation(std::vector<PlayerData>& a_top_10);

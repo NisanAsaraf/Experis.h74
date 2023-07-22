@@ -34,12 +34,14 @@ public:
     void paddle_reset();
     void draw_level_one();
     void draw_title_screen();
+    void new_high_score_check();
     void draw_background_title_screen();
     void draw_background_level_one();
     void draw_background_score_board();
     void paddle_movement_control(Event const&);
     bool close_window_check(Event const&);
     void win_condition();
+    std::string input_name();
     void pause_game();
     void draw_hearts();
     void restart();
@@ -81,6 +83,7 @@ private:
     std::unique_ptr<Scene> scene;
     Font font;
     bool paused;
+    bool high_score;
 };
 
 } // namespace arkanoid
