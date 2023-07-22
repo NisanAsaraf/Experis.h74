@@ -22,15 +22,15 @@ using namespace sf;
 
         window.setFramerateLimit(64);
         window.setVerticalSyncEnabled(false);
-        //make_title_screen();
+        make_title_screen();
         //make_level_one()
-        make_scoreBoard_screen();
+        //make_scoreBoard_screen();
     }
 
     void Game_Window::make_level_one()
     {
         currentGameState = GameState::Level1;
-
+        clock.restart();
         scene = std::make_unique<Level_One>();
         Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
 
@@ -418,8 +418,7 @@ using namespace sf;
     {
         ScoresFileManager sc_manager;
         std::unique_ptr<PlayerData> p_data = std::make_unique<PlayerData>();
-        *p_data = {player->get_name(), player->get_score(), clock.getElapsedTime()};
-        std::cout<<player->get_name()<<'\n';
+        *p_data = {player->get_name() , player->get_score(), clock.getElapsedTime().asSeconds()};
         sc_manager.update_top10_file(*p_data);
     }
 
@@ -522,6 +521,8 @@ using namespace sf;
                 if (event.type == Event::KeyPressed && event.key.code == Keyboard::Enter)
                 {
                     quit = true;
+                    make_title_screen();
+                    break;
                 }
                 else if (event.type == sf::Event::TextEntered) 
                 {
@@ -551,11 +552,10 @@ using namespace sf;
 
     void Game_Window::new_high_score_check()
     {
-        std::vector<PlayerData> top_10;
-        PlayerData new_player{"", player->get_score(), clock.getElapsedTime()};
+        //PlayerData new_player{"", player->get_score(), clock.getElapsedTime()};
         //ScoresFileManager score_manager;
 
-        if(true /* score_manager.check_new_high_score(new_player) */)
+        if(true /* score_manager.check_new_high_score(new_player) */ )
         {
             high_score = true;
             player->set_name(input_name());
@@ -579,7 +579,7 @@ using namespace sf;
                     paddle_movement_control(event);
                     break;
                 case GameState::ScoreBoard:
-                    new_high_score_check();//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                    new_high_score_check();
                     break;
             }
         }

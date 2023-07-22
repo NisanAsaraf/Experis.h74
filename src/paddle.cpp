@@ -19,7 +19,7 @@ Paddle::Paddle()
     velocity = Vector2f(0.0f, 0.0f);
 }
 
-void Paddle::right(Clock& a_clock)
+void Paddle::right(Clock a_clock)
 {
     Time deltaTime = a_clock.restart();
     float timeDeltaSeconds = deltaTime.asSeconds();
@@ -30,7 +30,7 @@ void Paddle::right(Clock& a_clock)
     }
 }
 
-void Paddle::left(Clock& a_clock)
+void Paddle::left(Clock a_clock)
 {   
     Time deltaTime = a_clock.restart();
     float timeDeltaSeconds = deltaTime.asSeconds();

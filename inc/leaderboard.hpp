@@ -14,13 +14,13 @@ struct PlayerData
 {
     std::string name;
     size_t score;
-    sf::Time elapsedTime;
+    float elapsedTimeSeconds;
 };
 
 class ScoresFileManager
 {
 public:
-    void update_top10_file(PlayerData const& a_player);
+    void update_top10_file(PlayerData a_player);
     void load_scores(std::vector<PlayerData>& a_top_10);
     bool check_new_high_score(PlayerData const&);
 private:

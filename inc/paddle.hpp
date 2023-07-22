@@ -21,8 +21,8 @@ public:
     void setPosition(float , float);
     void setPosition(Vector2f);
     void move(Vector2f);
-    void left(Clock&);
-    void right(Clock&);
+    void left(Clock);
+    void right(Clock);
     void stop();
 
 private:

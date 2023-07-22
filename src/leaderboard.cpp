@@ -2,24 +2,22 @@
 #include <iostream>
 namespace arkanoid
 {
-    void ScoresFileManager::update_top10_file(PlayerData const& a_player)
+    void ScoresFileManager::update_top10_file(PlayerData a_player)
     {
         std::vector<PlayerData> top_10;
-        std::cout << a_player.name + " " << std::to_string(a_player.score) + " " << std::to_string(a_player.elapsedTime.asSeconds()) + " " << '\n';
         load_scores(top_10);
 
         for(auto const& p : top_10)
         {
-            std::cout<< p.name + " " << std::to_string(p.score) + " " << std::to_string(p.elapsedTime.asSeconds()) + " " << '\n';
+            std::cout<< p.name << " " << std::to_string(p.score) + " " << std::to_string(p.elapsedTimeSeconds) + " " << '\n';
         }
 
         top_10.push_back(a_player);
-
         scoreboard_recalculation(top_10);
 
         for(auto const& p : top_10)
         {
-            std::cout<< p.name + " " << std::to_string(p.score) + " " << std::to_string(p.elapsedTime.asSeconds()) + " " << '\n';
+            std::cout<< p.name << " " << std::to_string(p.score) + " " << std::to_string(p.elapsedTimeSeconds) + " " << '\n';
         }
 
         save_scores(top_10);
@@ -37,10 +35,10 @@ namespace arkanoid
                     PlayerData player;
                     if (iss >> player.name >> player.score)
                     {
-                        float elapsedTimeSeconds;
-                        if (iss >> elapsedTimeSeconds)
+                        float seconds;
+                        if (iss >> seconds)
                         {
-                            player.elapsedTime = sf::seconds(elapsedTimeSeconds);
+                            player.elapsedTimeSeconds = seconds;
                             a_top_10.push_back(player);
                         }
                     }
@@ -60,7 +58,7 @@ namespace arkanoid
         {
             for (const PlayerData& player : a_top_10)
             {
-                outputFile << player.name << " " <<  std::to_string(player.score) << " " <<  std::to_string(player.elapsedTime.asSeconds())<< "\n";;
+                outputFile << player.name << " " <<  std::to_string(player.score) << " " <<  std::to_string(player.elapsedTimeSeconds)<< "\n";;
             }
             outputFile.close();
         }
@@ -82,7 +80,7 @@ namespace arkanoid
                 } 
                 else if(p1.score == p2.score)
                 {
-                    return p1.elapsedTime < p2.elapsedTime;
+                    return p1.elapsedTimeSeconds < p2.elapsedTimeSeconds;
                 }
                 return false;
             });
@@ -102,7 +100,7 @@ namespace arkanoid
             }
             else if(player_data.score == new_player_data.score)
             {
-                if(player_data.elapsedTime > new_player_data.elapsedTime)
+                if(player_data.elapsedTimeSeconds > new_player_data.elapsedTimeSeconds)
                 {
                     return true;
                 }
