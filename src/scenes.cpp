@@ -20,8 +20,12 @@ Title_Screen::Title_Screen()
 
 void Title_Screen::create()
 {
-    std::unique_ptr<Button> m_start_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.2, SCREEN_HEIGHT/2), "Start Game", m_font);
-    std::unique_ptr<Button> m_quit_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.2, SCREEN_HEIGHT/1.5), "Quit Game", m_font);
+    Texture startButton, quitButton;
+    startButton.loadFromFile("/home/nisan/Experis.h74/assets/textures/Buttons/start_button.png");
+    quitButton.loadFromFile("/home/nisan/Experis.h74/assets/textures/Buttons/quit_button.png");
+
+    std::unique_ptr<Button> m_start_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.3, SCREEN_HEIGHT/1.9), startButton);
+    std::unique_ptr<Button> m_quit_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.13, SCREEN_HEIGHT/1.5), quitButton);
 
     m_title_screen_text.setFont(m_font);
     m_title_screen_text.setString("Arkanoid - Nisan");

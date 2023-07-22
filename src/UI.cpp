@@ -4,34 +4,30 @@ namespace arkanoid
 {
 using namespace sf;
 
-Button::Button(Vector2f a_pos, std::string const& a_text, Font& a_font)
+Button::Button(Vector2f a_pos, Texture const& a_texture)
 {
-    m_button = std::make_unique<RectangleShape>(Vector2f(100.0f,40.0f));
-    m_button->setFillColor(Color::White);
-    m_button->setPosition(a_pos - Vector2f(10.0f,10.0f));
+    m_buttonTexture = std::make_unique<Texture>(); 
+    (*m_buttonTexture) = a_texture;
 
-    m_button_text.setFont(a_font);
-    m_button_text.setString(a_text);
-    m_button_text.setCharacterSize(20);
-    m_button_text.setFillColor(Color::Black);
-
-    m_button_text.setPosition(a_pos);
-
+    m_buttonSprite = std::make_unique<Sprite>(*m_buttonTexture);
+    m_buttonSprite->setPosition(a_pos - Vector2f(20.0f, 10.0f));
+    m_buttonSprite->setColor(Color::White);
+    m_buttonSprite->setScale(0.2f,0.2f);
 }
 
 FloatRect Button::getBounds()
 {
-    return m_button->getGlobalBounds();
+    return m_buttonSprite->getGlobalBounds();
 }
 
-const RectangleShape& Button::getShape() const
+const Sprite& Button::getShape() const
 {
-    return *m_button;
+    return *m_buttonSprite;
 }
 
 void Button::setPosition(Vector2f new_pos)
 {
-    m_button->setPosition(new_pos);
+    m_buttonSprite->setPosition(new_pos);
 }
 
 void Button::setText(std::string const& new_str)

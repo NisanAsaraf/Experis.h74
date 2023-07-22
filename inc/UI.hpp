@@ -10,16 +10,18 @@ using namespace sf;
 class Button
 {
 public:
-    Button(Vector2f, std::string const&, Font&);
+    Button(Vector2f, Texture const&);
     FloatRect getBounds();
     Text const& getText();
     void setPosition(Vector2f);
     void setText(std::string const&);
     void setButtonColor(Color);
-    const RectangleShape& getShape() const;
+    const Sprite& getShape() const;
 private:
-    std::unique_ptr<RectangleShape> m_button;
+    std::unique_ptr<Sprite> m_buttonSprite;
+    std::unique_ptr<Texture> m_buttonTexture;
     Text m_button_text;
+
 };
 
 class Life
