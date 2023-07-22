@@ -1,7 +1,6 @@
 #include "../inc/window.hpp"
 #include <exception>
 #include <memory>
-#include <iostream>
 #include <fstream>
 namespace arkanoid
 {
@@ -207,11 +206,10 @@ using namespace sf;
     {
         float borderWidth = window.getSize().x - 10.0f ;
         float borderHeight = window.getSize().y - 10.0f ;
-        sf::Color Teal(0, 128, 128);
+        Color Teal(0, 128, 128);
 
         border = std::make_unique<sf::RectangleShape>(Vector2f(borderWidth, borderHeight));
         border->setFillColor(Color::Transparent);
-
         border->setPosition(5.0f, 5.0f);
         border->setOutlineThickness(5.0f);
         border->setOutlineColor(Teal);
@@ -547,7 +545,6 @@ using namespace sf;
         while (window.pollEvent(event))
         {   
             close_window_check(event);
-
             switch (currentGameState)
             {
                 case GameState::TitleScreen:
