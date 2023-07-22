@@ -1,5 +1,5 @@
 #include "../inc/leaderboard.hpp"
-#include <iostream>
+
 namespace arkanoid
 {
 
@@ -14,40 +14,47 @@ void ScoresFileManager::update_top10_file(PlayerData a_player)
 
 void ScoresFileManager::load_scores(std::vector<PlayerData>& a_top_10)
 {
-    std::ifstream file("/home/nisan/Experis.h74/assets/scoreboard/top_scores.dat");
-    if (file.is_open())
+    std::ifstream inputFile("/home/nisan/Experis.h74/assets/scoreboard/top_scores.dat", std::ios::binary);
+    if (inputFile.is_open())
+    {
+        a_top_10.clear();
+        while (true)
         {
-            std::string line;
-            while (std::getline(file, line) && a_top_10.size() < 10)
+            std::unique_ptr<PlayerData> playerPtr = std::make_unique<PlayerData>();
+            PlayerData& player = *playerPtr; // Use a reference to the object
+
+            if (!inputFile.read(reinterpret_cast<char*>(&player.score), sizeof(player.score)))
             {
-                std::istringstream iss(line);
-                PlayerData player;
-                if (iss >> player.name >> player.score)
-                {
-                    float seconds;
-                    if (iss >> seconds)
-                    {
-                        player.elapsedTimeSeconds = seconds;
-                        a_top_10.push_back(player);
-                    }
-                }
+                break;
             }
-            file.close();
+            if (!inputFile.read(reinterpret_cast<char*>(&player.elapsedTimeMs), sizeof(player.elapsedTimeMs)))
+            {
+                break;
+            }
+
+            inputFile.read(player.name, sizeof(player.name));
+            player.name[sizeof(player.name) - 1] = '\0'; 
+
+            a_top_10.push_back(std::move(player)); 
         }
-        else
-        {
-            create_scores_file();
-        }
+        inputFile.close();
+    }
+    else
+    {
+        create_scores_file();
+    }
 }
 
 void ScoresFileManager::save_scores(std::vector<PlayerData>& a_top_10)
 {
-    std::ofstream outputFile("/home/nisan/Experis.h74/assets/scoreboard/top_scores.dat");
+    std::ofstream outputFile("/home/nisan/Experis.h74/assets/scoreboard/top_scores.dat", std::ios::binary);
     if (outputFile.is_open())
     {
         for (const PlayerData& player : a_top_10)
         {
-            outputFile << player.name << " " <<  std::to_string(player.score) << " " <<  std::to_string(player.elapsedTimeSeconds)<< "\n";;
+            outputFile.write(reinterpret_cast<const char*>(&player.score), sizeof(player.score));
+            outputFile.write(reinterpret_cast<const char*>(&player.elapsedTimeMs), sizeof(player.elapsedTimeMs));
+            outputFile.write(player.name, sizeof(player.name));
         }
         outputFile.close();
     }
@@ -59,20 +66,21 @@ void ScoresFileManager::save_scores(std::vector<PlayerData>& a_top_10)
 
 void ScoresFileManager::scoreboard_recalculation(std::vector<PlayerData>& a_top_10)
 {   
+    std::sort(a_top_10.begin(), a_top_10.end(), [](PlayerData const& p1, PlayerData const& p2) 
+    {
+        if(p1.score > p2.score)
+        {
+            return true;
+        } 
+        else if(p1.score == p2.score)
+        {
+            return p1.elapsedTimeMs < p2.elapsedTimeMs;
+        }
+        return false;
+    });
+
     if(a_top_10.size() > 10)
     {
-        std::sort(a_top_10.begin(), a_top_10.end(), [](PlayerData const& p1, PlayerData const& p2) 
-        {
-            if(p1.score > p2.score)
-            {
-                return true;
-            } 
-            else if(p1.score == p2.score)
-            {
-                return p1.elapsedTimeSeconds < p2.elapsedTimeSeconds;
-            }
-            return false;
-        });
         a_top_10.pop_back();
     }
 }
@@ -95,7 +103,7 @@ bool ScoresFileManager::check_new_high_score(PlayerData const& new_player_data)
         }
         else if(player_data.score == new_player_data.score)
         {
-            if(player_data.elapsedTimeSeconds > new_player_data.elapsedTimeSeconds)
+            if(player_data.elapsedTimeMs > new_player_data.elapsedTimeMs)
             {
                 return true;
             }

@@ -6,15 +6,16 @@
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <algorithm>
+#include <nlohmann/json.hpp>
 
 namespace arkanoid
 {
-
+using json = nlohmann::json;
 struct PlayerData
 {
-    std::string name;
-    size_t score;
-    float elapsedTimeSeconds;
+    char name[32];
+    uint32_t score;
+    uint64_t elapsedTimeMs;
 };
 
 class ScoresFileManager

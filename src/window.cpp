@@ -277,12 +277,11 @@ using namespace sf;
 
     void Game_Window::restart()
     {
+        window.clear();
         player->reset();
         paddle_reset();
         balls.clear();
         scene->reset();
-        make_level_one();
-        spawn_ball();
     }
 
     void Game_Window::animate_balls()
@@ -419,9 +418,25 @@ using namespace sf;
     void Game_Window::update_top_scores()
     {
         ScoresFileManager sc_manager;
-        std::unique_ptr<PlayerData> p_data = std::make_unique<PlayerData>();
-        *p_data = {player->get_name() , player->get_score(), clock.getElapsedTime().asSeconds()};
-        sc_manager.update_top10_file(*p_data);
+
+        std::string playerName = player->get_name();
+        std::array<char, 32> nameArray{};
+        size_t nameLength = std::min(playerName.size(), nameArray.size() - 1);
+        std::copy_n(playerName.c_str(), nameLength, nameArray.begin());
+        nameArray[nameLength] = '\0';
+
+        uint32_t score = static_cast<uint32_t>(player->get_score());
+        uint64_t elapsedTimeMs = static_cast<uint64_t>(clock.getElapsedTime().asMilliseconds());
+
+        std::unique_ptr<PlayerData> playerData = std::make_unique<PlayerData>();
+        std::memcpy((*playerData).name, nameArray.data(), nameArray.size());
+
+        (*playerData).score = score;
+        (*playerData).elapsedTimeMs = elapsedTimeMs;
+    
+        std::cout << (*playerData).name << " " << (*playerData).score << " " << (*playerData).elapsedTimeMs << std::endl;
+
+        sc_manager.update_top10_file(*playerData);
     }
 
     void Game_Window::pause_game()
@@ -554,7 +569,10 @@ using namespace sf;
 
     void Game_Window::new_high_score_check()
     {
-        PlayerData new_player{"", player->get_score(), clock.getElapsedTime().asSeconds()};
+        uint32_t score = static_cast<uint32_t>(player->get_score());
+        uint64_t elapsedTimeMs = static_cast<uint64_t>(clock.getElapsedTime().asMilliseconds());
+
+        PlayerData new_player{"", score, elapsedTimeMs};
         ScoresFileManager score_manager;
 
         if(!high_score_entered && score_manager.check_new_high_score(new_player))
@@ -571,6 +589,7 @@ using namespace sf;
     {
         if ((event.type == Event::KeyPressed && event.key.code != Keyboard::Escape))
         {
+            restart();
             make_title_screen();
         }
     }

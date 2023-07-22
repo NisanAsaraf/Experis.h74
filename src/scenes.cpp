@@ -177,7 +177,7 @@ void Score_Board::create()
         text.setCharacterSize(30);
         text.setFillColor(Color::White);
         text.setPosition(SCREEN_WIDTH / 2 - 50, 100 + 40*i);
-        text.setString(m_players.at(i - 1).name + "    " + std::to_string(m_players.at(i - 1).score));
+        text.setString(std::string(m_players.at(i - 1).name) + "    " + std::to_string(m_players.at(i - 1).score));
         m_texts.push_back(text);
     }
 }
