@@ -6,26 +6,14 @@ namespace arkanoid
     {
         std::vector<PlayerData> top_10;
         load_scores(top_10);
-
-        for(auto const& p : top_10)
-        {
-            std::cout<< p.name << " " << std::to_string(p.score) + " " << std::to_string(p.elapsedTimeSeconds) + " " << '\n';
-        }
-
         top_10.push_back(a_player);
         scoreboard_recalculation(top_10);
-
-        for(auto const& p : top_10)
-        {
-            std::cout<< p.name << " " << std::to_string(p.score) + " " << std::to_string(p.elapsedTimeSeconds) + " " << '\n';
-        }
-
         save_scores(top_10);
     }
 
     void ScoresFileManager::load_scores(std::vector<PlayerData>& a_top_10)
     {
-        std::ifstream file("/home/nisan/Experis.h74/assets/scoreboard/top_scores.txt");
+        std::ifstream file("/home/nisan/Experis.h74/assets/scoreboard/top_scores.dat");
         if (file.is_open())
             {
                 std::string line;
@@ -53,7 +41,7 @@ namespace arkanoid
 
     void ScoresFileManager::save_scores(std::vector<PlayerData>& a_top_10)
     {
-        std::ofstream outputFile("/home/nisan/Experis.h74/assets/scoreboard/top_scores.txt");
+        std::ofstream outputFile("/home/nisan/Experis.h74/assets/scoreboard/top_scores.dat");
         if (outputFile.is_open())
         {
             for (const PlayerData& player : a_top_10)
