@@ -22,8 +22,8 @@ public:
     void draw_level_one(Level_One&, RenderWindow&);
     void draw_scoreboard(Score_Board&, RenderWindow&);
 
-    void draw_win_screen(Font&, RenderWindow&);
-    void draw_game_over_screen(Font&, RenderWindow&);
+    void draw_win_screen(RenderWindow&);
+    void draw_game_over_screen(RenderWindow&);
 };
 
 class Animator

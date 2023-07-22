@@ -306,7 +306,7 @@ using namespace sf;
     void Game_Window::game_win_screen()
     {
         Illustrator illustrator;
-        illustrator.draw_win_screen(font , window);
+        illustrator.draw_win_screen(window);
         currentGameState = GameState::ScoreBoard;
         make_scoreBoard_screen();
     }
@@ -314,7 +314,7 @@ using namespace sf;
     void Game_Window::game_over_screen()
     {
         Illustrator illustrator;
-        illustrator.draw_game_over_screen(font , window);
+        illustrator.draw_game_over_screen(window);
     }
 
     void Game_Window::animate_balls()

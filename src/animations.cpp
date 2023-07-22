@@ -37,7 +37,15 @@ void Illustrator::draw_BG_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_w
 void Illustrator::draw_title_screen(Title_Screen& a_titlescreen,RenderWindow& a_window)
 {
     auto const& buttons = a_titlescreen.get_vector();
-    a_window.draw(a_titlescreen.getTitleText());
+    Texture msg_texture;
+    Sprite msg_sprite;
+    msg_texture.loadFromFile("/home/nisan/Experis.h74/assets/textures/Messages/arkanoid_color.png");
+    msg_sprite.setTexture(msg_texture);
+    msg_sprite.setColor(Color::White);
+    msg_sprite.setScale(0.4f,0.4f);
+    msg_sprite.setPosition(SCREEN_WIDTH/12 - 10, SCREEN_HEIGHT/7);
+
+    a_window.draw(msg_sprite);
 
     for (auto& buttonPtr : buttons)
     {
@@ -67,22 +75,21 @@ void Illustrator::draw_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_wind
     }
 }
 
-void Illustrator::draw_win_screen(Font& a_font, RenderWindow& a_window)
+void Illustrator::draw_win_screen(RenderWindow& a_window)
 {
-    Text text;
+    Texture msg_texture;
+    Sprite msg_sprite;
+    msg_texture.loadFromFile("/home/nisan/Experis.h74/assets/textures/Messages/you_win.png");
+    msg_sprite.setTexture(msg_texture);
+    msg_sprite.setScale(0.5f,0.5f);
+    msg_sprite.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3);
     Clock clk;
     Event event;
     bool quit = false;
-    
-    text.setFont(a_font);
-    text.setString("YOU WIN!");
-    text.setCharacterSize(100);
-    text.setFillColor(Color::Green);
-    text.setPosition(SCREEN_WIDTH/4 + 40, SCREEN_HEIGHT/3);
 
     while(clk.getElapsedTime().asSeconds() < 10)
     {
-        a_window.draw(text);
+        a_window.draw(msg_sprite);
         a_window.display();
         while (a_window.pollEvent(event))
         {
@@ -99,22 +106,22 @@ void Illustrator::draw_win_screen(Font& a_font, RenderWindow& a_window)
     }
 }
 
-void Illustrator::draw_game_over_screen(Font& a_font, RenderWindow& a_window)
+void Illustrator::draw_game_over_screen(RenderWindow& a_window)
 {
-    Text text;
+    Texture msg_texture;
+    Sprite msg_sprite;
+    msg_texture.loadFromFile("/home/nisan/Experis.h74/assets/textures/Messages/game_over.png");
+    msg_sprite.setTexture(msg_texture);
+    msg_sprite.setScale(0.8f,0.8f);
+    msg_sprite.setPosition(SCREEN_WIDTH/4, SCREEN_HEIGHT/3);
+
     Clock clk;
     Event event;
     bool quit = false;
 
-    text.setFont(a_font);
-    text.setString("GAME OVER!");
-    text.setCharacterSize(100);
-    text.setFillColor(Color::Red);
-    text.setPosition(SCREEN_WIDTH/4 - 20, SCREEN_HEIGHT/3 );
-
     while(clk.getElapsedTime().asSeconds() < 20)
     {
-        a_window.draw(text);
+        a_window.draw(msg_sprite);
         a_window.display();
         while (a_window.pollEvent(event))
         {
