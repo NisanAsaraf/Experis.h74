@@ -61,6 +61,7 @@ public:
     void animate_paddle_stop();
     void draw_shapes();
     void draw_scene();
+    void restart_game_handler(Event const&);
     void processEvents();
     void paddle_out_of_bounds_handler();
     void handleCollisions();
@@ -84,6 +85,7 @@ private:
     Font font;
     bool paused;
     bool high_score;
+    bool high_score_entered;
 };
 
 } // namespace arkanoid

@@ -13,6 +13,7 @@ using namespace sf;
     ,currentGameState(GameState::TitleScreen)
     ,paused(false)
     ,high_score(false)
+    ,high_score_entered(false)
     { 
         create_player();
         if (!font.loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Bold.ttf"))
@@ -47,6 +48,7 @@ using namespace sf;
         scene = std::make_unique<Title_Screen>();
         Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
         title_scrn->create();
+        high_score_entered = false;
     }
 
     void Game_Window::make_scoreBoard_screen()
@@ -521,7 +523,7 @@ using namespace sf;
                 if (event.type == Event::KeyPressed && event.key.code == Keyboard::Enter)
                 {
                     quit = true;
-                    make_title_screen();
+                    high_score = false;
                     break;
                 }
                 else if (event.type == sf::Event::TextEntered) 
@@ -552,14 +554,24 @@ using namespace sf;
 
     void Game_Window::new_high_score_check()
     {
-        //PlayerData new_player{"", player->get_score(), clock.getElapsedTime()};
-        //ScoresFileManager score_manager;
+        PlayerData new_player{"", player->get_score(), clock.getElapsedTime().asSeconds()};
+        ScoresFileManager score_manager;
 
-        if(true /* score_manager.check_new_high_score(new_player) */ )
+        if(!high_score_entered && score_manager.check_new_high_score(new_player))
         {
             high_score = true;
             player->set_name(input_name());
             update_top_scores();
+            make_scoreBoard_screen();
+            high_score_entered = true;
+        }
+    }
+
+    void Game_Window::restart_game_handler(Event const& event)
+    {
+        if ((event.type == Event::KeyPressed && event.key.code != Keyboard::Escape))
+        {
+            make_title_screen();
         }
     }
 
@@ -580,6 +592,7 @@ using namespace sf;
                     break;
                 case GameState::ScoreBoard:
                     new_high_score_check();
+                    restart_game_handler(event);
                     break;
             }
         }
