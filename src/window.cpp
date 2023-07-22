@@ -28,6 +28,137 @@ using namespace sf;
         //make_scoreBoard_screen();
     }
 
+    void Game_Window::draw_background_title_screen()
+    {
+        Title_Screen* title_screen_ptr = dynamic_cast<Title_Screen*>(scene.get());
+        Illustrator ilustrator;
+        ilustrator.draw_BG_title(*title_screen_ptr,window);
+    }
+
+    void Game_Window::draw_background_level_one()
+    {
+        Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
+        Illustrator ilustrator;
+        ilustrator.draw_BG_level(*level_1,window);
+    }
+
+    void Game_Window::Game_Window::draw_background_score_board()
+    {
+        Score_Board* score_scrn = dynamic_cast<Score_Board*>(scene.get());
+        Illustrator illustrator;
+        illustrator.draw_BG_scoreboard(*score_scrn,window);
+    }
+    
+    void Game_Window::draw_background()
+    {
+        switch (currentGameState)
+        {
+            case GameState::TitleScreen:
+                draw_background_title_screen();
+                break;
+
+            case GameState::Level1:
+                draw_background_level_one();
+                break;
+
+            case GameState::ScoreBoard:
+                draw_background_score_board();
+                break;    
+        }
+    }
+
+    void Game_Window::draw_shapes()
+    {
+        Paddle& pad = *paddle;
+        draw_shape(pad, window);      
+        for (const auto& ballPtr : balls)
+        {
+            Ball& ball = *ballPtr;
+            draw_shape(ball, window);
+        }
+    }
+
+    void Game_Window::draw_hearts()
+    {
+        size_t lives = player->get_lives();
+        for (size_t i = 1; i <= lives; i++)
+        {
+            Life life(Vector2f(30*i, 70));
+            window.draw(*(life.get()));
+        }
+    }
+
+    void Game_Window::draw_score()
+    {
+        Text scoreText;
+        scoreText.setFont(font);
+        scoreText.setString("Score: " + std::to_string(player->get_score()));
+
+        scoreText.setCharacterSize(30);
+        scoreText.setFillColor(Color::White);
+        scoreText.setPosition(30, 30);
+        window.draw(scoreText);
+    }
+
+    void Game_Window::draw_pause_text()
+    {
+        Text text;
+        text.setFont(font);
+        text.setString("PAUSED");
+
+        text.setCharacterSize(100);
+        text.setFillColor(Color::White);
+        text.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3);
+        window.draw(text);
+    }
+
+    void Game_Window::draw_title_screen()
+    {
+        Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
+        Illustrator ilustrator;
+        ilustrator.draw_title_screen(*title_scrn, window);
+    }
+
+    void Game_Window::draw_level_one()
+    {
+        Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
+        Illustrator ilustrator;
+        ilustrator.draw_level_one(*level_1, window);
+        draw_hearts();
+    }
+
+    void Game_Window::draw_scoreboard()
+    {
+        Score_Board* score_scrn = dynamic_cast<Score_Board*>(scene.get());
+        Illustrator ilustrator;
+        ilustrator.draw_scoreboard(*score_scrn, window);
+    }
+
+    void Game_Window::draw_scene()
+    {  
+        switch (currentGameState)
+        {
+            case GameState::TitleScreen:
+                draw_title_screen();
+                break;
+            case GameState::Level1:
+                draw_level_one();
+                break;
+            case GameState::ScoreBoard:
+                draw_scoreboard();
+                break;
+        }
+    }
+
+    void Game_Window::make_title_screen()
+    {
+        currentGameState = GameState::TitleScreen;
+        scene = std::make_unique<Title_Screen>();
+        Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
+        title_scrn->create();
+        high_score_entered = false;
+    }
+
     void Game_Window::make_level_one()
     {
         currentGameState = GameState::Level1;
@@ -42,15 +173,6 @@ using namespace sf;
         spawn_ball();
     }
     
-    void Game_Window::make_title_screen()
-    {
-        currentGameState = GameState::TitleScreen;
-        scene = std::make_unique<Title_Screen>();
-        Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
-        title_scrn->create();
-        high_score_entered = false;
-    }
-
     void Game_Window::make_scoreBoard_screen()
     {
         currentGameState = GameState::ScoreBoard;
@@ -105,6 +227,14 @@ using namespace sf;
         paddle->reset();
     }
 
+    void Game_Window::run_title_screen()
+    {
+        handleCollisions();
+        draw_background();
+        draw_scene();
+        window.display();
+    }
+
     void Game_Window::run_level_one()
     {
         handleCollisions();
@@ -118,54 +248,6 @@ using namespace sf;
         win_condition();
         window.display();
     }
-
-    void Game_Window::draw_background_level_one()
-    {
-        Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
-        Sprite backgroundSprite;
-        backgroundSprite.setTexture(*(level_1->get_BG()));     
-        window.clear();
-        backgroundSprite.setScale(0.2f, 0.2f);
-        window.draw(backgroundSprite);
-    }
-
-    void Game_Window::draw_background()
-    {
-        
-        switch (currentGameState)
-        {
-            case GameState::TitleScreen:
-                draw_background_title_screen();
-                break;
-
-            case GameState::Level1:
-                draw_background_level_one();
-                break;
-
-            case GameState::ScoreBoard:
-                draw_background_score_board();
-                break;    
-        }
-    }
-
-    void Game_Window::draw_background_title_screen()
-    {
-        Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
-        Sprite backgroundSprite;
-        window.clear();
-        backgroundSprite.setTexture(*(title_scrn->get_BG()));     
-        backgroundSprite.setScale(0.2f, 0.2f);
-        window.draw(backgroundSprite);
-    }
-
-    void Game_Window::run_title_screen()
-    {
-        handleCollisions();
-        draw_background();
-        draw_scene();
-        window.display();
-    }
-
     void Game_Window::run_scoreboard_screen()
     {
         draw_background();
@@ -314,107 +396,6 @@ using namespace sf;
         pad.move(pad.getVelocity());
     }
 
-    void Game_Window::draw_shapes()
-    {
-        Paddle& pad = *paddle;
-        draw_shape(pad, window);      
-        for (const auto& ballPtr : balls)
-        {
-            Ball& ball = *ballPtr;
-            draw_shape(ball, window);
-        }
-    }
-
-    void Game_Window::draw_hearts()
-    {
-        size_t lives = player->get_lives();
-        for (size_t i = 1; i <= lives; i++)
-        {
-            Life life(Vector2f(30*i, 70));
-            window.draw(*(life.get()));
-        }
-    }
-
-    void Game_Window::draw_level_one()
-    {
-        Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
-        auto const& blocks = level_1->get_vector();
-        for (auto& blockPtr : blocks)
-        { 
-            Block& block = *blockPtr;
-            draw_shape(block, window);
-        }
-        draw_hearts();
-    }
-    
-    void Game_Window::Game_Window::draw_background_score_board()
-    {
-        Score_Board* score_scrn = dynamic_cast<Score_Board*>(scene.get());
-        Illustrator illustrator;
-        illustrator.draw_BG_scoreboard(*score_scrn,window);
-    }
-
-    void Game_Window::draw_title_screen()
-    {
-        Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
-        auto const& buttons = title_scrn->get_vector();
-        window.draw(title_scrn->getTitleText());
-
-        for (auto& buttonPtr : buttons)
-        {
-            Button& button = *buttonPtr;
-            draw_shape(button, window);
-            window.draw(button.getText());
-        }
-    }
-
-    void Game_Window::draw_scoreboard()
-    {
-        Score_Board* score_scrn = dynamic_cast<Score_Board*>(scene.get());
-        Illustrator ilustrator;
-        ilustrator.draw_scoreboard(*score_scrn, window);
-    }
-
-    void Game_Window::draw_scene()
-    {  
-        switch (currentGameState)
-        {
-            case GameState::TitleScreen:
-                draw_title_screen();
-                break;
-            case GameState::Level1:
-                draw_level_one();
-                break;
-            case GameState::ScoreBoard:
-                draw_scoreboard();
-                break;
-        }
-    }
-
-    void Game_Window::draw_score()
-    {
-        Text scoreText;
-        scoreText.setFont(font);
-        scoreText.setString("Score: " + std::to_string(player->get_score()));
-
-        scoreText.setCharacterSize(30);
-        scoreText.setFillColor(Color::White);
-        scoreText.setPosition(30, 30);
-        window.draw(scoreText);
-    }
-
-    void Game_Window::draw_pause_text()
-    {
-        Text text;
-        text.setFont(font);
-        text.setString("PAUSED");
-
-        text.setCharacterSize(100);
-        text.setFillColor(Color::White);
-        text.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3);
-        window.draw(text);
-    }
-
     void Game_Window::update_top_scores()
     {
         ScoresFileManager sc_manager;
@@ -433,9 +414,6 @@ using namespace sf;
 
         (*playerData).score = score;
         (*playerData).elapsedTimeMs = elapsedTimeMs;
-    
-        std::cout << (*playerData).name << " " << (*playerData).score << " " << (*playerData).elapsedTimeMs << std::endl;
-
         sc_manager.update_top10_file(*playerData);
     }
 

@@ -21,7 +21,7 @@ void ScoresFileManager::load_scores(std::vector<PlayerData>& a_top_10)
         while (true)
         {
             std::unique_ptr<PlayerData> playerPtr = std::make_unique<PlayerData>();
-            PlayerData& player = *playerPtr; // Use a reference to the object
+            PlayerData& player = *playerPtr;
 
             if (!inputFile.read(reinterpret_cast<char*>(&player.score), sizeof(player.score)))
             {
