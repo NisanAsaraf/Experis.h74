@@ -43,7 +43,8 @@ namespace arkanoid
 
     void Ball::reset()
     {
-        shape->setPosition(400.0f, 550.0f);
+        shape->setPosition(SCREEN_WIDTH/2 - 10, SCREEN_HEIGHT - 70);
+        velocity = Vector2f(0,0);
         start = false;
     }
 

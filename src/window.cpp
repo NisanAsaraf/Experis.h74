@@ -191,7 +191,6 @@ void Game_Window::animate_paddle_stop(Scene& a_scene)
 void Game_Window::pause_game(GameState& currentGameState)
 {
     Event event;
-    GameState previousGameState = currentGameState;
     while(currentGameState == GameState::Paused)
     {
         draw_pause_text();
@@ -202,7 +201,7 @@ void Game_Window::pause_game(GameState& currentGameState)
 
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
             {
-                currentGameState = previousGameState;
+                currentGameState = GameState::Level1;
                 break;
             }
         }
@@ -349,10 +348,9 @@ void Game_Window::level_one_collisions_handler(Player& a_player, Scene& a_scene)
                 game_over_screen();
             }
             ballPtr->reset();
-            //paddle_reset();
+            pad.reset();
 
             //balls.erase(balls.begin()); // will delete the pointer from the vector, the smart pointer will handle the memory
-            //spawn_ball();
         }
     }
 }

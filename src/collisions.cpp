@@ -183,7 +183,7 @@ bool ball_kill_zone_collision_handler(Ball& a_ball, RectangleShape& a_kill_zone)
 
     if(ballBounds.intersects(killBounds))
     {
-        a_ball.vanish();
+        //a_ball.vanish();
         return true;
     }
     return false;
