@@ -10,15 +10,11 @@ using namespace sf;
     : window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT)
     ,"Arkanoid",Style::Titlebar | Style::Close)
     ,currentGameState(GameState::TitleScreen)
-    ,paused(false)
     ,high_score(false)
     ,high_score_entered(false)
     { 
-        create_player();
-        if (!font.loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Bold.ttf"))
-        {
-            throw std::runtime_error("Failed to load font from file.");
-        }
+        illustrator = std::make_unique<Illustrator>();
+        animator = std::make_unique<Animator>();
 
         window.setFramerateLimit(64);
         window.setVerticalSyncEnabled(false);
@@ -30,15 +26,13 @@ using namespace sf;
     void Game_Window::draw_background_title_screen()
     {
         Title_Screen* title_screen_ptr = dynamic_cast<Title_Screen*>(scene.get());
-        Illustrator ilustrator;
-        ilustrator.draw_BG_title(*title_screen_ptr,window);
+        illustrator->draw_BG_title(*title_screen_ptr,window);
     }
 
     void Game_Window::draw_background_level_one()
     {
         Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
-        Illustrator ilustrator;
-        ilustrator.draw_BG_level(*level_1,window);
+        illustrator->draw_BG_level(*level_1,window);
     }
 
     void Game_Window::Game_Window::draw_background_score_board()
@@ -69,63 +63,31 @@ using namespace sf;
         }   
     }
 
-    void Game_Window::draw_shapes()
+    void Game_Window::draw_hearts(size_t lives)
     {
-        Paddle& pad = *paddle;
-        draw_shape(pad, window);      
-        for (const auto& ballPtr : balls)
-        {
-            Ball& ball = *ballPtr;
-            draw_shape(ball, window);
-        }
+        illustrator->draw_life_bar(lives, window);
     }
 
-    void Game_Window::draw_hearts()
+    void Game_Window::draw_score(size_t score)
     {
-        size_t lives = player->get_lives();
-        for (size_t i = 1; i <= lives; i++)
-        {
-            Life life(Vector2f(30*i, 70));
-            window.draw(*(life.get()));
-        }
-    }
-
-    void Game_Window::draw_score()
-    {
-        Text scoreText;
-        scoreText.setFont(font);
-        scoreText.setString("Score: " + std::to_string(player->get_score()));
-
-        scoreText.setCharacterSize(30);
-        scoreText.setFillColor(Color::White);
-        scoreText.setPosition(30, 30);
-        window.draw(scoreText);
+        illustrator->draw_score(score , window);
     }
 
     void Game_Window::draw_pause_text()
     {
-        Text text;
-        text.setFont(font);
-        text.setString("PAUSED");
-
-        text.setCharacterSize(100);
-        text.setFillColor(Color::White);
-        text.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3);
-        window.draw(text);
+        illustrator->draw_pause(window);
     }
 
     void Game_Window::draw_title_screen()
     {
         Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
-        Illustrator ilustrator;
-        ilustrator.draw_title_screen(*title_scrn, window);
+        illustrator->draw_title_screen(*title_scrn, window);
     }
 
     void Game_Window::draw_level_one()
     {
-        Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
-        Illustrator ilustrator;
-        ilustrator.draw_level_one(*level_1, window);
+        Level_One* level_one = dynamic_cast<Level_One*>(scene.get());
+        illustrator->draw_level_one(*level_one, window);
         draw_hearts();
     }
 
@@ -167,14 +129,10 @@ using namespace sf;
     {
         currentGameState = GameState::Level1;
         clock.restart();
-        scene = std::make_unique<Level_One>();
-        Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
 
-        level_1->create();
-        make_border();
-        make_kill_zone();
-        make_paddle();
-        spawn_ball();
+        scene = std::make_unique<Level_One>();
+        Level_One* level_one = dynamic_cast<Level_One*>(scene.get());
+        level_one->create();
     }
     
     void Game_Window::make_scoreBoard_screen()
@@ -190,46 +148,6 @@ using namespace sf;
         score_scrn->create();
     }
 
-    void Game_Window::create_player()
-    {
-        player = std::make_unique<Player>();
-    }
-
-    void Game_Window::make_paddle()
-    {
-        paddle = std::make_unique<Paddle>();
-    }
-
-    void Game_Window::make_kill_zone()
-    {
-        kill_zone = std::make_unique<RectangleShape>(Vector2f(window.getSize()));
-        kill_zone->setPosition(0, window.getSize().y - 10);
-        kill_zone->setFillColor(Color::Transparent);
-    }
-
-    void Game_Window::make_border()
-    {
-        float borderWidth = window.getSize().x - 10.0f ;
-        float borderHeight = window.getSize().y - 10.0f ;
-        Color Teal(0, 128, 128);
-
-        border = std::make_unique<sf::RectangleShape>(Vector2f(borderWidth, borderHeight));
-        border->setFillColor(Color::Transparent);
-        border->setPosition(5.0f, 5.0f);
-        border->setOutlineThickness(5.0f);
-        border->setOutlineColor(Teal);
-    }
-
-    void Game_Window::spawn_ball()
-    {
-        balls.emplace_back(std::make_unique<Ball>());
-    }
-
-    void Game_Window::paddle_reset()
-    {
-        paddle->reset();
-    }
-
     void Game_Window::run_title_screen()
     {
         handleCollisions();
@@ -242,9 +160,11 @@ using namespace sf;
     {
         handleCollisions();
         draw_background();
+/* 
         window.draw(*border);
         window.draw(*kill_zone);
         draw_shapes();
+*/
         draw_scene();
         animate_balls();
         draw_score();
@@ -286,10 +206,9 @@ using namespace sf;
     void Game_Window::restart()
     {
         window.clear();
-        player->reset();
-        paddle_reset();
-        balls.clear();
-        scene->reset();
+        scene = std::make_unique<Level_One>();
+        Level_One* level_one = dynamic_cast<Level_One*>(scene.get());
+        level_one->reset();
     }
 
     void Game_Window::win_condition()
@@ -326,7 +245,6 @@ using namespace sf;
 
     void Game_Window::animate_balls()
     {
-        Animator anima;
         for (const auto& ballPtr : balls)
         {
             anima.animate_ball(*ballPtr);
@@ -335,19 +253,16 @@ using namespace sf;
 
     void Game_Window::animate_paddle_right()
     {
-        Animator anima;
         anima.animate_paddle_right(*paddle, clock);
     }
 
     void Game_Window::animate_paddle_left()
     {
-        Animator anima;
         anima.animate_paddle_left(*paddle, clock);
     }
 
     void Game_Window::animate_paddle_stop()
     {
-        Animator anima;
         anima.animate_paddle_stop(*paddle);
     }
 

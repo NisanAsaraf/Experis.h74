@@ -9,6 +9,7 @@
 #include "config.hpp"
 #include <vector>
 #include <random>
+#include "game.hpp"
 
 namespace arkanoid
 {
@@ -24,14 +25,8 @@ public:
     void run_title_screen();
     void run_level_one();
     void run_scoreboard_screen();
-    void create_player();
-    void make_paddle();
-    void make_border();
-    void make_kill_zone();
     void make_scoreBoard_screen();
     void title_screen_button_click_handler(Event& event);
-    void spawn_ball();
-    void paddle_reset();
     void draw_level_one();
     void draw_title_screen();
     void new_high_score_check();
@@ -43,14 +38,14 @@ public:
     void win_condition();
     std::string input_name();
     void pause_game();
-    void draw_hearts();
+    void draw_hearts(size_t lives);
     void restart();
     void draw_scoreboard();
     void draw_background();
     void level_one_collisions_handler();
     void game_over_screen();
     void game_win_screen();
-    void draw_score();
+    void draw_score(size_t score);
     void make_title_screen();
     void draw_pause_text();
     void make_level_one();   
@@ -75,19 +70,12 @@ private:
     };
 private:
     RenderWindow window;
-    GameState currentGameState;
     Clock clock;
-
-    std::unique_ptr<RectangleShape> border;
-    std::unique_ptr<RectangleShape> kill_zone;
-    std::unique_ptr<Paddle> paddle;
-    std::vector<std::unique_ptr<Ball>> balls;
-
-    std::unique_ptr<Player> player;
+    GameState currentGameState;
+    std::unique_ptr<Illustrator> illustrator;
+    std::unique_ptr<Animator> animator;
     std::unique_ptr<Scene> scene;
 
-    Font font;
-    bool paused;
     bool high_score;
     bool high_score_entered;
 };

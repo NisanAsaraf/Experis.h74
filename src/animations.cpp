@@ -2,7 +2,15 @@
 
 namespace arkanoid
 {
-    
+
+Illustrator::Illustrator()
+{
+    if(!m_font.loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Bold.ttf"))
+    {
+        throw std::runtime_error("Error load font");
+    }
+}
+
 void Illustrator::draw_BG_title(Title_Screen& a_titlescreen,RenderWindow& a_window)
 {
     Sprite backgroundSprite;
@@ -62,6 +70,16 @@ void Illustrator::draw_level_one(Level_One& a_level_one,RenderWindow& a_window)
     { 
         Block& block = *blockPtr;
         draw_shape(block, a_window);
+    }
+    a_window.draw(*a_level_one.get_border());
+    a_window.draw(*a_level_one.get_kill_zone());
+    draw_shape(*(a_level_one.get_paddle()),a_window);
+
+    auto const& balls = a_level_one.get_balls();
+    for (auto& ballPtr : balls)
+    { 
+        Ball& ball = *ballPtr;
+        draw_shape(ball, a_window);
     }
 }
 
@@ -136,6 +154,30 @@ void Illustrator::draw_game_over_screen(RenderWindow& a_window)
             break;
         }          
     }
+}
+
+void Illustrator::draw_score(size_t a_score ,RenderWindow& a_window)
+{
+    Text scoreText;
+    scoreText.setFont(m_font);
+    scoreText.setString("Score: " + std::to_string(a_score));
+
+    scoreText.setCharacterSize(30);
+    scoreText.setFillColor(Color::White);
+    scoreText.setPosition(30, 30);
+    a_window.draw(scoreText);
+}
+
+void Illustrator::draw_pause(RenderWindow& a_window)
+{
+    Text text;
+    text.setFont(m_font);
+    text.setString("PAUSED");
+
+    text.setCharacterSize(100);
+    text.setFillColor(Color::White);
+    text.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3);
+    a_window.draw(text);
 }
 
 void Animator::animate_ball(Ball& a_ball)

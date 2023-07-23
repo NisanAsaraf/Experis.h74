@@ -10,7 +10,6 @@
 
 namespace arkanoid
 {
-using json = nlohmann::json;
 struct PlayerData
 {
     char name[32];

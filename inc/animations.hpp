@@ -24,6 +24,11 @@ public:
 
     void draw_win_screen(RenderWindow&);
     void draw_game_over_screen(RenderWindow&);
+    void draw_pause(RenderWindow&);
+    void draw_score(size_t a_score ,RenderWindow& a_window);
+    void draw_life_bar(size_t lives,RenderWindow& a_window);
+private:
+    Font m_font;
 };
 
 class Animator

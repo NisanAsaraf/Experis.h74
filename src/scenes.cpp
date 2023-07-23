@@ -49,6 +49,21 @@ Level_One::Level_One()
 
 void Level_One::create()
 {
+    make_player();
+    make_blocks();
+    make_border(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
+    make_kill_zone(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
+    make_paddle();
+    spawn_ball();
+}
+
+void Level_One::make_player()
+{
+    m_player = std::make_unique<Player>();
+}
+
+void Level_One::make_blocks()
+{
     size_t row, col;
 
     row = 3;
@@ -60,7 +75,6 @@ void Level_One::create()
     {
         throw std::runtime_error("Failed to load font from file.");
     }
-
     if (!b1.loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/01-Breakout-Tiles.png"))
     {
         throw std::runtime_error("Failed to load font from file.");
@@ -99,9 +113,45 @@ void Level_One::create()
     }
 }
 
+void Level_One::make_paddle()
+{
+    paddle = std::make_unique<Paddle>();
+}
+
+void Level_One::make_kill_zone(Vector2f a_size)
+{
+    kill_zone = std::make_unique<RectangleShape>(a_size);
+    kill_zone->setPosition(0, a_size.y - 10);
+    kill_zone->setFillColor(Color::Transparent);
+}
+
+void Level_One::make_border(Vector2f a_size)
+{
+    Color Teal(0, 128, 128);
+    border = std::make_unique<sf::RectangleShape>(a_size - Vector2f(10.0f,10.0f));
+
+    border->setFillColor(Color::Transparent);
+    border->setPosition(5.0f, 5.0f);
+    border->setOutlineThickness(5.0f);
+    border->setOutlineColor(Teal);
+}
+
+void Level_One::spawn_ball()
+{
+    balls.emplace_back(std::make_unique<Ball>());
+}
+
+void Level_One::paddle_reset()
+{
+    paddle->reset();
+}
+
 void Level_One::reset()
 {
     blocks.clear();
+    paddle_reset();
+    balls.clear();
+    m_player->reset();
 }
 
 std::vector<std::unique_ptr<Block>>& Level_One::get_vector()
@@ -112,6 +162,26 @@ std::vector<std::unique_ptr<Block>>& Level_One::get_vector()
 std::unique_ptr<Texture> const& Level_One::get_BG()
 {
     return backgroundTexture;
+}
+
+std::unique_ptr<Paddle> const& Level_One::get_paddle()
+{
+    return paddle;
+}
+
+std::unique_ptr<RectangleShape> const& Level_One::get_kill_zone()
+{
+    return kill_zone;
+}
+
+std::unique_ptr<RectangleShape> const& Level_One::get_border()
+{
+    return border;
+}
+
+std::vector<std::unique_ptr<Ball>> const& Level_One::get_balls()
+{
+    return balls;
 }
 
 Score_Board::Score_Board(std::vector<PlayerData>& a_players)
