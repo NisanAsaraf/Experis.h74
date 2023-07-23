@@ -15,6 +15,14 @@ public:
     void make_title_screen();
     void make_level_one();
     void make_scoreBoard_screen();
+
+    void draw_title_screen();
+    void draw_level_one();
+    void draw_scoreBoard_screen();
+
+    void make_title_screen();
+    void make_level_one();
+    void make_scoreBoard_screen();
 private:
     enum class GameState
     {

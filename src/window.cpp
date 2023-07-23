@@ -18,44 +18,44 @@ using namespace sf;
 
         window.setFramerateLimit(64);
         window.setVerticalSyncEnabled(false);
-        make_title_screen();
+        //make_title_screen();
         //make_level_one()
         //make_scoreBoard_screen();
     }
 
-    void Game_Window::draw_background_title_screen()
+    void Game_Window::draw_background_title_screen(Scene& m_scene)
     {
-        Title_Screen* title_screen_ptr = dynamic_cast<Title_Screen*>(scene.get());
+        Title_Screen* title_screen_ptr = dynamic_cast<Title_Screen*>(&m_scene);
         illustrator->draw_BG_title(*title_screen_ptr,window);
     }
 
-    void Game_Window::draw_background_level_one()
+    void Game_Window::draw_background_level_one(Scene& m_scene)
     {
-        Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
+        Level_One* level_1 = dynamic_cast<Level_One*>(&m_scene);
         illustrator->draw_BG_level(*level_1,window);
     }
 
-    void Game_Window::Game_Window::draw_background_score_board()
+    void Game_Window::Game_Window::draw_background_score_board(Scene& m_scene)
     {
-        Score_Board* score_scrn = dynamic_cast<Score_Board*>(scene.get());
+        Score_Board* score_scrn = dynamic_cast<Score_Board*>(&m_scene);
         Illustrator illustrator;
         illustrator.draw_BG_scoreboard(*score_scrn,window);
     }
     
-    void Game_Window::draw_background()
+    void Game_Window::draw_background(Scene& m_scene)
     {
         switch (currentGameState)
         {
             case GameState::TitleScreen:
-                draw_background_title_screen();
+                draw_background_title_screen(m_scene);
                 break;
 
             case GameState::Level1:
-                draw_background_level_one();
+                draw_background_level_one(m_scene);
                 break;
 
             case GameState::ScoreBoard:
-                draw_background_score_board();
+                draw_background_score_board(m_scene);
                 break;
 
             case GameState::Paused:
@@ -78,124 +78,91 @@ using namespace sf;
         illustrator->draw_pause(window);
     }
 
-    void Game_Window::draw_title_screen()
+    void Game_Window::draw_title_screen(Scene& a_scene)
     {
-        Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
+        Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(&a_scene);
         illustrator->draw_title_screen(*title_scrn, window);
     }
 
-    void Game_Window::draw_level_one()
+    void Game_Window::draw_level_one(Player& a_player, Scene& a_scene)
     {
-        Level_One* level_one = dynamic_cast<Level_One*>(scene.get());
+        Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
         illustrator->draw_level_one(*level_one, window);
-        draw_hearts();
+        draw_hearts(a_player.get_lives());
     }
 
-    void Game_Window::draw_scoreboard()
+    void Game_Window::draw_scoreboard(Player& a_player, Scene& a_scene)
     {
-        Score_Board* score_scrn = dynamic_cast<Score_Board*>(scene.get());
+        Score_Board* score_scrn = dynamic_cast<Score_Board*>(&a_scene);
         Illustrator ilustrator;
         ilustrator.draw_scoreboard(*score_scrn, window);
     }
 
-    void Game_Window::draw_scene()
+    void Game_Window::draw_scene(Player& a_player, Scene& a_scene)
     {  
         switch (currentGameState)
         {
             case GameState::TitleScreen:
-                draw_title_screen();
+                draw_title_screen(a_scene);
                 break;
             case GameState::Level1:
-                draw_level_one();
+                draw_level_one(a_player, a_scene);
                 break;
             case GameState::ScoreBoard:
-                draw_scoreboard();
+                draw_scoreboard(a_player, a_scene);
                 break;
             case GameState::Paused:
                 break;
         }
     }
 
-    void Game_Window::make_title_screen()
+    void Game_Window::run_title_screen(Player& a_player, Scene& a_scene)
     {
-        currentGameState = GameState::TitleScreen;
-        scene = std::make_unique<Title_Screen>();
-        Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
-        title_scrn->create();
-        high_score_entered = false;
-    }
-
-    void Game_Window::make_level_one()
-    {
-        currentGameState = GameState::Level1;
-        clock.restart();
-
-        scene = std::make_unique<Level_One>();
-        Level_One* level_one = dynamic_cast<Level_One*>(scene.get());
-        level_one->create();
-    }
-    
-    void Game_Window::make_scoreBoard_screen()
-    {
-        currentGameState = GameState::ScoreBoard;
-
-        std::vector<PlayerData> top_players;
-        ScoresFileManager sc_manager;
-        sc_manager.load_scores(top_players);
-
-        scene = std::make_unique<Score_Board>(top_players);
-        Score_Board* score_scrn = dynamic_cast<Score_Board*>(scene.get());
-        score_scrn->create();
-    }
-
-    void Game_Window::run_title_screen()
-    {
-        handleCollisions();
-        draw_background();
-        draw_scene();
+        handleCollisions(a_player, a_scene);
+        draw_background(a_scene);
+        draw_scene(a_player, a_scene);
         window.display();
     }
 
-    void Game_Window::run_level_one()
+    void Game_Window::run_level_one(Player& a_player, Scene& a_scene)
     {
-        handleCollisions();
-        draw_background();
+        handleCollisions(a_player, a_scene);
+        draw_background(a_scene);
 /* 
         window.draw(*border);
         window.draw(*kill_zone);
         draw_shapes();
 */
-        draw_scene();
-        animate_balls();
-        draw_score();
-        win_condition();
-        window.display();
-    }
-    void Game_Window::run_scoreboard_screen()
-    {
-        draw_background();
-        draw_scene();
+        draw_scene(a_player, a_scene);
+        animate_balls(a_scene);
+        draw_score(a_player.get_score());
+        win_condition(a_player);
+
         window.display();
     }
 
-    void Game_Window::run()
+    void Game_Window::run_scoreboard_screen(Player& a_player, Scene& a_scene)
+    {
+        draw_background(a_scene);
+        draw_scene(a_player, a_scene);
+        window.display();
+    }
+
+    void Game_Window::run(Player& a_player, Scene& a_scene) //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     {
         while (window.isOpen())
         {   
-            processEvents();
-            
+            processEvents(a_player, a_scene);
             switch (currentGameState)
             {
                 case GameState::TitleScreen:
-                    run_title_screen();
+                    run_title_screen(a_player, a_scene);
                     break;
-
                 case GameState::Level1:
-                    run_level_one();
+                    run_level_one(a_player, a_scene);
                     break;
-
                 case GameState::ScoreBoard:
-                    run_scoreboard_screen();
+                    run_scoreboard_screen(a_player, a_scene);
                     break;
                 case GameState::Paused:
                     break;
@@ -203,17 +170,16 @@ using namespace sf;
         }
     }
 
-    void Game_Window::restart()
+    void Game_Window::restart(Scene& a_scene)
     {
         window.clear();
-        scene = std::make_unique<Level_One>();
-        Level_One* level_one = dynamic_cast<Level_One*>(scene.get());
+        Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
         level_one->reset();
     }
 
-    void Game_Window::win_condition()
+    void Game_Window::win_condition(Player& a_player)
     {
-        if(player->get_score() == WIN_SCORE)
+        if(a_player.get_score() == WIN_SCORE)
         {
             game_win_screen();
         }
@@ -234,7 +200,7 @@ using namespace sf;
         Illustrator illustrator;
         illustrator.draw_win_screen(window);
         currentGameState = GameState::ScoreBoard;
-        make_scoreBoard_screen();
+        //make_scoreBoard_screen();
     }
 
     void Game_Window::game_over_screen()
@@ -243,40 +209,45 @@ using namespace sf;
         illustrator.draw_game_over_screen(window);
     }
 
-    void Game_Window::animate_balls()
+    void Game_Window::animate_balls(Scene& a_scene)
     {
+        Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
+        auto balls = level_one->get_balls();
         for (const auto& ballPtr : balls)
         {
-            anima.animate_ball(*ballPtr);
+            animator->animate_ball(*ballPtr);
         }
     }
 
-    void Game_Window::animate_paddle_right()
+    void Game_Window::animate_paddle_right(Scene& a_scene)
     {
-        anima.animate_paddle_right(*paddle, clock);
+        Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
+        animator->animate_paddle_right(level_one->get_paddle(), clock);
     }
 
-    void Game_Window::animate_paddle_left()
+    void Game_Window::animate_paddle_left(Scene& a_scene)
     {
-        anima.animate_paddle_left(*paddle, clock);
+        Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
+        animator->animate_paddle_left(level_one->get_paddle(), clock);
     }
 
-    void Game_Window::animate_paddle_stop()
+    void Game_Window::animate_paddle_stop(Scene& a_scene)
     {
-        anima.animate_paddle_stop(*paddle);
+        Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
+        animator->animate_paddle_stop(level_one->get_paddle());
     }
 
-    void Game_Window::update_top_scores()
+    void Game_Window::update_top_scores(Player& a_player)
     {
         ScoresFileManager sc_manager;
 
-        std::string playerName = player->get_name();
+        std::string playerName = a_player.get_name();
         std::array<char, 32> nameArray{};
         size_t nameLength = std::min(playerName.size(), nameArray.size() - 1);
         std::copy_n(playerName.c_str(), nameLength, nameArray.begin());
         nameArray[nameLength] = '\0';
 
-        uint32_t score = static_cast<uint32_t>(player->get_score());
+        uint32_t score = static_cast<uint32_t>(a_player.get_score());
         uint64_t elapsedTimeMs = static_cast<uint64_t>(clock.getElapsedTime().asMilliseconds());
 
         std::unique_ptr<PlayerData> playerData = std::make_unique<PlayerData>();
@@ -307,11 +278,13 @@ using namespace sf;
         }
     }
 
-    void Game_Window::paddle_movement_control(Event const& event)
+    void Game_Window::paddle_movement_control(Player& a_player, Scene& a_scene, Event const& event)
     {
+        Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
+        auto& balls = level_one->get_balls();
         if (event.type == sf::Event::KeyPressed)
         {
-            if (event.key.code == sf::Keyboard::Space && !(paddle->started()))
+            if (event.key.code == sf::Keyboard::Space && !(level_one->get_paddle()->started()))
             {
                 for(auto& ballPtr : balls)
                 {
@@ -342,7 +315,7 @@ using namespace sf;
         }
     }
 
-    void Game_Window::title_screen_button_click_handler(Event& event)
+    void Game_Window::title_screen_button_click_handler(Player& a_player, Scene& a_scene, Event& event)
     {
         if (event.type == sf::Event::MouseButtonPressed)
         {
@@ -415,7 +388,7 @@ using namespace sf;
         return playerName;
     }        
 
-    void Game_Window::paddle_out_of_bounds_handler()
+    void Game_Window::paddle_out_of_bounds_handler(Player& a_player, Scene& a_scene)
     {
         Paddle& pad = *paddle;
         FloatRect paddleBounds = pad.getGlobalBounds();
@@ -434,7 +407,7 @@ using namespace sf;
         }
     }
 
-    void Game_Window::new_high_score_check()
+    void Game_Window::new_high_score_check(Player& a_player, Scene& a_scene)
     {
         uint32_t score = static_cast<uint32_t>(player->get_score());
         uint64_t elapsedTimeMs = static_cast<uint64_t>(clock.getElapsedTime().asMilliseconds());
@@ -452,7 +425,7 @@ using namespace sf;
         }
     }
 
-   void Game_Window::restart_game_handler(Event const& event)
+   void Game_Window::restart_game_handler(Player& a_player, Scene& a_scene, Event const& event)
     {
         if ((event.type == Event::KeyPressed && event.key.code != Keyboard::Escape))
         {
@@ -461,7 +434,7 @@ using namespace sf;
         }
     }
 
-    void Game_Window::processEvents()
+    void Game_Window::processEvents(Player& a_player, Scene& a_scene)
     {
         Event event;
         while (window.pollEvent(event))
@@ -485,7 +458,7 @@ using namespace sf;
         }
     }
 
-    void Game_Window::level_one_collisions_handler()
+    void Game_Window::level_one_collisions_handler(Player& a_player, Scene& a_scene)
     {
         Paddle& pad = *paddle;
         Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
@@ -532,7 +505,7 @@ using namespace sf;
         }
     }
 
-    void Game_Window::handleCollisions()
+    void Game_Window::handleCollisions(Player& a_player, Scene& a_scene)
     {
         switch (currentGameState)
         {

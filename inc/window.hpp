@@ -21,45 +21,52 @@ public:
     Game_Window();
     ~Game_Window() = default;
 
-    void run();
-    void run_title_screen();
-    void run_level_one();
-    void run_scoreboard_screen();
-    void make_scoreBoard_screen();
-    void title_screen_button_click_handler(Event& event);
-    void draw_level_one();
-    void draw_title_screen();
+    void run_title_screen(Player& a_player, Scene& a_scene);
+    void run_level_one(Player& a_player, Scene& a_scene);
+    void run_scoreboard_screen(Player& a_player,Scene& a_scene);
+    void run(Player& a_player, Scene& a_scene);
+
+    void draw_background_title_screen(Scene& m_scene);
+    void draw_background_level_one(Scene& a_scene);
+    void draw_background_score_board(Scene& a_scene);
+    void draw_background(Scene& m_scene);
+
+    void draw_level_one(Player& a_player, Scene& a_scene);
+    void draw_title_screen(Scene& a_scene);
+    void draw_scoreboard(Player& a_player, Scene& a_scene);
+    void draw_scene(Player& a_player, Scene& a_scene);
+
     void new_high_score_check();
-    void draw_background_title_screen();
-    void draw_background_level_one();
-    void draw_background_score_board();
-    void paddle_movement_control(Event const&);
-    bool close_window_check(Event const&);
-    void win_condition();
+
+
+    void win_condition(Player& a_player);
     std::string input_name();
     void pause_game();
     void draw_hearts(size_t lives);
-    void restart();
-    void draw_scoreboard();
-    void draw_background();
+    void restart(Scene& a_scene);
+    
     void level_one_collisions_handler();
     void game_over_screen();
     void game_win_screen();
     void draw_score(size_t score);
-    void make_title_screen();
+
     void draw_pause_text();
-    void make_level_one();   
-    void update_top_scores();
-    void animate_balls();
-    void animate_paddle_right();
-    void animate_paddle_left();
-    void animate_paddle_stop();
+    void update_top_scores(Player& a_player);
+
+    void animate_balls(Scene& a_scene);
+    void animate_paddle_right(Scene& a_scene);
+    void animate_paddle_left(Scene& a_scene);
+    void animate_paddle_stop(Scene& a_scene);
+
     void draw_shapes();
-    void draw_scene();
-    void restart_game_handler(Event const&);
-    void processEvents();
-    void paddle_out_of_bounds_handler();
-    void handleCollisions();
+
+    void title_screen_button_click_handler(Player& a_player, Scene& a_scene, Event& event);
+    void paddle_movement_control(Player& a_player, Scene& a_scene, Event const&);
+    bool close_window_check(Event const&);
+    void restart_game_handler(Player& a_player, Scene& a_scene, Event const&);
+    void processEvents(Player& a_player, Scene& a_scene);
+    void paddle_out_of_bounds_handler(Player& a_player, Scene& a_scene);
+    void handleCollisions(Player& a_player, Scene& a_scene);
 private:
     enum class GameState
     {
@@ -74,7 +81,6 @@ private:
     GameState currentGameState;
     std::unique_ptr<Illustrator> illustrator;
     std::unique_ptr<Animator> animator;
-    std::unique_ptr<Scene> scene;
 
     bool high_score;
     bool high_score_entered;

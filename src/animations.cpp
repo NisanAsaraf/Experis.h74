@@ -65,7 +65,9 @@ void Illustrator::draw_title_screen(Title_Screen& a_titlescreen,RenderWindow& a_
 
 void Illustrator::draw_level_one(Level_One& a_level_one,RenderWindow& a_window)
 {
+    auto const& paddle = a_level_one.get_paddle();
     auto const& blocks = a_level_one.get_vector();
+
     for (auto& blockPtr : blocks)
     { 
         Block& block = *blockPtr;
@@ -73,7 +75,7 @@ void Illustrator::draw_level_one(Level_One& a_level_one,RenderWindow& a_window)
     }
     a_window.draw(*a_level_one.get_border());
     a_window.draw(*a_level_one.get_kill_zone());
-    draw_shape(*(a_level_one.get_paddle()),a_window);
+    draw_shape(paddle,a_window);
 
     auto const& balls = a_level_one.get_balls();
     for (auto& ballPtr : balls)
@@ -90,6 +92,15 @@ void Illustrator::draw_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_wind
     for(auto& text: texts)
     {   
         a_window.draw(text);
+    }
+}
+
+void draw_life_bar(size_t lives,RenderWindow& a_window)
+{
+    for (size_t i = 1; i <= lives; i++)
+    {
+        Life life(Vector2f(30*i, 70));
+        a_window.draw(*(life.get()));
     }
 }
 

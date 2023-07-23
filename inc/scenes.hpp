@@ -42,7 +42,7 @@ public:
 
     std::vector<std::unique_ptr<Block>>& get_vector();
     std::unique_ptr<Texture> const& get_BG();
-    std::unique_ptr<Paddle> const& get_paddle();
+    Paddle& get_paddle();
     std::unique_ptr<RectangleShape> const& get_kill_zone();
     std::unique_ptr<RectangleShape> const& get_border();
     std::vector<std::unique_ptr<Ball>> const& get_balls();

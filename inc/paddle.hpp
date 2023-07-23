@@ -10,7 +10,7 @@ class Paddle
 {
 public:
     Paddle();
-    Vector2f& getVelocity();
+    Vector2f getVelocity();
     FloatRect getGlobalBounds();
     Vector2f getPosition();
     void paddle_start();

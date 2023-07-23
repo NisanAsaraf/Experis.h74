@@ -68,7 +68,7 @@ void Paddle::reset()
     start = false;
 }
 
-Vector2f& Paddle::getVelocity()
+Vector2f Paddle::getVelocity()
 {
     return velocity;
 }
