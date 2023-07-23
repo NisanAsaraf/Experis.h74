@@ -8,10 +8,7 @@ using namespace sf;
 
 Game_Window::Game_Window()
 : window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT)
-,"Arkanoid",Style::Titlebar | Style::Close)
-,currentGameState(GameState::TitleScreen)
-,high_score(false)
-,high_score_entered(false)
+, "Arkanoid",Style::Titlebar | Style::Close)
 { 
     illustrator = std::make_unique<Illustrator>();
     animator = std::make_unique<Animator>();
@@ -38,20 +35,20 @@ void Game_Window::Game_Window::draw_background_score_board(Scene& m_scene)
     illustrator->draw_BG_scoreboard(*score_scrn,window);
 }
 
-void Game_Window::draw_background(Scene& m_scene)
+void Game_Window::draw_background(Scene& a_scene, GameState& currentGameState)
 {
     switch (currentGameState)
     {
         case GameState::TitleScreen:
-            draw_background_title_screen(m_scene);
+            draw_background_title_screen(a_scene);
             break;
 
         case GameState::Level1:
-            draw_background_level_one(m_scene);
+            draw_background_level_one(a_scene);
             break;
 
         case GameState::ScoreBoard:
-            draw_background_score_board(m_scene);
+            draw_background_score_board(a_scene);
             break;
 
         case GameState::Paused:
@@ -94,7 +91,7 @@ void Game_Window::draw_scoreboard(Player& a_player, Scene& a_scene)
     ilustrator.draw_scoreboard(*score_scrn, window);
 }
 
-void Game_Window::draw_scene(Player& a_player, Scene& a_scene)
+void Game_Window::draw_scene(Player& a_player,Scene& a_scene, GameState& currentGameState)
 {  
     switch (currentGameState)
     {
@@ -112,27 +109,27 @@ void Game_Window::draw_scene(Player& a_player, Scene& a_scene)
     }
 }
 
-void Game_Window::run_title_screen(Player& a_player, Scene& a_scene)
+void Game_Window::run_title_screen(Player& a_player, Scene& a_scene, GameState& currentGameState)
 {
-    draw_background(a_scene);
-    draw_scene(a_player, a_scene);
+    draw_background(a_scene, currentGameState);
+    draw_scene(a_player, a_scene, currentGameState);
     window.display();
 }
 
-void Game_Window::run_level_one(Player& a_player, Scene& a_scene)
+void Game_Window::run_level_one(Player& a_player, Scene& a_scene, GameState& currentGameState)
 {
-    handleCollisions(a_player, a_scene);
-    draw_background(a_scene);
-    draw_scene(a_player, a_scene);
+    handleCollisions(a_player, a_scene, currentGameState);
+    draw_background(a_scene, currentGameState);
+    draw_scene(a_player, a_scene, currentGameState);
     draw_score(a_player.get_score());
     animate_balls(a_scene);
     window.display();
 }
 
-void Game_Window::run_scoreboard_screen(Player& a_player, Scene& a_scene)
+void Game_Window::run_scoreboard_screen(Player& a_player, Scene& a_scene, GameState& currentGameState)
 {
-    draw_background(a_scene);
-    draw_scene(a_player, a_scene);
+    draw_background(a_scene, currentGameState);
+    draw_scene(a_player, a_scene, currentGameState);
     window.display();
 }
 
@@ -193,30 +190,10 @@ void Game_Window::animate_paddle_stop(Scene& a_scene)
     animator->animate_paddle_stop(level_one->get_paddle());
 }
 
-void Game_Window::update_top_scores(Player& a_player)
-{
-    ScoresFileManager sc_manager;
-
-    std::string playerName = a_player.get_name();
-    std::array<char, 32> nameArray{};
-    size_t nameLength = std::min(playerName.size(), nameArray.size() - 1);
-    std::copy_n(playerName.c_str(), nameLength, nameArray.begin());
-    nameArray[nameLength] = '\0';
-
-    uint32_t score = static_cast<uint32_t>(a_player.get_score());
-    uint64_t elapsedTimeMs = static_cast<uint64_t>(clock.getElapsedTime().asMilliseconds());
-
-    std::unique_ptr<PlayerData> playerData = std::make_unique<PlayerData>();
-    std::memcpy((*playerData).name, nameArray.data(), nameArray.size());
-
-    (*playerData).score = score;
-    (*playerData).elapsedTimeMs = elapsedTimeMs;
-    sc_manager.update_top10_file(*playerData);
-}
-
-void Game_Window::pause_game()
+void Game_Window::pause_game(GameState& currentGameState)
 {
     Event event;
+    GameState previousGameState = currentGameState;
     while(currentGameState == GameState::Paused)
     {
         draw_pause_text();
@@ -227,14 +204,14 @@ void Game_Window::pause_game()
 
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
             {
-                currentGameState = GameState::Level1;
+                currentGameState = previousGameState;
                 break;
             }
         }
     }
 }
 
-void Game_Window::paddle_movement_control(Scene& a_scene, Event const& event)
+void Game_Window::paddle_movement_control(Scene& a_scene, Event const& event, GameState& currentGameState)
 {
     Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
     Paddle& paddle = level_one->get_paddle();
@@ -253,7 +230,7 @@ void Game_Window::paddle_movement_control(Scene& a_scene, Event const& event)
         else if (event.key.code == sf::Keyboard::Space && (paddle.started()))
         {
             currentGameState = GameState::Paused;
-            pause_game();
+            pause_game(currentGameState);
         }
         else if (event.key.code == sf::Keyboard::Right && (paddle.started()))
         {
@@ -325,23 +302,6 @@ void Game_Window::paddle_out_of_bounds_handler(Scene& a_scene)
     }
 }
 
-bool Game_Window::new_high_score_check(Player& a_player)
-{
-    uint32_t score = static_cast<uint32_t>(a_player.get_score());
-    uint64_t elapsedTimeMs = static_cast<uint64_t>(clock.getElapsedTime().asMilliseconds());
-
-    PlayerData new_player{"", score, elapsedTimeMs};
-    ScoresFileManager score_manager;
-
-    if(!high_score_entered && score_manager.check_new_high_score(new_player))
-    {
-        a_player.set_name(input_name());
-        update_top_scores(a_player);
-        return true;
-    }
-    return false;
-}
-
 bool Game_Window::pressed_any_key(Event const& event)
 {
     if ((event.type == Event::KeyPressed && event.key.code != Keyboard::Escape))
@@ -349,30 +309,6 @@ bool Game_Window::pressed_any_key(Event const& event)
         return true;
     }
     return false;
-}
-
-void Game_Window::processEvents(Player& a_player, Scene& a_scene)
-{
-    Event event;
-    while (window.pollEvent(event))
-    {   
-        close_window_check(event);
-        switch (currentGameState)
-        {
-            case GameState::TitleScreen:
-                title_screen_button_click_handler(a_scene, event);
-                break;
-            case GameState::Level1:
-                paddle_movement_control(a_scene, event);
-                break;
-            case GameState::ScoreBoard:
-                new_high_score_check(a_player);
-                // restart_game_handler(a_scene, event);
-                break;
-            case GameState::Paused:
-                break;
-        }
-    }
 }
 
 void Game_Window::level_one_collisions_handler(Player& a_player, Scene& a_scene)
@@ -423,7 +359,7 @@ void Game_Window::level_one_collisions_handler(Player& a_player, Scene& a_scene)
     }
 }
 
-void Game_Window::handleCollisions(Player& a_player, Scene& a_scene)
+void Game_Window::handleCollisions(Player& a_player, Scene& a_scene, GameState& currentGameState)
 {
     switch (currentGameState)
     {

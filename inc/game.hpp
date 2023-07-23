@@ -30,6 +30,8 @@ private:
     void make_scoreBoard_screen();
     void check_win_condition();
     void processEvents();
+    bool new_high_score_check();
+    void update_top_scores();
 private:
     std::unique_ptr<Game_Window> m_window_ptr;
     std::unique_ptr<Player> player;

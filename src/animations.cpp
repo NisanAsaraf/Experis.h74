@@ -216,7 +216,6 @@ std::string Illustrator::draw_input_name_screen(RenderWindow& a_window)
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Enter)
             {
                 quit = true;
-                //high_score = false;
                 break;
             }
             else if (event.type == sf::Event::TextEntered) 

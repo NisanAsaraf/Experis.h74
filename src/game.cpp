@@ -149,6 +149,23 @@ void Arkanoid_Game::processEvents()
     }
 }
 
+bool Arkanoid_Game::new_high_score_check()
+{
+    uint32_t score = static_cast<uint32_t>(player->get_score());
+    uint64_t elapsedTimeMs = static_cast<uint64_t>(clock.getElapsedTime().asMilliseconds());
+
+    PlayerData new_player{"", score, elapsedTimeMs};
+    ScoresFileManager score_manager;
+
+    if(score_manager.check_new_high_score(new_player))
+    {
+        player->set_name(m_window_ptr->input_name());
+        update_top_scores();
+        return true;
+    }
+    return false;
+}
+
 void Arkanoid_Game::check_win_condition()
 {
     if((*player).get_score() == WIN_SCORE)
@@ -158,27 +175,26 @@ void Arkanoid_Game::check_win_condition()
     }
 }
 
+void Arkanoid_Game::update_top_scores()
+{
+    ScoresFileManager sc_manager;
 
+    std::string playerName = player->get_name();
+    std::array<char, 32> nameArray{};
+    size_t nameLength = std::min(playerName.size(), nameArray.size() - 1);
+    std::copy_n(playerName.c_str(), nameLength, nameArray.begin());
+    nameArray[nameLength] = '\0';
 
+    uint32_t score = static_cast<uint32_t>(player->get_score());
+    uint64_t elapsedTimeMs = static_cast<uint64_t>(clock.getElapsedTime().asMilliseconds());
 
+    std::unique_ptr<PlayerData> playerData = std::make_unique<PlayerData>();
+    std::memcpy((*playerData).name, nameArray.data(), nameArray.size());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    (*playerData).score = score;
+    (*playerData).elapsedTimeMs = elapsedTimeMs;
+    sc_manager.update_top10_file(*playerData);
+}
 
 
 }//namepspace arkanoid
