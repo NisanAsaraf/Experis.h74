@@ -17,11 +17,11 @@ public:
     sf::Vector2f getSize() const;
     void reset();
     sf::RectangleShape const& getShape() const;
-    void setPosition(float , float);
-    void setPosition(sf::Vector2f);
-    void move(sf::Vector2f);
-    void left(sf::Clock);
-    void right(sf::Clock);
+    void setPosition(float a_x, float a_y);
+    void setPosition(sf::Vector2f a_v);
+    void move(sf::Vector2f a_v);
+    void left(sf::Clock a_c);
+    void right(sf::Clock a_c);
     void stop();
 
 private:

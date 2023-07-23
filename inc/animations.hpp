@@ -15,21 +15,23 @@ class Illustrator
 {
 public:
     Illustrator();
-    void draw_BG_title(Title_Screen&, sf::RenderWindow&);
-    void draw_BG_level(Level_One&, sf::RenderWindow&);
-    void draw_BG_scoreboard(Score_Board&, sf::RenderWindow&);
 
-    void draw_title_screen(Title_Screen&, sf::RenderWindow&);
-    void draw_level_one(Level_One&, sf::RenderWindow&);
-    void draw_scoreboard(Score_Board&, sf::RenderWindow&);
+    void draw_BG_title(Title_Screen& titleScreen, sf::RenderWindow& window);
+    void draw_BG_level(Level_One& levelOne, sf::RenderWindow& window);
+    void draw_BG_scoreboard(Score_Board& scoreboard, sf::RenderWindow& window);
 
-    void draw_win_screen(sf::RenderWindow&);
-    void draw_game_over_screen(sf::RenderWindow&);
-    void draw_pause(sf::RenderWindow&);
-    void draw_score(size_t a_score ,sf::RenderWindow& a_window);
-    void draw_life_bar(size_t lives,sf::RenderWindow& a_window);
+    void draw_title_screen(Title_Screen& titleScreen, sf::RenderWindow& window);
+    void draw_level_one(Level_One& levelOne, sf::RenderWindow& window);
+    void draw_scoreboard(Score_Board& scoreboard, sf::RenderWindow& window);
+    void draw_win_screen(sf::RenderWindow& window);
+    void draw_game_over_screen(sf::RenderWindow& window);
+    void draw_pause(sf::RenderWindow& window);
 
-    std::string draw_input_name_screen(sf::RenderWindow& a_window);
+    void draw_score(size_t score, sf::RenderWindow& window);
+    void draw_life_bar(size_t lives, sf::RenderWindow& window);
+
+    std::string draw_input_name_screen(sf::RenderWindow& window);
+
 private:
     sf::Font m_font;
 };

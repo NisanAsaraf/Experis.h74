@@ -9,13 +9,13 @@ class Player
 {
 public:
     Player();
-    void add_score(size_t);
+    void add_score(size_t a_score);
     void hit();
     void reset();
     bool is_dead() const;
     size_t get_lives();
     std::string const& get_name();
-    void set_name(std::string);
+    void set_name(std::string a_name);
     size_t const& get_score();
 private:
     std::string m_name;

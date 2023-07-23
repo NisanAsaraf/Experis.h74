@@ -9,7 +9,7 @@ namespace arkanoid
 class Block
 {
 public:
-    Block(sf::Texture, float , float);
+    Block(sf::Texture a_texture, float a_x, float a_y);
     sf::FloatRect getGlobalBounds();
     sf::Vector2f getSize();
     bool isVanished();

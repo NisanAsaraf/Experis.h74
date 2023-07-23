@@ -22,12 +22,12 @@ public:
 class Button
 {
 public:
-    Button(sf::Vector2f, sf::Texture const&);
+    Button(sf::Vector2f, sf::Texture const& a_texture);
     sf::FloatRect getBounds();
     sf::Text const& getText();
-    void setPosition(sf::Vector2f);
-    void setText(std::string const&);
-    void setButtonColor(sf::Color);
+    void setPosition(sf::Vector2f a_v);
+    void setText(std::string const& a_str);
+    void setButtonColor(sf::Color a_color);
     const sf::Sprite& getShape() const;
 private:
     std::unique_ptr<sf::Sprite> m_buttonSprite;
