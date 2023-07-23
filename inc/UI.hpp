@@ -37,15 +37,5 @@ private:
 
 };
 
-class Life
-{
-public:
-    Life(Vector2f);
-    std::unique_ptr<Sprite> const& get();
-private:
-    std::unique_ptr<Texture> heartTexture;
-    std::unique_ptr<Sprite> heartSprite;
-};
-
 }//namespace arkanoid
 #endif

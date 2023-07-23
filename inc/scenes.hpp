@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "block.hpp"
 #include "UI.hpp"
+#include "life.hpp"
 #include "leaderboard.hpp"
 #include "paddle.hpp"
 #include "ball.hpp"
@@ -10,7 +11,7 @@
 
 namespace arkanoid
 {
-    
+
 enum class GameState
 {
     TitleScreen,
