@@ -12,7 +12,7 @@ Arkanoid_Game::Arkanoid_Game()
 
 void Arkanoid_Game::reset()
 {
-    m_window_ptr->restart(*scene);
+    make_title_screen();
 }
 
 void Arkanoid_Game::make_title_screen()
@@ -21,7 +21,7 @@ void Arkanoid_Game::make_title_screen()
     scene = std::make_unique<Title_Screen>();
     Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
     title_scrn->create();
-    high_score_entered = false;
+    is_high_score_already_entered = false;
 }
 
 void Arkanoid_Game::make_level_one()
@@ -106,8 +106,10 @@ void Arkanoid_Game::processEvents()
                 break;
             case GameState::ScoreBoard:
                 new_high_score_check();
-                m_window_ptr->pressed_any_key(event);
-                
+                if(m_window_ptr->pressed_any_key(event))
+                {
+                    reset();
+                }
                 break;
             case GameState::Paused:
                 break;
@@ -123,10 +125,12 @@ bool Arkanoid_Game::new_high_score_check()
     PlayerData new_player{"", score, elapsedTimeMs};
     ScoresFileManager score_manager;
 
-    if(score_manager.check_new_high_score(new_player))
+    if(!is_high_score_already_entered && score_manager.check_new_high_score(new_player))
     {
         player->set_name(m_window_ptr->input_name());
         update_top_scores();
+        is_high_score_already_entered = true;
+        make_scoreBoard_screen();
         return true;
     }
     return false;

@@ -32,8 +32,8 @@ private:
     Clock clock;
     GameState currentGameState;
 
-    bool high_score;
-    bool high_score_entered;
+    bool is_high_score_already_entered;
+
 };  
 
 }//namepspace arkanoid

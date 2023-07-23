@@ -10,14 +10,14 @@ class Paddle
 {
 public:
     Paddle();
-    Vector2f getVelocity();
-    FloatRect getGlobalBounds();
-    Vector2f getPosition();
+    Vector2f getVelocity() const;
+    FloatRect getGlobalBounds() const;
+    Vector2f getPosition() const;
     void paddle_start();
-    bool started();
-    Vector2f getSize();
+    bool started() const;
+    Vector2f getSize() const;
     void reset();
-    const RectangleShape& getShape() const;
+    RectangleShape const& getShape() const;
     void setPosition(float , float);
     void setPosition(Vector2f);
     void move(Vector2f);

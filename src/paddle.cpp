@@ -41,7 +41,7 @@ void Paddle::left(Clock a_clock)
     }
 }
 
-Vector2f Paddle::getSize()
+Vector2f Paddle::getSize() const
 {
     return paddle->getSize();
 }
@@ -57,7 +57,7 @@ void Paddle::paddle_start()
     start = true;
 }
 
-bool Paddle::started()
+bool Paddle::started() const
 {
     return start;
 }
@@ -68,12 +68,12 @@ void Paddle::reset()
     start = false;
 }
 
-Vector2f Paddle::getVelocity()
+Vector2f Paddle::getVelocity() const
 {
     return velocity;
 }
 
-FloatRect Paddle::getGlobalBounds()
+FloatRect Paddle::getGlobalBounds() const
 {
     return paddle->getGlobalBounds();
 }
@@ -83,7 +83,7 @@ const RectangleShape& Paddle::getShape() const
     return *paddle;
 }
 
-Vector2f Paddle::getPosition()
+Vector2f Paddle::getPosition() const
 {
     return paddle->getPosition();
 }
