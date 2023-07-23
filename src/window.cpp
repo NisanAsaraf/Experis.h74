@@ -1,4 +1,4 @@
-#include "../inc/window.hpp"
+#include "window.hpp"
 
 namespace arkanoid
 {

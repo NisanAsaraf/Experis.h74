@@ -1,6 +1,6 @@
 #ifndef ANIME_HXX
 #define ANIME_HXX
-#include "../animations.hpp"
+#include "animations.hpp"
 
 namespace arkanoid
 {

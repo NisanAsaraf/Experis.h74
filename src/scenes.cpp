@@ -1,4 +1,4 @@
-#include "../inc/scenes.hpp"
+#include "scenes.hpp"
 #include <memory>
 
 namespace arkanoid

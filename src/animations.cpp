@@ -1,4 +1,4 @@
-#include "../inc/animations.hpp"
+#include "animations.hpp"
 
 namespace arkanoid
 {

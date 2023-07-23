@@ -1,4 +1,4 @@
-#include "../inc/ball.hpp"
+#include "ball.hpp"
 #include <cmath>
 
 namespace arkanoid

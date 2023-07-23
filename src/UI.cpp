@@ -1,4 +1,4 @@
-#include "../inc/UI.hpp"
+#include "UI.hpp"
 
 namespace arkanoid
 {

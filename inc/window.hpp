@@ -57,10 +57,10 @@ public:
 
     void draw_shapes();
 
-    bool title_screen_button_click_handler(Scene& a_scene, Event& event);
-    void paddle_movement_control(Scene& a_scene, Event const&, GameState& currentGameState);
-    bool close_window_check(Event const&);
-    bool pressed_any_key(Event const& event);
+    bool title_screen_button_click_handler(Scene& a_scene, sf::Event& event);
+    void paddle_movement_control(Scene& a_scene, sf::Event const&, GameState& currentGameState);
+    bool close_window_check(sf::Event const&);
+    bool pressed_any_key(sf::Event const& event);
     void paddle_out_of_bounds_handler(Scene& a_scene);
     void handleCollisions(Player& a_player, Scene& a_scene, GameState& currentGameState);
 

@@ -1,4 +1,4 @@
-#include "../inc/collisions.hpp"
+#include "collisions.hpp"
 #include <SFML/Graphics.hpp>
 
 namespace arkanoid

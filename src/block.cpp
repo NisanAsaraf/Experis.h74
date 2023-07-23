@@ -1,4 +1,4 @@
-#include "../inc/block.hpp"
+#include "block.hpp"
 namespace arkanoid
 {
 using namespace sf;

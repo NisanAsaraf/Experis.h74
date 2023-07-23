@@ -1,4 +1,4 @@
-#include "../inc/paddle.hpp"
+#include "paddle.hpp"
 namespace arkanoid
 {
 using namespace sf;
