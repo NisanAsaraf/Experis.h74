@@ -12,7 +12,7 @@ public:
     void add_score(size_t);
     void hit();
     void reset();
-    bool is_dead();
+    bool is_dead() const;
     size_t get_lives();
     std::string const& get_name();
     void set_name(std::string);

@@ -10,6 +10,14 @@
 
 namespace arkanoid
 {
+    
+enum class GameState
+{
+    TitleScreen,
+    Level1,
+    ScoreBoard,
+    Paused,
+};
 
 class Scene
 {

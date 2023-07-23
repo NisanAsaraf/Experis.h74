@@ -1,3 +1,6 @@
+#ifndef G_WINDOW_H
+#define G_WINDOW_H
+
 #include "paddle.hpp"
 #include "scenes.hpp"
 #include "ball.hpp"
@@ -9,7 +12,6 @@
 #include "config.hpp"
 #include <vector>
 #include <random>
-#include "game.hpp"
 
 namespace arkanoid
 {
@@ -20,7 +22,7 @@ class Game_Window
 public:
     Game_Window();
     ~Game_Window() = default;
-
+    
     void run_title_screen(Player& a_player, Scene& a_scene, GameState& currentGameState);
     void run_level_one(Player& a_player, Scene& a_scene, GameState& currentGameState);
     void run_scoreboard_screen(Player& a_player,Scene& a_scene, GameState& currentGameState);
@@ -32,7 +34,7 @@ public:
 
     void draw_level_one(Player& a_player, Scene& a_scene);
     void draw_title_screen(Scene& a_scene);
-    void draw_scoreboard(Player& a_player, Scene& a_scene);
+    void draw_scoreboard(Scene& a_scene);
     void draw_scene(Player& a_player, Scene& a_scene, GameState& currentGameState);
 
     bool new_high_score_check(Player& a_player);
@@ -65,7 +67,6 @@ public:
 
     bool isOpen();
     RenderWindow& getWindow();
-
 private:
     RenderWindow window;
     Clock clock;
@@ -77,3 +78,4 @@ private:
 };
 
 } // namespace arkanoid
+#endif//G_WINDOW_H

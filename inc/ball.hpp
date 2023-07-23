@@ -10,19 +10,6 @@
 namespace arkanoid
 {
 using namespace sf;
-
-class RandomColorGenerator
-{
-public:
-    static Color getRandomColor()
-    {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, 255);
-        return Color(dis(gen), dis(gen), dis(gen));
-    } 
-};
-
 class Ball
 {
 public:

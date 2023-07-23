@@ -59,40 +59,7 @@ void Arkanoid_Game::draw_level_one()
 
 void Arkanoid_Game::draw_scoreBoard_screen()
 {
-    m_window_ptr->draw_scoreboard(*player, *scene);
-}
-
-void Arkanoid_Game::make_title_screen()
-{
-    currentGameState = GameState::TitleScreen;
-    scene = std::make_unique<Title_Screen>();
-
-    Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
-    high_score_entered = false;
-    title_scrn->create();
-}
-
-void Arkanoid_Game::make_level_one()
-{
-    currentGameState = GameState::Level1;
-    clock.restart();
-
-    scene = std::make_unique<Level_One>();
-    Level_One* level_one = dynamic_cast<Level_One*>(scene.get());
-    level_one->create();
-}
-
-void Arkanoid_Game::make_scoreBoard_screen()
-{
-    currentGameState = GameState::ScoreBoard;
-
-    std::vector<PlayerData> top_players;
-    ScoresFileManager sc_manager;
-    sc_manager.load_scores(top_players);
-
-    scene = std::make_unique<Score_Board>(top_players);
-    Score_Board* score_scrn = dynamic_cast<Score_Board*>(scene.get());
-    score_scrn->create();
+    m_window_ptr->draw_scoreboard(*scene);
 }
 
 void Arkanoid_Game::run()
@@ -103,14 +70,14 @@ void Arkanoid_Game::run()
         switch (currentGameState)
         {
             case GameState::TitleScreen:
-                m_window_ptr->run_title_screen(*player, *scene);
+                m_window_ptr->run_title_screen(*player, *scene, currentGameState);
                 break;
             case GameState::Level1:
-                m_window_ptr->run_level_one(*player, *scene);
+                m_window_ptr->run_level_one(*player, *scene, currentGameState);
                 check_win_condition();
                 break;
             case GameState::ScoreBoard:
-                m_window_ptr->run_scoreboard_screen(*player, *scene);
+                m_window_ptr->run_scoreboard_screen(*player, *scene, currentGameState);
                 break;
             case GameState::Paused:
                 break;
@@ -135,7 +102,7 @@ void Arkanoid_Game::processEvents()
                 }
                 break;
             case GameState::Level1:
-                m_window_ptr->paddle_movement_control(*scene, event);
+                m_window_ptr->paddle_movement_control(*scene, event, currentGameState);
                 break;
             case GameState::ScoreBoard:
                 m_window_ptr->new_high_score_check(*player);

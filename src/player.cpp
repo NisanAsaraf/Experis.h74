@@ -46,7 +46,7 @@ void Player::hit()
     m_lives--;
 }
 
-bool Player::is_dead()
+bool Player::is_dead() const
 {
     return !m_lives;
 }

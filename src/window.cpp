@@ -84,7 +84,7 @@ void Game_Window::draw_level_one(Player& a_player, Scene& a_scene)
     draw_hearts(a_player.get_lives());
 }
 
-void Game_Window::draw_scoreboard(Player& a_player, Scene& a_scene)
+void Game_Window::draw_scoreboard(Scene& a_scene)
 {
     Score_Board* score_scrn = dynamic_cast<Score_Board*>(&a_scene);
     Illustrator ilustrator;
@@ -102,7 +102,7 @@ void Game_Window::draw_scene(Player& a_player,Scene& a_scene, GameState& current
             draw_level_one(a_player, a_scene);
             break;
         case GameState::ScoreBoard:
-            draw_scoreboard(a_player, a_scene);
+            draw_scoreboard(a_scene);
             break;
         case GameState::Paused:
             break;

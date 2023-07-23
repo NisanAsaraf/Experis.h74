@@ -4,22 +4,12 @@
 
 namespace arkanoid
 {
-
-enum class GameState
-{
-    TitleScreen,
-    Level1,
-    ScoreBoard,
-    Paused,
-};
-
 class Arkanoid_Game
 {
 public:
     Arkanoid_Game();
     void run();
     void reset();
-
 private:
     void draw_title_screen();
     void draw_level_one();
@@ -28,11 +18,13 @@ private:
     void make_title_screen();
     void make_level_one();
     void make_scoreBoard_screen();
+
     void check_win_condition();
     void processEvents();
     bool new_high_score_check();
     void update_top_scores();
 private:
+
     std::unique_ptr<Game_Window> m_window_ptr;
     std::unique_ptr<Player> player;
     std::unique_ptr<Scene> scene;
