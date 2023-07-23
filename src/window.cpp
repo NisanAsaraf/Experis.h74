@@ -62,8 +62,11 @@ using namespace sf;
 
             case GameState::ScoreBoard:
                 draw_background_score_board();
-                break;    
-        }
+                break;
+
+            case GameState::Paused:
+                break;
+        }   
     }
 
     void Game_Window::draw_shapes()
@@ -145,6 +148,8 @@ using namespace sf;
                 break;
             case GameState::ScoreBoard:
                 draw_scoreboard();
+                break;
+            case GameState::Paused:
                 break;
         }
     }
@@ -272,6 +277,8 @@ using namespace sf;
                 case GameState::ScoreBoard:
                     run_scoreboard_screen();
                     break;
+                case GameState::Paused:
+                    break;
             }
         }
     }
@@ -368,7 +375,7 @@ using namespace sf;
     void Game_Window::pause_game()
     {
         Event event;
-        while(paused)
+        while(currentGameState == GameState::Paused)
         {
             draw_pause_text();
             window.display();
@@ -378,7 +385,7 @@ using namespace sf;
 
                 if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
                 {
-                    paused = false;
+                    currentGameState = GameState::Level1;
                     break;
                 }
             }
@@ -399,7 +406,7 @@ using namespace sf;
             }
             else if (event.key.code == sf::Keyboard::Space && (paddle->started()) && paused == false)
             {
-                paused = true;
+                currentGameState = GameState::Paused;
                 pause_game();
             }
             else if (event.key.code == sf::Keyboard::Right && paddle->started())
@@ -557,6 +564,8 @@ using namespace sf;
                     new_high_score_check();
                     restart_game_handler(event);
                     break;
+                case GameState::Paused:
+                    break;
             }
         }
     }
@@ -618,6 +627,8 @@ using namespace sf;
                 level_one_collisions_handler();
                 break;
             case GameState::ScoreBoard:
+                break;
+            case GameState::Paused:
                 break;
         }
     }

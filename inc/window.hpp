@@ -71,17 +71,21 @@ private:
         TitleScreen,
         Level1,
         ScoreBoard,
+        Paused,
     };
 private:
     RenderWindow window;
     GameState currentGameState;
     Clock clock;
+
     std::unique_ptr<RectangleShape> border;
     std::unique_ptr<RectangleShape> kill_zone;
     std::unique_ptr<Paddle> paddle;
     std::vector<std::unique_ptr<Ball>> balls;
+
     std::unique_ptr<Player> player;
     std::unique_ptr<Scene> scene;
+
     Font font;
     bool paused;
     bool high_score;
