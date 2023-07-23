@@ -14,6 +14,7 @@ namespace arkanoid
 class Illustrator
 {
 public:
+    Illustrator();
     void draw_BG_title(Title_Screen&, RenderWindow&);
     void draw_BG_level(Level_One&, RenderWindow&);
     void draw_BG_scoreboard(Score_Board&, RenderWindow&);

@@ -1,7 +1,5 @@
 #include "../inc/window.hpp"
-#include <exception>
-#include <memory>
-#include <fstream>
+
 namespace arkanoid
 {
 using namespace sf;
@@ -165,7 +163,7 @@ void Game_Window::game_over_screen()
 void Game_Window::animate_balls(Scene& a_scene)
 {
     Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
-    auto balls = level_one->get_balls();
+    auto& balls = level_one->get_balls();
     for (const auto& ballPtr : balls)
     {
         animator->animate_ball(*ballPtr);

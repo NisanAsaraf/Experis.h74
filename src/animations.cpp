@@ -95,7 +95,7 @@ void Illustrator::draw_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_wind
     }
 }
 
-void draw_life_bar(size_t lives,RenderWindow& a_window)
+void Illustrator::draw_life_bar(size_t lives,RenderWindow& a_window)
 {
     for (size_t i = 1; i <= lives; i++)
     {
