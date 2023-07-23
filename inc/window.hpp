@@ -36,7 +36,7 @@ public:
     void draw_scoreboard(Player& a_player, Scene& a_scene);
     void draw_scene(Player& a_player, Scene& a_scene);
 
-    void new_high_score_check();
+    void new_high_score_check(Player& a_player);
 
 
     void win_condition(Player& a_player);
@@ -45,7 +45,7 @@ public:
     void draw_hearts(size_t lives);
     void restart(Scene& a_scene);
     
-    void level_one_collisions_handler();
+    void level_one_collisions_handler(Player& a_player, Scene& a_scene);
     void game_over_screen();
     void game_win_screen();
     void draw_score(size_t score);
@@ -60,12 +60,12 @@ public:
 
     void draw_shapes();
 
-    void title_screen_button_click_handler(Player& a_player, Scene& a_scene, Event& event);
-    void paddle_movement_control(Player& a_player, Scene& a_scene, Event const&);
+    void title_screen_button_click_handler(Scene& a_scene, Event& event);
+    void paddle_movement_control(Scene& a_scene, Event const&);
     bool close_window_check(Event const&);
-    void restart_game_handler(Player& a_player, Scene& a_scene, Event const&);
+    void restart_game_handler(Scene& a_scene, Event const&);
     void processEvents(Player& a_player, Scene& a_scene);
-    void paddle_out_of_bounds_handler(Player& a_player, Scene& a_scene);
+    void paddle_out_of_bounds_handler(Scene& a_scene);
     void handleCollisions(Player& a_player, Scene& a_scene);
 private:
     enum class GameState

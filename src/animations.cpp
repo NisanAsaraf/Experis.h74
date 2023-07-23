@@ -191,6 +191,60 @@ void Illustrator::draw_pause(RenderWindow& a_window)
     a_window.draw(text);
 }
 
+std::string Illustrator::draw_input_name_screen(RenderWindow& a_window)
+{
+    Text text("New high score!\n input name:", m_font, 50);
+    text.setFillColor(Color::White);
+    text.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/4);
+    Text inputText("", m_font, 30);
+    std::string playerName;
+    inputText.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3 + 100);
+    inputText.setFillColor(Color::Cyan);
+
+    bool quit = false;
+    Event event;
+    while(a_window.isOpen())
+    {
+        while (a_window.pollEvent(event)) 
+        {
+            if(event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
+            {
+                a_window.close();
+                break;
+            }
+
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Enter)
+            {
+                quit = true;
+                //high_score = false;
+                break;
+            }
+            else if (event.type == sf::Event::TextEntered) 
+            {
+                if (event.text.unicode < 128 && playerName.size() <= 16 && event.text.unicode != '\b') 
+                {
+                    playerName += static_cast<char>(event.text.unicode);
+                    inputText.setString(playerName);
+                } else if (event.text.unicode == '\b' && !playerName.empty()) 
+                {
+                    playerName.pop_back();
+                    inputText.setString(playerName);
+                }
+            }
+        }
+        a_window.clear(Color::Black);
+        a_window.draw(text);
+        a_window.draw(inputText);
+        a_window.display();
+
+        if(quit)
+        {
+            break;
+        }
+    }
+    return playerName;
+}
+
 void Animator::animate_ball(Ball& a_ball)
 {
     a_ball.move(a_ball.getVelocity());

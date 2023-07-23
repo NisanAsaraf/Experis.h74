@@ -164,9 +164,9 @@ std::unique_ptr<Texture> const& Level_One::get_BG()
     return backgroundTexture;
 }
 
-std::unique_ptr<Paddle>& Level_One::get_paddle()
+Paddle& Level_One::get_paddle()
 {
-    return paddle;
+    return *paddle;
 }
 
 std::unique_ptr<RectangleShape> const& Level_One::get_kill_zone()

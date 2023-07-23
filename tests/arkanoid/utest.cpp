@@ -1,9 +1,7 @@
-#include "../inc/window.hpp"
-
+#include "../inc/game.hpp"
 int main()
 {
-    arkanoid::Game_Window window;
-    window.run();
-
+    arkanoid::Arkanoid_Game game;
+    game.run();
     return 0;
 }

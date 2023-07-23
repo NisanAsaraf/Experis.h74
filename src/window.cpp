@@ -278,50 +278,52 @@ using namespace sf;
         }
     }
 
-    void Game_Window::paddle_movement_control(Player& a_player, Scene& a_scene, Event const& event)
+    void Game_Window::paddle_movement_control(Scene& a_scene, Event const& event)
     {
         Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
+        Paddle& paddle = level_one->get_paddle();
         auto& balls = level_one->get_balls();
+
         if (event.type == sf::Event::KeyPressed)
         {
-            if (event.key.code == sf::Keyboard::Space && !(level_one->get_paddle()->started()))
+            if (event.key.code == sf::Keyboard::Space && !(paddle.started()))
             {
                 for(auto& ballPtr : balls)
                 {
                     ballPtr->ball_start();
                 }
-                paddle->paddle_start();
+                level_one->get_paddle().paddle_start();
             }
-            else if (event.key.code == sf::Keyboard::Space && (paddle->started()) && paused == false)
+            else if (event.key.code == sf::Keyboard::Space && (paddle.started()))
             {
                 currentGameState = GameState::Paused;
                 pause_game();
             }
-            else if (event.key.code == sf::Keyboard::Right && paddle->started())
+            else if (event.key.code == sf::Keyboard::Right && (paddle.started()))
             {
-                animate_paddle_right();
+                animate_paddle_right(a_scene);
             }
-            else if (event.key.code == sf::Keyboard::Left && paddle->started())
+            else if (event.key.code == sf::Keyboard::Left && (paddle.started()))
             {
-                animate_paddle_left();
+                animate_paddle_left(a_scene);
             }
         }
-        else if (event.type == sf::Event::KeyReleased && paddle->started())
+        else if (event.type == sf::Event::KeyReleased && (paddle.started()))
         {
             if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::Left)
             {
-                animate_paddle_stop();
+                animate_paddle_stop(a_scene);
             }
         }
     }
 
-    void Game_Window::title_screen_button_click_handler(Player& a_player, Scene& a_scene, Event& event)
+    void Game_Window::title_screen_button_click_handler(Scene& a_scene, Event& event)
     {
         if (event.type == sf::Event::MouseButtonPressed)
         {
             Vector2f mousePosition(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
 
-            Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
+            Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(&a_scene);
             auto const& buttons = title_scrn->get_vector(); 
 
             Button& button1 = *buttons.at(0);
@@ -330,7 +332,7 @@ using namespace sf;
             if (button1.getBounds().contains(mousePosition))
             {                    
                 currentGameState = GameState::Level1;
-                make_level_one();
+                //make_level_one();
             }
             else if (button2.getBounds().contains(mousePosition))
             {
@@ -341,58 +343,17 @@ using namespace sf;
 
     std::string Game_Window::input_name()
     {
-        Text text("New high score!\n input name:", font, 50);
-        text.setFillColor(Color::White);
-        text.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/4);
-        Text inputText("", font, 30);
-        std::string playerName;
-        inputText.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3 + 100);
-        inputText.setFillColor(Color::Cyan);
-
-        bool quit = false;
-        Event event;
-        while(window.isOpen())
-        {
-            while (window.pollEvent(event)) 
-            {
-                close_window_check(event);
-                if (event.type == Event::KeyPressed && event.key.code == Keyboard::Enter)
-                {
-                    quit = true;
-                    high_score = false;
-                    break;
-                }
-                else if (event.type == sf::Event::TextEntered) 
-                {
-                    if (event.text.unicode < 128 && playerName.size() <= 16 && event.text.unicode != '\b') 
-                    {
-                        playerName += static_cast<char>(event.text.unicode);
-                        inputText.setString(playerName);
-                    } else if (event.text.unicode == '\b' && !playerName.empty()) 
-                    {
-                        playerName.pop_back();
-                        inputText.setString(playerName);
-                    }
-                }
-            }
-            window.clear(Color::Black);
-            window.draw(text);
-            window.draw(inputText);
-            window.display();
-
-            if(quit)
-            {
-                break;
-            }
-        }
-        return playerName;
+        return illustrator->draw_input_name_screen(window);
     }        
 
-    void Game_Window::paddle_out_of_bounds_handler(Player& a_player, Scene& a_scene)
+    void Game_Window::paddle_out_of_bounds_handler(Scene& a_scene)
     {
-        Paddle& pad = *paddle;
+        Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
+        Paddle& pad = level_one->get_paddle();
+
         FloatRect paddleBounds = pad.getGlobalBounds();
-        FloatRect borderBounds = (*border).getGlobalBounds();
+        FloatRect borderBounds = (*level_one->get_border()).getGlobalBounds();
+
         float newY = pad.getPosition().y;
         float newXL = borderBounds.left + 5.0f;
         float newXR = borderBounds.left + borderBounds.width - paddleBounds.width - 5.0f;
@@ -407,9 +368,9 @@ using namespace sf;
         }
     }
 
-    void Game_Window::new_high_score_check(Player& a_player, Scene& a_scene)
+    void Game_Window::new_high_score_check(Player& a_player)
     {
-        uint32_t score = static_cast<uint32_t>(player->get_score());
+        uint32_t score = static_cast<uint32_t>(a_player.get_score());
         uint64_t elapsedTimeMs = static_cast<uint64_t>(clock.getElapsedTime().asMilliseconds());
 
         PlayerData new_player{"", score, elapsedTimeMs};
@@ -418,19 +379,19 @@ using namespace sf;
         if(!high_score_entered && score_manager.check_new_high_score(new_player))
         {
             high_score = true;
-            player->set_name(input_name());
-            update_top_scores();
-            make_scoreBoard_screen();
+            a_player.set_name(input_name());
+            update_top_scores(a_player);
+            //make_scoreBoard_screen();
             high_score_entered = true;
         }
     }
 
-   void Game_Window::restart_game_handler(Player& a_player, Scene& a_scene, Event const& event)
+   void Game_Window::restart_game_handler(Scene& a_scene, Event const& event)
     {
         if ((event.type == Event::KeyPressed && event.key.code != Keyboard::Escape))
         {
-            restart();
-            make_title_screen();
+            restart(a_scene);
+            //make_title_screen();
         }
     }
 
@@ -443,14 +404,14 @@ using namespace sf;
             switch (currentGameState)
             {
                 case GameState::TitleScreen:
-                    title_screen_button_click_handler(event);
+                    title_screen_button_click_handler(a_scene, event);
                     break;
                 case GameState::Level1:
-                    paddle_movement_control(event);
+                    paddle_movement_control(a_scene, event);
                     break;
                 case GameState::ScoreBoard:
-                    new_high_score_check();
-                    restart_game_handler(event);
+                    new_high_score_check(a_player);
+                    restart_game_handler(a_scene, event);
                     break;
                 case GameState::Paused:
                     break;
@@ -460,11 +421,12 @@ using namespace sf;
 
     void Game_Window::level_one_collisions_handler(Player& a_player, Scene& a_scene)
     {
-        Paddle& pad = *paddle;
-        Level_One* level_1 = dynamic_cast<Level_One*>(scene.get());
-        auto& blocks = level_1->get_vector(); 
+        Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
+        Paddle& pad = level_one->get_paddle();
+        auto& blocks = level_one->get_vector(); 
+        auto& balls = level_one->get_balls();
 
-        paddle_out_of_bounds_handler();
+        paddle_out_of_bounds_handler(a_scene);
 
         for (const auto& ballPtr : balls)
         {
@@ -481,7 +443,7 @@ using namespace sf;
                 }
                 if(check_collision(*ballPtr, *block))
                 {
-                    player->add_score(40);
+                    a_player.add_score(40);
                     ball_block_collision_handler(*block, *ballPtr);//will vanish a block
                 }
             }
@@ -489,18 +451,18 @@ using namespace sf;
             ball_window_collision_handler(*ballPtr, window);    
             ball_paddle_collision_handler(*ballPtr,pad);
 
-            if(ball_kill_zone_collision_handler(*ballPtr, *kill_zone))  // will vanish a ball , wont delete it from the vector
+            if(ball_kill_zone_collision_handler(*ballPtr, *level_one->get_kill_zone()))  // will vanish a ball , wont delete it from the vector
             {
-                player->hit();
-                if(player->is_dead())
+                a_player.hit();
+                if(a_player.is_dead())
                 {
                     game_over_screen();
                 }
                 ballPtr->reset();
-                paddle_reset();
+                //paddle_reset();
 
-                balls.erase(balls.begin()); // will delete the pointer from the vector, the smart pointer will handle the memory
-                spawn_ball();
+                //balls.erase(balls.begin()); // will delete the pointer from the vector, the smart pointer will handle the memory
+                //spawn_ball();
             }
         }
     }
@@ -512,7 +474,7 @@ using namespace sf;
             case GameState::TitleScreen:
                 break;
             case GameState::Level1:
-                level_one_collisions_handler();
+                level_one_collisions_handler(a_player, a_scene);
                 break;
             case GameState::ScoreBoard:
                 break;
