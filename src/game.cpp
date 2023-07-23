@@ -73,11 +73,11 @@ void Arkanoid_Game::run()
                 m_window_ptr->run_title_screen(*player, *scene, currentGameState);
                 break;
             case GameState::Level1:
-                //m_window_ptr->run_level_one(*player, *scene, currentGameState);
-                //check_win_condition();
+                m_window_ptr->run_level_one(*player, *scene, currentGameState);
+                check_win_condition();
                 break;
             case GameState::ScoreBoard:
-                //m_window_ptr->run_scoreboard_screen(*player, *scene, currentGameState);
+                m_window_ptr->run_scoreboard_screen(*player, *scene, currentGameState);
                 break;
             case GameState::Paused:
                 break;
