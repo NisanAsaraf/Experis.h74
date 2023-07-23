@@ -2,11 +2,12 @@
 #define SCENE_H
 #include <SFML/Graphics.hpp>
 #include "block.hpp"
-#include "UI.hpp"
-#include "life.hpp"
-#include "leaderboard.hpp"
 #include "paddle.hpp"
 #include "ball.hpp"
+#include "life.hpp"
+#include "UI.hpp"
+#include "abs_scene.hpp"
+#include "leaderboard.hpp"
 #include <vector>
 
 namespace arkanoid
@@ -18,13 +19,6 @@ enum class GameState
     Level1,
     ScoreBoard,
     Paused,
-};
-
-class Scene
-{
-public:
-    virtual void create() = 0;
-    virtual void reset() = 0;
 };
 
 class Title_Screen : public Scene
