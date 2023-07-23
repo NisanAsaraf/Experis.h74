@@ -5,13 +5,14 @@ namespace arkanoid
 
 Arkanoid_Game::Arkanoid_Game()
 {
-    player = std::make_unique<Player>();
     m_window_ptr = std::make_unique<Game_Window>();
+    player = std::make_unique<Player>();
+
 }
 
 void Arkanoid_Game::run()
 {
-    m_window_ptr->run(*player, *scene);
+    m_window_ptr->run(*player, *scene, currentGameState);
 }
 
 void Arkanoid_Game::reset()
@@ -58,21 +59,22 @@ void Arkanoid_Game::draw_title_screen()
 
 void Arkanoid_Game::draw_level_one()
 {
-
+    m_window_ptr->draw_level_one(*player, *scene);
 }
 
 void Arkanoid_Game::draw_scoreBoard_screen()
 {
-
+    m_window_ptr->draw_scoreboard(*player, *scene);
 }
 
 void Arkanoid_Game::make_title_screen()
 {
     currentGameState = GameState::TitleScreen;
     scene = std::make_unique<Title_Screen>();
+
     Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(scene.get());
-    title_scrn->create();
     high_score_entered = false;
+    title_scrn->create();
 }
 
 void Arkanoid_Game::make_level_one()

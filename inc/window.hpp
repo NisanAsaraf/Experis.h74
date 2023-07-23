@@ -24,7 +24,7 @@ public:
     void run_title_screen(Player& a_player, Scene& a_scene);
     void run_level_one(Player& a_player, Scene& a_scene);
     void run_scoreboard_screen(Player& a_player,Scene& a_scene);
-    void run(Player& a_player, Scene& a_scene);
+    void run(Player& a_player, Scene& a_scene, GameState& a_gameState);
 
     void draw_background_title_screen(Scene& m_scene);
     void draw_background_level_one(Scene& a_scene);
@@ -67,14 +67,7 @@ public:
     void processEvents(Player& a_player, Scene& a_scene);
     void paddle_out_of_bounds_handler(Scene& a_scene);
     void handleCollisions(Player& a_player, Scene& a_scene);
-private:
-    enum class GameState
-    {
-        TitleScreen,
-        Level1,
-        ScoreBoard,
-        Paused,
-    };
+
 private:
     RenderWindow window;
     Clock clock;

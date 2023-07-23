@@ -18,9 +18,6 @@ using namespace sf;
 
         window.setFramerateLimit(64);
         window.setVerticalSyncEnabled(false);
-        //make_title_screen();
-        //make_level_one()
-        //make_scoreBoard_screen();
     }
 
     void Game_Window::draw_background_title_screen(Scene& m_scene)
@@ -38,8 +35,7 @@ using namespace sf;
     void Game_Window::Game_Window::draw_background_score_board(Scene& m_scene)
     {
         Score_Board* score_scrn = dynamic_cast<Score_Board*>(&m_scene);
-        Illustrator illustrator;
-        illustrator.draw_BG_scoreboard(*score_scrn,window);
+        illustrator->draw_BG_scoreboard(*score_scrn,window);
     }
     
     void Game_Window::draw_background(Scene& m_scene)
@@ -148,7 +144,7 @@ using namespace sf;
         window.display();
     }
 
-    void Game_Window::run(Player& a_player, Scene& a_scene) //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    void Game_Window::run(Player& a_player, Scene& a_scene, GameState& a_gameState) //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     {
         while (window.isOpen())
         {   
