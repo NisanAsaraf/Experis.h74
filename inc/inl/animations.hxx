@@ -4,10 +4,9 @@
 
 namespace arkanoid
 {
-using namespace sf;
 
 template <typename T>
-void draw_shape(T& a_object, RenderWindow& a_window)
+void draw_shape(T& a_object, sf::RenderWindow& a_window)
 {
     a_window.draw(a_object.getShape());
 }

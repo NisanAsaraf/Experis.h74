@@ -29,7 +29,7 @@ private:
     std::unique_ptr<Player> player;
     std::unique_ptr<Scene> scene;
     
-    Clock clock;
+    sf::Clock clock;
     GameState currentGameState;
 
     bool is_high_score_already_entered;

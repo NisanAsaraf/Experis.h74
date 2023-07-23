@@ -1,7 +1,7 @@
 #include "../inc/paddle.hpp"
 namespace arkanoid
 {
-
+using namespace sf;
 Paddle::Paddle()
 {
     paddle = std::make_unique<RectangleShape>(Vector2f(100.0f, 20.0f));
@@ -14,8 +14,8 @@ Paddle::Paddle()
     }
     paddle->setTexture(&(*paddleTexture));
     paddle->setPosition(SCREEN_WIDTH/2 - 50, SCREEN_HEIGHT - 50);
-    max_speed = 25.0f;
-    acceleration = 50.0f;
+    max_speed = 40.0f;
+    acceleration = 10.0f;
     velocity = Vector2f(0.0f, 0.0f);
 }
 

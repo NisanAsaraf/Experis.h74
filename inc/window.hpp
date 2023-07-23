@@ -15,7 +15,6 @@
 
 namespace arkanoid
 {
-using namespace sf;
 
 class Game_Window
 {
@@ -66,10 +65,10 @@ public:
     void handleCollisions(Player& a_player, Scene& a_scene, GameState& currentGameState);
 
     bool isOpen();
-    RenderWindow& getWindow();
+    sf::RenderWindow& getWindow();
 private:
-    RenderWindow window;
-    Clock clock;
+    sf::RenderWindow window;
+    sf::Clock clock;
     std::unique_ptr<Illustrator> illustrator;
     std::unique_ptr<Animator> animator;
 

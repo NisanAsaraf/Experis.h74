@@ -5,23 +5,22 @@
 
 namespace arkanoid
 {
-using namespace sf;
 
 class Block
 {
 public:
-    Block(Texture, float , float);
-    FloatRect getGlobalBounds();
-    Vector2f getSize();
+    Block(sf::Texture, float , float);
+    sf::FloatRect getGlobalBounds();
+    sf::Vector2f getSize();
     bool isVanished();
-    const RectangleShape& getShape() const;
+    const sf::RectangleShape& getShape() const;
     void Collision() ;
 private:
     void vanish();
 
 private:
-    std::unique_ptr<RectangleShape> shape;
-    std::unique_ptr<Texture> blockTexture;
+    std::unique_ptr<sf::RectangleShape> shape;
+    std::unique_ptr<sf::Texture> blockTexture;
     bool vanished;
 
 };

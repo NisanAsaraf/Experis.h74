@@ -1,8 +1,8 @@
 #include "game.hpp"
 
+using namespace sf;
 namespace arkanoid
 {
-
 Arkanoid_Game::Arkanoid_Game()
 {
     m_window_ptr = std::make_unique<Game_Window>();
@@ -88,7 +88,7 @@ void Arkanoid_Game::run()
 void Arkanoid_Game::processEvents()
 {
     Event event;
-    RenderWindow& window = m_window_ptr->getWindow();
+    sf::RenderWindow& window = m_window_ptr->getWindow();
 
     while (window.pollEvent(event))
     {   

@@ -2,7 +2,7 @@
 
 namespace arkanoid
 {
-
+using namespace sf;
 Illustrator::Illustrator()
 {
     if(!m_font.loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Bold.ttf"))

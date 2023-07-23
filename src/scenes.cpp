@@ -3,6 +3,7 @@
 
 namespace arkanoid
 {
+using namespace sf;
 
 Title_Screen::Title_Screen()
 {

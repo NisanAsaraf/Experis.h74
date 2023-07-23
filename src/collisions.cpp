@@ -3,7 +3,7 @@
 
 namespace arkanoid
 {
- 
+using namespace sf;
 bool check_collision(Ball& a_ball, Block& a_block)
 {
     FloatRect ball_bounds = a_ball.getGlobalBounds();
@@ -34,14 +34,6 @@ bool check_collision(Paddle& a_paddle, Ball& a_ball)
     FloatRect paddle_bounds = a_paddle.getGlobalBounds();
 
     return ( ball_bounds.intersects(paddle_bounds));
-}
-
-bool check_window_collision(Shape& a_shape, RenderWindow& a_window , float a_buffer)
-{
-    FloatRect shape_bounds = a_shape.getGlobalBounds();
-    FloatRect window_bounds(Vector2f(a_buffer, a_buffer), Vector2f(a_window.getSize().x - a_buffer, a_window.getSize().y - a_buffer));
-
-    return (shape_bounds.intersects(window_bounds));
 }
 
 void ball_block_collision_handler(Block& a_block, Ball& a_ball)
@@ -131,6 +123,14 @@ void ball_paddle_collision_handler(Ball& a_ball, Paddle& a_paddle)
             a_ball.elastic_vertical();
         }
     }
+}
+
+bool check_window_collision(Shape& a_shape,RenderWindow& a_window , float a_buffer)
+{
+    FloatRect shape_bounds = a_shape.getGlobalBounds();
+    FloatRect window_bounds(Vector2f(a_buffer, a_buffer), Vector2f(a_window.getSize().x - a_buffer, a_window.getSize().y - a_buffer));
+
+    return (shape_bounds.intersects(window_bounds));
 }
 
 void ball_paddle_collision_handler(Paddle& a_paddle, Ball& a_ball)

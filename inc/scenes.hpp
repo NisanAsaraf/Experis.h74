@@ -34,11 +34,11 @@ public:
     void create() override;
     void reset() override;
     std::vector<std::unique_ptr<Button>>& get_vector();
-    std::unique_ptr<Texture> const& get_BG();
+    std::unique_ptr<sf::Texture> const& get_BG();
 
 private:
     std::vector<std::unique_ptr<Button>> buttons;
-    std::unique_ptr<Texture> backgroundTexture;
+    std::unique_ptr<sf::Texture> backgroundTexture;
 };
 
 
@@ -50,24 +50,24 @@ public:
     void reset() override;
 
     std::vector<std::unique_ptr<Block>>& get_vector();
-    std::unique_ptr<Texture> const& get_BG();
+    std::unique_ptr<sf::Texture> const& get_BG();
     Paddle& get_paddle();
-    std::unique_ptr<RectangleShape> const& get_kill_zone();
-    std::unique_ptr<RectangleShape> const& get_border();
+    std::unique_ptr<sf::RectangleShape> const& get_kill_zone();
+    std::unique_ptr<sf::RectangleShape> const& get_border();
     std::vector<std::unique_ptr<Ball>> const& get_balls();
 private:
     void make_blocks(); 
     void make_player();
     void make_paddle();
-    void make_kill_zone(Vector2f a_size);
-    void make_border(Vector2f a_size);
+    void make_kill_zone(sf::Vector2f a_size);
+    void make_border(sf::Vector2f a_size);
     void spawn_ball();
     void paddle_reset();
     
 private:
-    std::unique_ptr<Texture> backgroundTexture;
-    std::unique_ptr<RectangleShape> border;
-    std::unique_ptr<RectangleShape> kill_zone;
+    std::unique_ptr<sf::Texture> backgroundTexture;
+    std::unique_ptr<sf::RectangleShape> border;
+    std::unique_ptr<sf::RectangleShape> kill_zone;
     std::unique_ptr<Player> m_player;
     std::vector<std::unique_ptr<Block>> blocks;
     std::vector<std::unique_ptr<Ball>> balls;
@@ -81,16 +81,16 @@ public:
     Score_Board(std::vector<PlayerData>&);
     void create() override;
     void reset() override;
-    std::vector<Text> const& getTexts();
-    std::unique_ptr<Texture> const& getBG();
-    std::unique_ptr<Text> const& getHeader();
+    std::vector<sf::Text> const& getTexts();
+    std::unique_ptr<sf::Texture> const& getBG();
+    std::unique_ptr<sf::Text> const& getHeader();
 
 private:
     std::vector<PlayerData> m_players;
-    std::unique_ptr<Texture> backgroundTexture;
-    std::unique_ptr<Font> m_font;
-    std::unique_ptr<Text> m_header;
-    std::vector<Text> m_texts;
+    std::unique_ptr<sf::Texture> backgroundTexture;
+    std::unique_ptr<sf::Font> m_font;
+    std::unique_ptr<sf::Text> m_header;
+    std::vector<sf::Text> m_texts;
 };
 
 }

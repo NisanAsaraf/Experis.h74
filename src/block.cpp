@@ -1,6 +1,7 @@
 #include "../inc/block.hpp"
 namespace arkanoid
 {
+using namespace sf;
 
 Block::Block(Texture a_blockTexture, float a_x, float a_y)
 {

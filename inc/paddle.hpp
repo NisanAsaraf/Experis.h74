@@ -5,30 +5,29 @@
 #include "config.hpp"
 namespace arkanoid
 {
-using namespace sf;
 class Paddle
 {
 public:
     Paddle();
-    Vector2f getVelocity() const;
-    FloatRect getGlobalBounds() const;
-    Vector2f getPosition() const;
+    sf::Vector2f getVelocity() const;
+    sf::FloatRect getGlobalBounds() const;
+    sf::Vector2f getPosition() const;
     void paddle_start();
     bool started() const;
-    Vector2f getSize() const;
+    sf::Vector2f getSize() const;
     void reset();
-    RectangleShape const& getShape() const;
+    sf::RectangleShape const& getShape() const;
     void setPosition(float , float);
-    void setPosition(Vector2f);
-    void move(Vector2f);
-    void left(Clock);
-    void right(Clock);
+    void setPosition(sf::Vector2f);
+    void move(sf::Vector2f);
+    void left(sf::Clock);
+    void right(sf::Clock);
     void stop();
 
 private:
-    std::unique_ptr<RectangleShape> paddle;
-    std::unique_ptr<Texture> paddleTexture;
-    Vector2f velocity;
+    std::unique_ptr<sf::RectangleShape> paddle;
+    std::unique_ptr<sf::Texture> paddleTexture;
+    sf::Vector2f velocity;
     float acceleration;
     bool start;
     float max_speed;
