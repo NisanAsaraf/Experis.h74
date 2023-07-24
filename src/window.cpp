@@ -41,7 +41,7 @@ void Game_Window::draw_background(Scene& a_scene, GameState& currentGameState)
             draw_background_title_screen(a_scene);
             break;
 
-        case GameState::Level1:
+        case GameState::Level:
             draw_background_level_one(a_scene);
             break;
 
@@ -96,7 +96,7 @@ void Game_Window::draw_scene(Player& a_player,Scene& a_scene, GameState& current
         case GameState::TitleScreen:
             draw_title_screen(a_scene);
             break;
-        case GameState::Level1:
+        case GameState::Level:
             draw_level_one(a_player, a_scene);
             break;
         case GameState::ScoreBoard:
@@ -114,7 +114,7 @@ void Game_Window::run_title_screen(Player& a_player, Scene& a_scene, GameState& 
     window.display();
 }
 
-void Game_Window::run_level_one(Player& a_player, Scene& a_scene, GameState& currentGameState)
+void Game_Window::run_level(Player& a_player, Scene& a_scene, GameState& currentGameState)
 {
     handleCollisions(a_player, a_scene, currentGameState);
     draw_background(a_scene, currentGameState);
@@ -201,7 +201,7 @@ void Game_Window::pause_game(GameState& currentGameState)
 
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
             {
-                currentGameState = GameState::Level1;
+                currentGameState = GameState::Level;
                 break;
             }
         }
@@ -336,7 +336,7 @@ void Game_Window::level_one_collisions_handler(Player& a_player, Scene& a_scene)
     auto& blocks = level_one->get_vector(); 
     auto& balls = level_one->get_balls();
     paddle_out_of_bounds_handler(a_scene);
-    
+
     for (const auto& ballPtr : balls)
     {
         if(ballPtr->isVanished())
@@ -381,7 +381,7 @@ void Game_Window::handleCollisions(Player& a_player, Scene& a_scene, GameState& 
     {
         case GameState::TitleScreen:
             break;
-        case GameState::Level1:
+        case GameState::Level:
             level_one_collisions_handler(a_player, a_scene);
             break;
         case GameState::ScoreBoard:

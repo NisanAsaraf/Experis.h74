@@ -10,6 +10,7 @@ public:
     virtual void create() = 0;
     virtual void reset() = 0;
     virtual size_t get_win_score() const = 0;
+    virtual size_t get_level_number() const = 0;
 };
 
 }//namespace arkanoid

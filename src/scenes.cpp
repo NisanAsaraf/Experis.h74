@@ -48,6 +48,11 @@ size_t Title_Screen::get_win_score() const
     return 0;
 }
 
+size_t Title_Screen::get_level_number() const
+{
+    return 0;
+}
+
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 Level_One::Level_One()
@@ -80,7 +85,6 @@ void Level_One::make_player()
 
 void Level_One::make_blocks()
 {
-/*  
     size_t row, col;
     row = 6;
     col = 11;
@@ -125,7 +129,7 @@ void Level_One::make_blocks()
             }
             blocks.emplace_back(std::move(block)); 
         }
-    } */
+    } 
 }
 
 void Level_One::make_paddle()
@@ -204,6 +208,11 @@ size_t Level_One::get_win_score() const
     return win_score;
 }
 
+size_t Level_One::get_level_number() const
+{
+    return 1;
+}
+
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 Level_Two::Level_Two()
 {
@@ -218,7 +227,7 @@ void Level_Two::create()
     make_kill_zone(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
     make_paddle();
     spawn_ball();
-    win_score = 11*(50 + 90 + 100 + 120 + 110 + 80);
+    win_score = 11*100 + 10*60 + 9*70 + 8*80 + 7*100 + 6*90 + 5*120 + 4*70 + 3*80 + 2*100 + 1*110;
     backgroundTexture = std::make_unique<Texture>();
 
     if (!(*backgroundTexture).loadFromFile("../../assets/textures/BG/neon.jpg"))
@@ -245,10 +254,11 @@ void Level_Two::make_blocks()
 
     for (size_t i = 0; i < row; ++i)
     {
-        for (size_t j = i; j <= row; ++j)
+        for (size_t j = i; j < row; ++j)
         {
             x = 100 + i * (blockWidth);
             y = 120 + j * (blockHeight);
+
             switch(i)
             {
                 case 0:
@@ -266,7 +276,7 @@ void Level_Two::make_blocks()
                 case 4:
                     blocks.emplace_back(std::make_unique<RedBlock>(x, y));
                     break;
-                case 5: 
+                case 5:
                     blocks.emplace_back(std::make_unique<OrangeBlock>(x, y));
                     break;
                 case 6:
@@ -281,15 +291,13 @@ void Level_Two::make_blocks()
                 case 9: 
                     blocks.emplace_back(std::make_unique<RedBlock>(x, y));
                     break;
-                case 10:
-                    blocks.emplace_back(std::make_unique<PurpleBlock>(x, y));
-                    break;
                 default: 
                     break;
             }
         }
         blocks.emplace_back(std::make_unique<GrayBlock>(x, y));
     }
+    blocks.emplace_back(std::make_unique<PurpleBlock>(x, y));
 }
 
 void Level_Two::make_paddle()
@@ -368,6 +376,11 @@ size_t Level_Two::get_win_score() const
     return win_score;
 }
 
+size_t Level_Two::get_level_number() const
+{
+    return 2;
+}
+
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 Score_Board::Score_Board(std::vector<PlayerData>& a_players)
@@ -430,6 +443,11 @@ void Score_Board::create()
 size_t Score_Board::get_win_score() const
 {
     return 0;
+}
+
+size_t Score_Board::get_level_number() const
+{
+    return 42;
 }
 
 } // namespace arkanoid

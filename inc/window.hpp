@@ -23,7 +23,7 @@ public:
     ~Game_Window() = default;
     
     void run_title_screen(Player& a_player, Scene& a_scene, GameState& currentGameState);
-    void run_level_one(Player& a_player, Scene& a_scene, GameState& currentGameState);
+    void run_level(Player& a_player, Scene& a_scene, GameState& currentGameState);
     void run_scoreboard_screen(Player& a_player,Scene& a_scene, GameState& currentGameState);
     
     void draw_background_title_screen(Scene& m_scene);

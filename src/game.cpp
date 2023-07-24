@@ -26,12 +26,22 @@ void Arkanoid_Game::make_title_screen()
 
 void Arkanoid_Game::make_level_one()
 {
-    currentGameState = GameState::Level1;
+    currentGameState = GameState::Level;
     clock.restart();
 
     scene = std::make_unique<Level_One>();
     Level_One* level_one = dynamic_cast<Level_One*>(scene.get());
     level_one->create();
+}
+
+void Arkanoid_Game::make_level_two()
+{
+    currentGameState = GameState::Level;
+    clock.restart();
+
+    scene = std::make_unique<Level_Two>();
+    Level_Two* level_two = dynamic_cast<Level_Two*>(scene.get());
+    level_two->create();
 }
 
 void Arkanoid_Game::make_scoreBoard_screen()
@@ -72,8 +82,8 @@ void Arkanoid_Game::run()
             case GameState::TitleScreen:
                 m_window_ptr->run_title_screen(*player, *scene, currentGameState);
                 break;
-            case GameState::Level1:
-                m_window_ptr->run_level_one(*player, *scene, currentGameState);
+            case GameState::Level:
+                m_window_ptr->run_level(*player, *scene, currentGameState);
                 check_win_condition();
                 break;
             case GameState::ScoreBoard:
@@ -101,7 +111,7 @@ void Arkanoid_Game::processEvents()
                     make_level_one();
                 }
                 break;
-            case GameState::Level1:
+            case GameState::Level:
                 m_window_ptr->paddle_movement_control(*scene, event, currentGameState);
                 break;
             case GameState::ScoreBoard:
@@ -136,12 +146,25 @@ bool Arkanoid_Game::new_high_score_check()
     return false;
 }
 
+void Arkanoid_Game::advance_level()
+{
+    if(scene->get_level_number() == 1)
+    {
+        make_level_two();
+    }
+
+    if(scene->get_level_number() == 2)
+    {
+        make_scoreBoard_screen();
+    }
+}
+
 void Arkanoid_Game::check_win_condition()
 {
     if((*player).get_score() == scene->get_win_score())
     {
         m_window_ptr->game_win_screen();
-        make_scoreBoard_screen();
+        advance_level();
     }
 }
 

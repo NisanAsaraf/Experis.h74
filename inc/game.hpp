@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 #include "window.hpp"
+#include "config.hpp"
 
 namespace arkanoid
 {
@@ -17,7 +18,10 @@ private:
 
     void make_title_screen();
     void make_level_one();
+    void make_level_two();
     void make_scoreBoard_screen();
+
+    void advance_level();
 
     void check_win_condition();
     void processEvents();
