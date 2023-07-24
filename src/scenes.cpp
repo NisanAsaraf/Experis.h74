@@ -57,7 +57,7 @@ void Level_One::create()
     make_kill_zone(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
     make_paddle();
     spawn_ball();
-    win_score = 11*(50 + 90 + 100 + 120 + 110 + 80);
+    win_score = LEVEL_ONE_SCORE;
     backgroundTexture = std::make_unique<Texture>();
 
     if (!(*backgroundTexture).loadFromFile("../../assets/textures/BG/neon.jpg"))
@@ -146,7 +146,7 @@ void Level_Two::create()
     make_kill_zone(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
     make_paddle();
     spawn_ball();
-    win_score = 11*100 + 10*60 + 9*70 + 8*80 + 7*100 + 6*90 + 5*120 + 4*70 + 3*80 + 2*100 + 1*110;
+    win_score = LEVEL_TWO_SCORE;
     backgroundTexture = std::make_unique<Texture>();
 
     if (!(*backgroundTexture).loadFromFile("../../assets/textures/BG/neon.jpg"))
@@ -233,7 +233,52 @@ size_t Level_Two::get_level_number() const
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
+Level_Three::Level_Three()
+{
 
+}
+
+void Level_Three::create()
+{
+    make_blocks();
+    make_border(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
+    make_kill_zone(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
+    make_paddle();
+    spawn_ball();
+    win_score = LEVEL_THREE_SCORE;
+    backgroundTexture = std::make_unique<Texture>();
+
+    if (!(*backgroundTexture).loadFromFile("../../assets/textures/BG/neon.jpg"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+
+}
+
+void Level_Three::make_blocks()
+{
+
+}
+
+void Level_Three::reset()
+{
+    blocks.clear();
+    paddle_reset();
+    balls.clear();
+}
+
+
+size_t Level_Three::get_win_score() const
+{
+    return win_score;
+}
+
+size_t Level_Three::get_level_number() const
+{
+    return 3;
+}
+
+/* ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */ 
 Score_Board::Score_Board(std::vector<PlayerData>& a_players)
 {
     m_players = a_players;
