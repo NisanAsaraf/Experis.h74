@@ -53,7 +53,6 @@ WhiteBlock::WhiteBlock(float a_x, float a_y) : Block(a_x, a_y)
     blockTexture = std::make_unique<Texture>();
     if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/white-50.png"))
     shape->setTexture(&(*blockTexture));
-    shape->setScale(0.8f,0.8f);
     vanished = false;
 }
 
@@ -62,7 +61,6 @@ WhiteBlock::WhiteBlock(Vector2f a_vec) : Block(a_vec)
     blockTexture = std::make_unique<Texture>();
     if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/white-50.png"))
     shape->setTexture(&(*blockTexture));
-    shape->setScale(0.8f,0.8f);
     vanished = false;
 }
 
