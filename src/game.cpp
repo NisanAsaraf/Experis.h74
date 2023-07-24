@@ -9,7 +9,6 @@ Arkanoid_Game::Arkanoid_Game()
     m_window_ptr = std::make_unique<Game_Window>();
     player = std::make_unique<Player>();
     make_title_screen();
-    scene->play_scene_music();
 }
 
 void Arkanoid_Game::reset()
@@ -23,6 +22,7 @@ void Arkanoid_Game::make_title_screen()
     scene = std::make_unique<Title_Screen>();
     scene ->create();
     is_high_score_already_entered = false;
+    scene->play_scene_music();
 }
 
 void Arkanoid_Game::make_level_one()
@@ -32,6 +32,7 @@ void Arkanoid_Game::make_level_one()
     clock.restart();
     scene = std::make_unique<Level_One>();
     scene ->create();
+    scene->play_scene_music();
 }
 
 void Arkanoid_Game::make_level_two()
@@ -41,6 +42,7 @@ void Arkanoid_Game::make_level_two()
     player->reset_to_next_level();
     scene = std::make_unique<Level_Two>();
     scene ->create();
+    scene->play_scene_music();
 }
 
 void Arkanoid_Game::make_level_three()
@@ -50,6 +52,7 @@ void Arkanoid_Game::make_level_three()
     player->reset_to_next_level();
     scene = std::make_unique<Level_Three>();
     scene ->create();
+    scene->play_scene_music();
 }
 
 void Arkanoid_Game::make_scoreBoard_screen()
@@ -110,7 +113,10 @@ void Arkanoid_Game::processEvents()
 
     while (window.pollEvent(event))
     {   
-        m_window_ptr->close_window_check(event);
+        if(m_window_ptr->close_window_check(event))
+        {
+            scene->stop_scene_music();
+        }
         switch (currentGameState)
         {
             case GameState::TitleScreen:

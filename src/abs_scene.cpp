@@ -99,6 +99,11 @@ void Scene::play_scene_music()
     scene_music.play();
 }
 
+void Scene::stop_scene_music()
+{
+    scene_music.stop();
+}
+
 void Scene::load_blocks_from_json(std::ifstream& file)
 {
     json level_data;

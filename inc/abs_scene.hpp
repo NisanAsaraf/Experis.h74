@@ -31,6 +31,7 @@ public:
     std::vector<std::unique_ptr<Ball>> const& get_balls() const;
     void load_blocks_from_json(std::ifstream& file);
     void play_scene_music();
+    void stop_scene_music();
     std::vector<sf::Text> const& getTexts();
     sf::Text& getHeader();
 

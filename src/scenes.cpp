@@ -26,6 +26,7 @@ Title_Screen::Title_Screen()
     }
 
     scene_music.setLoop(true);
+    scene_music.setVolume(75);
 }
 
 void Title_Screen::create()
@@ -79,7 +80,13 @@ void Level_One::create()
     {
         throw std::runtime_error("Failed to load font from file.");
     }
+    if (!scene_music.openFromFile("../../assets/audio/level_one.ogg"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
 
+    scene_music.setLoop(true);
+    scene_music.setVolume(50);
 }
 
 void Level_One::make_blocks()
