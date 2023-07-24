@@ -275,7 +275,7 @@ bool Game_Window::title_screen_button_click_handler(Scene& a_scene, Event& event
         Vector2f mousePosition(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
 
         Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(&a_scene);
-        auto const& buttons = title_scrn->get_vector(); 
+        auto const& buttons = title_scrn->get_buttons(); 
 
         Button& button1 = *buttons.at(0);
         Button& button2 = *buttons.at(1);
@@ -333,7 +333,7 @@ void Game_Window::level_one_collisions_handler(Player& a_player, Scene& a_scene)
 {
     Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
     Paddle& pad = level_one->get_paddle();
-    auto& blocks = level_one->get_vector(); 
+    auto& blocks = level_one->get_blocks(); 
     auto& balls = level_one->get_balls();
     paddle_out_of_bounds_handler(a_scene);
 

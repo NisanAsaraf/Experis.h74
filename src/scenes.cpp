@@ -33,6 +33,16 @@ void Title_Screen::reset()
     create();
 }
 
+size_t Title_Screen::get_win_score() const
+{
+    return 0;
+}
+
+size_t Title_Screen::get_level_number() const
+{
+    return 0;
+}
+
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 Level_One::Level_One()
@@ -203,7 +213,6 @@ void Level_Two::make_blocks()
     }
     blocks.emplace_back(std::make_unique<PurpleBlock>(x, y));
 }
-
 
 void Level_Two::reset()
 {

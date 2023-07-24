@@ -18,7 +18,7 @@ std::vector<std::unique_ptr<Block>> const& Scene::get_blocks() const
     return blocks;
 }
 
-Paddle const& Scene::get_paddle() const
+Paddle& Scene::get_paddle() const
 {
     return *paddle;
 }

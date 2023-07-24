@@ -61,7 +61,7 @@ block.o: $(SOURCES_DIR)/block.cpp $(INCLUDES_DIR)/block.hpp
 
 abs_scene.o: $(SOURCES_DIR)/abs_scene.cpp $(INCLUDES_DIR)/abs_scene.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
-	
+
 scenes.o: $(SOURCES_DIR)/scenes.cpp $(INCLUDES_DIR)/scenes.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@	
 

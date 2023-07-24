@@ -2,6 +2,10 @@
 #define ABS_SCENE_H
 #include<SFML/Graphics.hpp>
 #include <vector>
+#include "UI.hpp"
+#include "ball.hpp"
+#include "paddle.hpp"
+#include "block.hpp"
 
 namespace arkanoid
 {
@@ -17,7 +21,7 @@ public:
 
     std::vector<std::unique_ptr<Button>> const& get_buttons() const;
     std::vector<std::unique_ptr<Block>> const& get_blocks() const;
-    Paddle const& get_paddle() const;
+    Paddle& get_paddle() const;
 
     std::unique_ptr<sf::Texture> const& get_BG() const;
     std::unique_ptr<sf::RectangleShape> const& get_kill_zone() const;

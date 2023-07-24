@@ -1,12 +1,8 @@
 #ifndef SCENE_H
 #define SCENE_H
 #include <SFML/Graphics.hpp>
-#include "block.hpp"
-#include "paddle.hpp"
-#include "ball.hpp"
-#include "life.hpp"
-#include "UI.hpp"
 #include "abs_scene.hpp"
+#include "life.hpp"
 #include "leaderboard.hpp"
 #include <vector>
 
