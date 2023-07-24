@@ -28,6 +28,7 @@ public:
     std::unique_ptr<sf::RectangleShape> const& get_kill_zone() const;
     std::unique_ptr<sf::RectangleShape> const& get_border() const;
     std::vector<std::unique_ptr<Ball>> const& get_balls() const;
+    void load_blocks_from_json(std::ifstream& file);
 
     std::vector<sf::Text> const& getTexts();
     sf::Text& getHeader();

@@ -1,11 +1,8 @@
 #include "abs_scene.hpp"
-#include "UI.hpp"
-#include "paddle.hpp"
-#include "ball.hpp"
-#include "block.hpp"
 
 namespace arkanoid
 {
+using json = nlohmann::json;
 using namespace sf;
 
 std::vector<std::unique_ptr<Button>> const& Scene::get_buttons() const
@@ -97,6 +94,45 @@ std::vector<sf::Text> const& Scene::getTexts()
 sf::Text& Scene::getHeader()
 {
     return m_header;
+}
+
+void Scene::load_blocks_from_json(std::ifstream& file)
+{
+    json level_data;
+    file >> level_data;
+
+    blocks.clear();
+
+    for (const auto& block_data : level_data["blocks"])
+    {
+        int x = block_data["x"];
+        int y = block_data["y"];
+        std::string block_type = block_data["type"];
+
+        std::unique_ptr<Block> block;
+        if (block_type == "WhiteBlock")
+        block = std::make_unique<WhiteBlock>(x, y);
+        else if (block_type == "TealBlock")
+            block = std::make_unique<TealBlock>(x, y);
+        else if (block_type == "BrownBlock")
+            block = std::make_unique<BrownBlock>(x, y);
+        else if (block_type == "OrangeBlock")
+            block = std::make_unique<OrangeBlock>(x, y);
+        else if (block_type == "GreenBlock")
+            block = std::make_unique<GreenBlock>(x, y);
+        else if (block_type == "PurpleBlock")
+            block = std::make_unique<PurpleBlock>(x, y);
+        else if (block_type == "BlueBlock")
+            block = std::make_unique<BlueBlock>(x, y);
+        else if (block_type == "GrayBlock")
+            block = std::make_unique<GrayBlock>(x, y);
+        else if (block_type == "RedBlock")
+            block = std::make_unique<RedBlock>(x, y);
+        else if (block_type == "YellowBlock")
+            block = std::make_unique<YellowBlock>(x, y);
+
+        blocks.emplace_back(std::move(block));
+    }
 }
 
 }//namespace arkanoid
