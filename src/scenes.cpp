@@ -176,80 +176,12 @@ void Level_Three::create()
 
 void Level_Three::make_blocks()
 {
-   size_t row, col;
-    row = 8;
-    col = 11;
-    blocks.clear();
-    const int blockWidth = 60;
-    const int blockHeight = 25;
-    
-    const int spacingX = 1;
-    const int spacingY = blockHeight;
-
-    blocks.reserve(row * col);
-    
-    for (size_t i = 0; i < row; ++i)
+    std::ifstream file("../../assets/levels/level-3.dat");
+    if (!file)
     {
-        for (size_t j = 0; j < col; ++j)
-        {
-            int x = 60 + spacingX + j * (blockWidth + spacingX);
-            int y = spacingY + i * (blockHeight + spacingY);
-            std::unique_ptr<Block> block;
-            switch (i)
-            {
-                case 0:
-                     block = std::make_unique<GreenBlock>(x, y);
-                    break;
-                case 1:
-                {
-                    if(j < 3)
-                    {
-                        block = std::make_unique<WhiteBlock>(x, y);
-                    }
-                    else
-                    {
-                        block = std::make_unique<OrangeBlock>(x, y);
-                    }
-                    break;
-                }
-                case 2:
-                    block = std::make_unique<RedBlock>(x, y);
-                    break;
-                case 3:
-                    if(j < 3)
-                    {
-                        block = std::make_unique<OrangeBlock>(x, y);
-                    }
-                    else
-                    {
-                        block = std::make_unique<WhiteBlock>(x, y);
-                    }
-                    break;
-                case 4:
-                    block = std::make_unique<PurpleBlock>(x, y);
-                    break;
-                case 5: 
-                    if(j < 3)
-                    {
-                        block = std::make_unique<BlueBlock>(x, y);
-                    }
-                    else
-                    {
-                        block = std::make_unique<OrangeBlock>(x, y);
-                    }
-                    break;
-                case 6:
-                    block = std::make_unique<BlueBlock>(x, y);
-                    break;
-                case 7:
-                    block = std::make_unique<RedBlock>(x, y);
-                    break;
-                default: 
-                    break;
-            }
-            blocks.emplace_back(std::move(block)); 
-        }
-    } 
+        throw std::runtime_error("Failed to load font from file.");
+    }
+    load_blocks_from_json(file);
 }
 
 void Level_Three::reset()
