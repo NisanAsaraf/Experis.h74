@@ -157,7 +157,7 @@ void Arkanoid_Game::advance_level()
 
 void Arkanoid_Game::check_win_condition()
 {
-    if((*player).get_score() == scene->get_win_score())
+    if((*player).get_score() >= scene->get_win_score())
     {
         m_window_ptr->game_win_screen();
         advance_level();
