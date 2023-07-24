@@ -5,7 +5,7 @@ namespace arkanoid
 
 Player::Player()
 :m_name{}
-,m_score{0}
+,m_score{LEVEL_ONE_SCORE}
 ,m_total_score{0}
 ,m_lives{3}
 {

@@ -193,7 +193,7 @@ void Illustrator::draw_pause(RenderWindow& a_window)
     a_window.draw(text);
 }
 
-std::string Illustrator::draw_input_name_screen(RenderWindow& a_window)
+bool Illustrator::draw_input_name_screen(std::string& a_string, RenderWindow& a_window)
 {
     Text text("New high score!\n input name:", m_font, 50);
     text.setFillColor(Color::White);
@@ -212,7 +212,7 @@ std::string Illustrator::draw_input_name_screen(RenderWindow& a_window)
             if(event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
             {
                 a_window.close();
-                break;
+                return false;
             }
 
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Enter)
@@ -243,7 +243,8 @@ std::string Illustrator::draw_input_name_screen(RenderWindow& a_window)
             break;
         }
     }
-    return playerName;
+    a_string.assign(playerName);
+    return true;
 }
 
 void Animator::animate_ball(Ball& a_ball)

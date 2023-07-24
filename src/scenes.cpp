@@ -125,60 +125,12 @@ void Level_Two::create()
 
 void Level_Two::make_blocks()
 {
-    size_t row;
-    row = 10;
-    const int blockWidth = 60;
-    const int blockHeight = 25;
-    int x, y;
-    blocks.clear();
-    blocks.reserve(row * row / 2);
-
-    for (size_t i = 0; i < row; ++i)
+    std::ifstream file("../../assets/levels/level-2.dat");
+    if (!file)
     {
-        for (size_t j = i; j < row; ++j)
-        {
-            x = 100 + i * (blockWidth);
-            y = 120 + j * (blockHeight);
-
-            switch(i)
-            {
-                case 0:
-                    blocks.emplace_back(std::make_unique<BrownBlock>(x, y));
-                    break;
-                case 1: 
-                    blocks.emplace_back(std::make_unique<TealBlock>(x, y));
-                    break;
-                case 2: 
-                    blocks.emplace_back(std::make_unique<GreenBlock>(x, y));
-                    break;
-                case 3: 
-                    blocks.emplace_back(std::make_unique<BlueBlock>(x, y));
-                    break;
-                case 4:
-                    blocks.emplace_back(std::make_unique<RedBlock>(x, y));
-                    break;
-                case 5:
-                    blocks.emplace_back(std::make_unique<OrangeBlock>(x, y));
-                    break;
-                case 6:
-                    blocks.emplace_back(std::make_unique<TealBlock>(x, y));
-                    break;
-                case 7: 
-                    blocks.emplace_back(std::make_unique<GreenBlock>(x, y));
-                    break;
-                case 8: 
-                    blocks.emplace_back(std::make_unique<BlueBlock>(x, y));
-                    break;
-                case 9: 
-                    blocks.emplace_back(std::make_unique<RedBlock>(x, y));
-                    break;
-                default: 
-                    break;
-            }
-        }
-        blocks.emplace_back(std::make_unique<GrayBlock>(x, y));
+        throw std::runtime_error("Failed to load font from file.");
     }
-    blocks.emplace_back(std::make_unique<PurpleBlock>(x, y));
+    load_blocks_from_json(file);
 }
 
 void Level_Two::reset()

@@ -145,7 +145,14 @@ bool Arkanoid_Game::new_high_score_check()
 
     if(!is_high_score_already_entered && score_manager.check_new_high_score(new_player))
     {
-        player->set_name(m_window_ptr->input_name());
+        std::string a_name;
+
+        if(!m_window_ptr->input_name(a_name))
+        {
+            return false;
+        }
+
+        player->set_name(a_name);
         update_top_scores();
         is_high_score_already_entered = true;
         make_scoreBoard_screen();

@@ -277,9 +277,13 @@ bool Game_Window::title_screen_button_click_handler(Scene& a_scene, Event& event
     return false;
 }
 
-std::string Game_Window::input_name()
+bool Game_Window::input_name(std::string& a_name)
 {
-    return illustrator->draw_input_name_screen(window);
+    if(illustrator->draw_input_name_screen(a_name, window))
+    {
+        return true;
+    }
+    return false;
 }        
 
 void Game_Window::paddle_out_of_bounds_handler(Scene& a_scene)
@@ -335,7 +339,7 @@ void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
             }
             if(check_collision(*ballPtr, *block))
             {
-                a_player.add_score(block->getScoreValue());
+                a_player.add_score(block->getScoreValue(a_scene.get_level_number()));
                 ball_block_collision_handler(*block, *ballPtr);//will vanish a block
             }
         }
