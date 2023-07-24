@@ -289,7 +289,7 @@ YellowBlock::YellowBlock(float a_x, float a_y) : Block(a_x, a_y)
 YellowBlock::YellowBlock(Vector2f a_vec) : Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/white-50.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/white-50.png"))
     shape->setTexture(&(*blockTexture));
     score = 0;
     vanished = false;

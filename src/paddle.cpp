@@ -8,7 +8,7 @@ Paddle::Paddle()
     start = false;
     paddleTexture    = std::make_unique<Texture>();
 
-    if (!(*paddleTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/49-Breakout-Tiles.png"))
+    if (!(*paddleTexture).loadFromFile("../../assets/textures/Breakout/PNG/49-Breakout-Tiles.png"))
     {
         throw std::runtime_error("Failed to load font from file.");
     }

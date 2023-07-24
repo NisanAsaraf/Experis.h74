@@ -11,7 +11,7 @@ namespace arkanoid
         shape->setPosition(SCREEN_WIDTH/2 - 10, SCREEN_HEIGHT - 70);
         vanished = false;
         ballTexture = std::make_unique<Texture>();
-        if (!(*ballTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/58-Breakout-Tiles.png"))
+        if (!(*ballTexture).loadFromFile("../../assets/textures/Breakout/PNG/58-Breakout-Tiles.png"))
         {
             throw std::runtime_error("Failed to load font from file.");
         }

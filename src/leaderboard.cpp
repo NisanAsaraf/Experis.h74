@@ -14,7 +14,7 @@ void ScoresFileManager::update_top10_file(PlayerData a_player)
 
 void ScoresFileManager::load_scores(std::vector<PlayerData>& a_top_10)
 {
-    std::ifstream inputFile("/home/nisan/Experis.h74/assets/scoreboard/top_scores.dat", std::ios::binary);
+    std::ifstream inputFile("../../assets/scoreboard/top_scores.dat", std::ios::binary);
     if (inputFile.is_open())
     {
         a_top_10.clear();
@@ -47,7 +47,7 @@ void ScoresFileManager::load_scores(std::vector<PlayerData>& a_top_10)
 
 void ScoresFileManager::save_scores(std::vector<PlayerData>& a_top_10)
 {
-    std::ofstream outputFile("/home/nisan/Experis.h74/assets/scoreboard/top_scores.dat", std::ios::binary);
+    std::ofstream outputFile("../../assets/scoreboard/top_scores.dat", std::ios::binary);
     if (outputFile.is_open())
     {
         for (const PlayerData& player : a_top_10)
@@ -114,7 +114,7 @@ bool ScoresFileManager::check_new_high_score(PlayerData const& new_player_data)
 
 void ScoresFileManager::create_scores_file()
 {
-    std::ofstream file("/home/nisan/Experis.h74/assets/scoreboard/top_scores.dat");
+    std::ofstream file("../..//assets/scoreboard/top_scores.dat");
 }
 
 }//namespace arkanoid

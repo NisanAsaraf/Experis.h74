@@ -6,7 +6,7 @@ using namespace sf;
 Life::Life(Vector2f a_pos)
 {
     heartTexture = std::make_unique<Texture>();
-    if (!(*heartTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/Heart/heart.png")) 
+    if (!(*heartTexture).loadFromFile("../../assets/textures/Heart/heart.png")) 
     {
         throw std::runtime_error("Failed to load font from file.");
     }

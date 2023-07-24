@@ -5,7 +5,7 @@ namespace arkanoid
 using namespace sf;
 Illustrator::Illustrator()
 {
-    if(!m_font.loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Bold.ttf"))
+    if(!m_font.loadFromFile("../../assets/fonts/Antonio-Bold.ttf"))
     {
         throw std::runtime_error("Error load font");
     }
@@ -47,7 +47,7 @@ void Illustrator::draw_title_screen(Title_Screen& a_titlescreen,RenderWindow& a_
     auto const& buttons = a_titlescreen.get_vector();
     Texture msg_texture;
     Sprite msg_sprite;
-    msg_texture.loadFromFile("/home/nisan/Experis.h74/assets/textures/Messages/arkanoid_color.png");
+    msg_texture.loadFromFile("../../assets/textures/Messages/arkanoid_color.png");
     msg_sprite.setTexture(msg_texture);
     msg_sprite.setColor(Color::White);
     msg_sprite.setScale(0.4f,0.4f);
@@ -108,7 +108,7 @@ void Illustrator::draw_win_screen(RenderWindow& a_window)
 {
     Texture msg_texture;
     Sprite msg_sprite;
-    msg_texture.loadFromFile("/home/nisan/Experis.h74/assets/textures/Messages/you_win.png");
+    msg_texture.loadFromFile("../../assets/textures/Messages/you_win.png");
     msg_sprite.setTexture(msg_texture);
     msg_sprite.setScale(0.5f,0.5f);
     msg_sprite.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3);
@@ -139,7 +139,7 @@ void Illustrator::draw_game_over_screen(RenderWindow& a_window)
 {
     Texture msg_texture;
     Sprite msg_sprite;
-    msg_texture.loadFromFile("/home/nisan/Experis.h74/assets/textures/Messages/game_over.png");
+    msg_texture.loadFromFile("../../assets/textures/Messages/game_over.png");
     msg_sprite.setTexture(msg_texture);
     msg_sprite.setScale(0.8f,0.8f);
     msg_sprite.setPosition(SCREEN_WIDTH/4, SCREEN_HEIGHT/3);
