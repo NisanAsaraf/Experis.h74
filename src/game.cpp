@@ -138,7 +138,7 @@ bool Arkanoid_Game::new_high_score_check()
 
 void Arkanoid_Game::check_win_condition()
 {
-    if((*player).get_score() == WIN_SCORE)
+    if((*player).get_score() == scene->get_win_score())
     {
         m_window_ptr->game_win_screen();
         make_scoreBoard_screen();

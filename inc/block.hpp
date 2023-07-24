@@ -52,65 +52,74 @@ public:
     void Collision() override;
 };
 
-class TealBlock : Block // 70 score
+class TealBlock : public Block // 70 score
 {
+public:
     TealBlock(float a_x , float a_y);
     TealBlock(sf::Vector2f a_pos);
     void Collision() override;
 };
 
-class BrownBlock : Block // 60 score
+class BrownBlock : public Block // 60 score
 {
+public:   
     BrownBlock(float a_x , float a_y);
     BrownBlock(sf::Vector2f a_pos);
     void Collision() override;
 };
 
-class OrangeBlock : Block // 120 score
+class OrangeBlock : public Block // 120 score
 {
+public:
     OrangeBlock(float a_x , float a_y);
     OrangeBlock(sf::Vector2f a_pos);
     void Collision() override;
 };
 
-class GreenBlock : Block // 80 score
+class GreenBlock : public Block // 80 score
 {
+public:
     GreenBlock(float a_x , float a_y);
     GreenBlock(sf::Vector2f a_pos);
     void Collision() override;
 };
 
-class PurpleBlock : Block // 110 score
+class PurpleBlock : public Block // 110 score
 {
+public:
     PurpleBlock(float a_x , float a_y);
     PurpleBlock(sf::Vector2f a_pos);
     void Collision() override;
 };
 
-class BlueBlock : Block // 100 score
+class BlueBlock : public Block // 100 score
 {
+public:
     BlueBlock(float a_x , float a_y);
     BlueBlock(sf::Vector2f a_pos);
     void Collision() override;
 };
 
-class GrayBlock : Block // 50 score
+class GrayBlock : public Block // 50 score
 {
+public:
     GrayBlock(float a_x , float a_y);
     GrayBlock(sf::Vector2f a_pos);
     void Collision() override;
 };
 
-class RedBlock : Block // 90
+class RedBlock : public Block // 90
 {
+public:
     RedBlock(float a_x , float a_y);
     RedBlock(sf::Vector2f a_pos);
     void Collision() override;
 };
 
 
-class YellowBlock : Block // indestructible
+class YellowBlock : public Block // indestructible
 {
+public:
     YellowBlock(float a_x , float a_y);
     YellowBlock(sf::Vector2f a_pos);
     void Collision() override;

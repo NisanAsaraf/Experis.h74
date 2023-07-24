@@ -29,7 +29,7 @@ public:
     void reset() override;
     std::vector<std::unique_ptr<Button>>& get_vector();
     std::unique_ptr<sf::Texture> const& get_BG();
-
+     size_t get_win_score() const override;
 private:
     std::vector<std::unique_ptr<Button>> buttons;
     std::unique_ptr<sf::Texture> backgroundTexture;
@@ -42,13 +42,14 @@ public:
     Level_One();
     void create() override;
     void reset() override;
-
+    
     std::vector<std::unique_ptr<Block>>& get_vector();
     std::unique_ptr<sf::Texture> const& get_BG();
     Paddle& get_paddle();
     std::unique_ptr<sf::RectangleShape> const& get_kill_zone();
     std::unique_ptr<sf::RectangleShape> const& get_border();
     std::vector<std::unique_ptr<Ball>> const& get_balls();
+    size_t get_win_score() const override;
 
 private:
     void make_blocks(); 
@@ -80,7 +81,7 @@ public:
     std::vector<sf::Text> const& getTexts();
     std::unique_ptr<sf::Texture> const& getBG();
     std::unique_ptr<sf::Text> const& getHeader();
-
+     size_t get_win_score() const override;
 private:
     std::vector<PlayerData> m_players;
     std::unique_ptr<sf::Texture> backgroundTexture;

@@ -43,6 +43,11 @@ std::unique_ptr<Texture> const& Title_Screen::get_BG()
     return backgroundTexture;
 }
 
+size_t Title_Screen::get_win_score() const
+{
+    return 0;
+}
+
 Level_One::Level_One()
 {
 
@@ -56,6 +61,14 @@ void Level_One::create()
     make_kill_zone(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
     make_paddle();
     spawn_ball();
+    win_score = 11*(50 + 90 + 100 + 120 + 110 + 80);
+    backgroundTexture = std::make_unique<Texture>();
+
+    if (!(*backgroundTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/neon.jpg"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+
 }
 
 void Level_One::make_player()
@@ -66,15 +79,8 @@ void Level_One::make_player()
 void Level_One::make_blocks()
 {
     size_t row, col;
-
     row = 6;
     col = 11;
-    backgroundTexture = std::make_unique<Texture>();
-
-    if (!(*backgroundTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/neon.jpg"))
-    {
-        throw std::runtime_error("Failed to load font from file.");
-    }
 
     const int blockWidth = 60;
     const int blockHeight = 25;
@@ -90,7 +96,30 @@ void Level_One::make_blocks()
         {
             int x = 60 + spacingX + j * (blockWidth + spacingX);
             int y = 100 + spacingY + i * (blockHeight + spacingY);
-            std::unique_ptr<Block> block = std::make_unique<WhiteBlock>( x, y);
+            std::unique_ptr<Block> block;
+            switch (i)
+            {
+                case 0:
+                     block = std::make_unique<GrayBlock>(x, y);
+                    break;
+                case 1: 
+                    block = std::make_unique<RedBlock>(x, y);
+                    break;
+                case 2: 
+                    block = std::make_unique<BlueBlock>(x, y);
+                    break;
+                case 3: 
+                    block = std::make_unique<OrangeBlock>(x, y);
+                    break;
+                case 4:
+                    block = std::make_unique<PurpleBlock>(x, y);
+                    break;
+                case 5: 
+                    block = std::make_unique<GreenBlock>(x, y);
+                    break;
+                default: 
+                    break;
+            }
             blocks.emplace_back(std::move(block)); 
         }
     }
@@ -167,6 +196,11 @@ std::vector<std::unique_ptr<Ball>> const& Level_One::get_balls()
     return balls;
 }
 
+size_t Level_One::get_win_score() const
+{
+    return win_score;
+}
+
 Score_Board::Score_Board(std::vector<PlayerData>& a_players)
 {
     m_players = a_players;
@@ -222,6 +256,11 @@ void Score_Board::create()
         text.setString(std::string(m_players.at(i - 1).name) + "    " + std::to_string(m_players.at(i - 1).score));
         m_texts.push_back(text);
     }
+}
+
+size_t Score_Board::get_win_score() const
+{
+    return 0;
 }
 
 } // namespace arkanoid
