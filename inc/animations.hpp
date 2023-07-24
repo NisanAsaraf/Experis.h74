@@ -21,8 +21,9 @@ public:
     void draw_BG_scoreboard(Score_Board& scoreboard, sf::RenderWindow& window);
 
     void draw_title_screen(Title_Screen& titleScreen, sf::RenderWindow& window);
-    void draw_level_one(Level_One& levelOne, sf::RenderWindow& window);
-    void draw_scoreboard(Score_Board& scoreboard, sf::RenderWindow& window);
+    void draw_level(Scene& a_level_one, sf::RenderWindow& a_window);
+    void draw_scoreboard(Scene& scoreboard, sf::RenderWindow& window);
+
     void draw_win_screen(sf::RenderWindow& window);
     void draw_game_over_screen(sf::RenderWindow& window);
     void draw_pause(sf::RenderWindow& window);

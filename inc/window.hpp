@@ -43,7 +43,7 @@ public:
     void draw_hearts(size_t lives);
     void restart(Scene& a_scene);
     
-    void level_one_collisions_handler(Player& a_player, Scene& a_scene);
+    void level_collisions_handler(Player& a_player, Scene& a_scene);
     void game_over_screen();
     void game_win_screen();
     void draw_score(size_t score);

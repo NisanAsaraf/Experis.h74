@@ -71,16 +71,10 @@ public:
     Score_Board(std::vector<PlayerData>&);
     void create() override;
     void reset() override;
-
-    std::vector<sf::Text> const& getTexts();
-    sf::Text& getHeader();
-
     size_t get_win_score() const;
     size_t get_level_number() const;
 private:
     std::vector<PlayerData> m_players;
-    sf::Text m_header;
-    std::vector<sf::Text> m_texts;
 };
 
 }

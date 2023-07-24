@@ -6,6 +6,7 @@
 #include "ball.hpp"
 #include "paddle.hpp"
 #include "block.hpp"
+#include "leaderboard.hpp"
 
 namespace arkanoid
 {
@@ -28,6 +29,9 @@ public:
     std::unique_ptr<sf::RectangleShape> const& get_border() const;
     std::vector<std::unique_ptr<Ball>> const& get_balls() const;
 
+    std::vector<sf::Text> const& getTexts();
+    sf::Text& getHeader();
+
 protected:
     void make_paddle();
     void make_kill_zone(sf::Vector2f a_size);
@@ -45,6 +49,10 @@ protected:
     std::vector<std::unique_ptr<Block>> blocks;
     std::unique_ptr<Paddle> paddle;
     std::vector<std::unique_ptr<Ball>> balls;
+
+    std::vector<PlayerData> m_players;
+    sf::Text m_header;
+    std::vector<sf::Text> m_texts;
 
     size_t lvl;
     size_t win_score;

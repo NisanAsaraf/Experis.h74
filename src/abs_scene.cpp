@@ -89,4 +89,14 @@ void Scene::paddle_reset()
     paddle->reset();
 }
 
+std::vector<sf::Text> const& Scene::getTexts()
+{
+    return m_texts;
+}
+
+sf::Text& Scene::getHeader()
+{
+    return m_header;
+}
+
 }//namespace arkanoid

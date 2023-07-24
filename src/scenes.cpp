@@ -245,16 +245,6 @@ Score_Board::Score_Board(std::vector<PlayerData>& a_players)
     }
 }
 
-std::vector<Text> const& Score_Board::getTexts()
-{
-    return m_texts;
-}
-
-Text& Score_Board::getHeader()
-{
-    return m_header;
-}
-
 void Score_Board::reset()
 {
 

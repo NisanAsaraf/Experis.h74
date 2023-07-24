@@ -63,7 +63,7 @@ void Illustrator::draw_title_screen(Title_Screen& a_titlescreen,RenderWindow& a_
     }
 }
 
-void Illustrator::draw_level_one(Level_One& a_level_one,RenderWindow& a_window)
+void Illustrator::draw_level(Scene& a_level_one,RenderWindow& a_window)
 {
     auto const& paddle = a_level_one.get_paddle();
     auto const& blocks = a_level_one.get_blocks();
@@ -85,7 +85,7 @@ void Illustrator::draw_level_one(Level_One& a_level_one,RenderWindow& a_window)
     }
 }
 
-void Illustrator::draw_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_window)
+void Illustrator::draw_scoreboard(Scene& a_scoreBoard,RenderWindow& a_window)
 {
     auto& header = a_scoreBoard.getHeader();
     header.setFont(m_font);

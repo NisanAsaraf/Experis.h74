@@ -84,9 +84,7 @@ void Game_Window::draw_level_one(Player& a_player, Scene& a_scene)
 
 void Game_Window::draw_scoreboard(Scene& a_scene)
 {
-    Score_Board* score_scrn = dynamic_cast<Score_Board*>(&a_scene);
-    Illustrator ilustrator;
-    ilustrator.draw_scoreboard(*score_scrn, window);
+    illustrator->draw_scoreboard(a_scene, window);
 }
 
 void Game_Window::draw_scene(Player& a_player,Scene& a_scene, GameState& currentGameState)
@@ -134,8 +132,7 @@ void Game_Window::run_scoreboard_screen(Player& a_player, Scene& a_scene, GameSt
 void Game_Window::restart(Scene& a_scene)
 {
     window.clear();
-    Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
-    level_one->reset();
+    a_scene.reset();
 }
 
 bool Game_Window::close_window_check(Event const& event)
@@ -150,20 +147,17 @@ bool Game_Window::close_window_check(Event const& event)
 
 void Game_Window::game_win_screen()
 {
-    Illustrator illustrator;
-    illustrator.draw_win_screen(window);
+    illustrator->draw_win_screen(window);
 }
 
 void Game_Window::game_over_screen()
 {
-    Illustrator illustrator;
-    illustrator.draw_game_over_screen(window);
+    illustrator->draw_game_over_screen(window);
 }
 
 void Game_Window::animate_balls(Scene& a_scene)
 {
-    Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
-    auto& balls = level_one->get_balls();
+    auto& balls = a_scene.get_balls();
     for (const auto& ballPtr : balls)
     {
         animator->animate_ball(*ballPtr);
@@ -172,20 +166,17 @@ void Game_Window::animate_balls(Scene& a_scene)
 
 void Game_Window::animate_paddle_right(Scene& a_scene)
 {
-    Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
-    animator->animate_paddle_right(level_one->get_paddle(), clock);
+    animator->animate_paddle_right(a_scene.get_paddle(), clock);
 }
 
 void Game_Window::animate_paddle_left(Scene& a_scene)
 {
-    Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
-    animator->animate_paddle_left(level_one->get_paddle(), clock);
+    animator->animate_paddle_left(a_scene.get_paddle(), clock);
 }
 
 void Game_Window::animate_paddle_stop(Scene& a_scene)
 {
-    Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
-    animator->animate_paddle_stop(level_one->get_paddle());
+    animator->animate_paddle_stop(a_scene.get_paddle());
 }
 
 void Game_Window::pause_game(GameState& currentGameState)
@@ -273,8 +264,8 @@ bool Game_Window::title_screen_button_click_handler(Scene& a_scene, Event& event
     {
         Vector2f mousePosition(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
 
-        Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(&a_scene);
-        auto const& buttons = title_scrn->get_buttons(); 
+
+        auto const& buttons = a_scene.get_buttons(); 
 
         Button& button1 = *buttons.at(0);
         Button& button2 = *buttons.at(1);
@@ -298,11 +289,10 @@ std::string Game_Window::input_name()
 
 void Game_Window::paddle_out_of_bounds_handler(Scene& a_scene)
 {
-    Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
-    Paddle& pad = level_one->get_paddle();
+    Paddle& pad = a_scene.get_paddle();
 
     FloatRect paddleBounds = pad.getGlobalBounds();
-    FloatRect borderBounds = (*level_one->get_border()).getGlobalBounds();
+    FloatRect borderBounds = (*a_scene.get_border()).getGlobalBounds();
 
     float newY = pad.getPosition().y;
     float newXL = borderBounds.left + 5.0f;
@@ -327,12 +317,12 @@ bool Game_Window::pressed_any_key(Event const& event)
     return false;
 }
 
-void Game_Window::level_one_collisions_handler(Player& a_player, Scene& a_scene)
+void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
 {
-    Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
-    Paddle& pad = level_one->get_paddle();
-    auto& blocks = level_one->get_blocks(); 
-    auto& balls = level_one->get_balls();
+
+    Paddle& pad = a_scene.get_paddle();
+    auto& blocks = a_scene.get_blocks(); 
+    auto& balls = a_scene.get_balls();
     paddle_out_of_bounds_handler(a_scene);
 
     for (const auto& ballPtr : balls)
@@ -358,7 +348,7 @@ void Game_Window::level_one_collisions_handler(Player& a_player, Scene& a_scene)
         ball_window_collision_handler(*ballPtr, window);    
         ball_paddle_collision_handler(*ballPtr,pad);
 
-        if(ball_kill_zone_collision_handler(*ballPtr, *level_one->get_kill_zone()))  // will vanish a ball , wont delete it from the vector
+        if(ball_kill_zone_collision_handler(*ballPtr, *a_scene.get_kill_zone()))  // will vanish a ball , wont delete it from the vector
         {
             a_player.hit();
             if(a_player.is_dead())
@@ -380,7 +370,7 @@ void Game_Window::handleCollisions(Player& a_player, Scene& a_scene, GameState& 
         case GameState::TitleScreen:
             break;
         case GameState::Level:
-            level_one_collisions_handler(a_player, a_scene);
+            level_collisions_handler(a_player, a_scene);
             break;
         case GameState::ScoreBoard:
             break;
