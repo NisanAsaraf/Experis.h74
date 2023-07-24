@@ -1,9 +1,11 @@
 #include "scenes.hpp"
 #include <memory>
+#include <nlohmann/json.hpp>
 
 namespace arkanoid
 {
 using namespace sf;
+using json = nlohmann::json;
 
 Title_Screen::Title_Screen()
 {
@@ -69,51 +71,47 @@ void Level_One::create()
 
 void Level_One::make_blocks()
 {
-    size_t row, col;
-    row = 6;
-    col = 11;
-
-    const int blockWidth = 60;
-    const int blockHeight = 25;
-    
-    const int spacingX = 1;
-    const int spacingY = 1;
-
-    blocks.reserve(row * col);
-    
-    for (size_t i = 0; i < row; ++i)
+    std::ifstream file("../../assets/levels/level-1.dat");
+    if (!file)
     {
-        for (size_t j = 0; j < col; ++j)
-        {
-            int x = 60 + spacingX + j * (blockWidth + spacingX);
-            int y = 100 + spacingY + i * (blockHeight + spacingY);
-            std::unique_ptr<Block> block;
-            switch (i)
-            {
-                case 0:
-                     block = std::make_unique<GrayBlock>(x, y);
-                    break;
-                case 1: 
-                    block = std::make_unique<RedBlock>(x, y);
-                    break;
-                case 2: 
-                    block = std::make_unique<BlueBlock>(x, y);
-                    break;
-                case 3: 
-                    block = std::make_unique<OrangeBlock>(x, y);
-                    break;
-                case 4:
-                    block = std::make_unique<PurpleBlock>(x, y);
-                    break;
-                case 5: 
-                    block = std::make_unique<GreenBlock>(x, y);
-                    break;
-                default: 
-                    break;
-            }
-            blocks.emplace_back(std::move(block)); 
-        }
-    }  
+        throw std::runtime_error("Failed to load font from file.");
+    }
+
+    json level_data;
+    file >> level_data;
+
+    blocks.clear();
+
+    for (const auto& block_data : level_data["blocks"])
+    {
+        int x = block_data["x"];
+        int y = block_data["y"];
+        std::string block_type = block_data["type"];
+
+        std::unique_ptr<Block> block;
+        if (block_type == "WhiteBlock")
+        block = std::make_unique<WhiteBlock>(x, y);
+        else if (block_type == "TealBlock")
+            block = std::make_unique<TealBlock>(x, y);
+        else if (block_type == "BrownBlock")
+            block = std::make_unique<BrownBlock>(x, y);
+        else if (block_type == "OrangeBlock")
+            block = std::make_unique<OrangeBlock>(x, y);
+        else if (block_type == "GreenBlock")
+            block = std::make_unique<GreenBlock>(x, y);
+        else if (block_type == "PurpleBlock")
+            block = std::make_unique<PurpleBlock>(x, y);
+        else if (block_type == "BlueBlock")
+            block = std::make_unique<BlueBlock>(x, y);
+        else if (block_type == "GrayBlock")
+            block = std::make_unique<GrayBlock>(x, y);
+        else if (block_type == "RedBlock")
+            block = std::make_unique<RedBlock>(x, y);
+        else if (block_type == "YellowBlock")
+            block = std::make_unique<YellowBlock>(x, y);
+
+        blocks.emplace_back(std::move(block));
+    }
 }
 
 void Level_One::reset()
@@ -163,7 +161,7 @@ void Level_Two::make_blocks()
     const int blockWidth = 60;
     const int blockHeight = 25;
     int x, y;
-
+    blocks.clear();
     blocks.reserve(row * row / 2);
 
     for (size_t i = 0; i < row; ++i)
@@ -260,7 +258,7 @@ void Level_Three::make_blocks()
    size_t row, col;
     row = 8;
     col = 11;
-
+    blocks.clear();
     const int blockWidth = 60;
     const int blockHeight = 25;
     
