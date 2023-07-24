@@ -33,10 +33,8 @@ private:
     std::unique_ptr<Game_Window> m_window_ptr;
     std::unique_ptr<Player> player;
     std::unique_ptr<Scene> scene;
-    
     sf::Clock clock;
     GameState currentGameState;
-
     bool is_high_score_already_entered;
 
 };  

@@ -36,7 +36,7 @@ void Arkanoid_Game::make_level_two()
 {
     currentGameState = GameState::Level;
     clock.restart();
-
+    player->reset_to_next_level();
     scene = std::make_unique<Level_Two>();
     scene ->create();
 }
@@ -126,6 +126,7 @@ void Arkanoid_Game::processEvents()
 
 bool Arkanoid_Game::new_high_score_check()
 {
+    player->update_score();
     uint32_t score = static_cast<uint32_t>(player->get_score());
     uint64_t elapsedTimeMs = static_cast<uint64_t>(clock.getElapsedTime().asMilliseconds());
 
