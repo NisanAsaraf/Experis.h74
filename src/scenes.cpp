@@ -69,30 +69,12 @@ void Level_One::make_blocks()
 
     row = 3;
     col = 5;
-    Texture b1,b2,b3;
     backgroundTexture = std::make_unique<Texture>();
 
     if (!(*backgroundTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/neon.jpg"))
     {
         throw std::runtime_error("Failed to load font from file.");
     }
-    if (!b1.loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/01-Breakout-Tiles.png"))
-    {
-        throw std::runtime_error("Failed to load font from file.");
-    }
-    if (!b2.loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/03-Breakout-Tiles.png"))
-    {
-        throw std::runtime_error("Failed to load font from file.");
-    }
-    if (!b3.loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/05-Breakout-Tiles.png"))
-    {
-        throw std::runtime_error("Failed to load font from file.");
-    }
-
-    std::vector<Texture> textures;
-    textures.push_back(b1);
-    textures.push_back(b2);
-    textures.push_back(b3);
 
     const int blockWidth = 100;
     const int blockHeight = 40;
@@ -108,7 +90,7 @@ void Level_One::make_blocks()
         {
             int x = 150 + spacingX + j * (blockWidth + spacingX);
             int y = 100 + spacingY + i * (blockHeight + spacingY);
-            std::unique_ptr<Block> block = std::make_unique<Block>(textures.at(i), x, y);
+            std::unique_ptr<Block> block = std::make_unique<WhiteBlock>( x, y);
             blocks.emplace_back(std::move(block)); 
         }
     }

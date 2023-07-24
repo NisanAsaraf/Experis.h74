@@ -49,6 +49,7 @@ public:
     std::unique_ptr<sf::RectangleShape> const& get_kill_zone();
     std::unique_ptr<sf::RectangleShape> const& get_border();
     std::vector<std::unique_ptr<Ball>> const& get_balls();
+    
 private:
     void make_blocks(); 
     void make_player();
