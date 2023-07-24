@@ -86,6 +86,12 @@ void ball_paddle_collision_handler(Ball& a_ball, Paddle& a_paddle)
 {
     auto ballBounds = a_ball.getGlobalBounds();
     auto paddleBounds = a_paddle.getGlobalBounds();
+    
+    if(!a_paddle.started())
+    {
+        return;
+    }
+
     if (check_collision(a_ball, a_paddle))
     {
         float overlapX = std::min(ballBounds.left + ballBounds.width, paddleBounds.left + paddleBounds.width) - std::max(ballBounds.left, paddleBounds.left);                

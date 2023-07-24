@@ -49,7 +49,7 @@ public:
     std::unique_ptr<sf::RectangleShape> const& get_kill_zone();
     std::unique_ptr<sf::RectangleShape> const& get_border();
     std::vector<std::unique_ptr<Ball>> const& get_balls();
-    
+
 private:
     void make_blocks(); 
     void make_player();
@@ -60,6 +60,7 @@ private:
     void paddle_reset();
     
 private:
+    size_t lvl;
     std::unique_ptr<sf::Texture> backgroundTexture;
     std::unique_ptr<sf::RectangleShape> border;
     std::unique_ptr<sf::RectangleShape> kill_zone;
@@ -67,8 +68,8 @@ private:
     std::vector<std::unique_ptr<Block>> blocks;
     std::vector<std::unique_ptr<Ball>> balls;
     std::unique_ptr<Paddle> paddle;
+    size_t win_score;
 };
-
 
 class Score_Board : public Scene
 {

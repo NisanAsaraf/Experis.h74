@@ -213,29 +213,50 @@ void Game_Window::paddle_movement_control(Scene& a_scene, Event const& event, Ga
     Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
     Paddle& paddle = level_one->get_paddle();
     auto& balls = level_one->get_balls();
-
     if (event.type == sf::Event::KeyPressed)
     {
-        if (event.key.code == sf::Keyboard::Space && !(paddle.started()))
+        if (!(paddle.started()))
         {
-            for(auto& ballPtr : balls)
+            if(event.key.code == sf::Keyboard::Space)
             {
-                ballPtr->ball_start();
+                for(auto& ballPtr : balls)
+                {
+                    ballPtr->ball_start();
+                }
+                paddle.paddle_start();
             }
-            level_one->get_paddle().paddle_start();
+            else if(event.key.code == sf::Keyboard::Right)
+            {
+                animate_paddle_right(a_scene);
+                for(auto& ballPtr : balls)
+                {
+                    ballPtr->setPosition(paddle.getPosition().x + paddle.getSize().x / 2.5, SCREEN_HEIGHT - 70);
+                }
+            }
+            else if(event.key.code == sf::Keyboard::Left)
+            {
+                animate_paddle_left(a_scene);
+                for(auto& ballPtr : balls)
+                {
+                    ballPtr->setPosition(paddle.getPosition().x + paddle.getSize().x / 2.5, SCREEN_HEIGHT - 70);
+                }
+            }
         }
-        else if (event.key.code == sf::Keyboard::Space && (paddle.started()))
+        else
         {
-            currentGameState = GameState::Paused;
-            pause_game(currentGameState);
-        }
-        else if (event.key.code == sf::Keyboard::Right && (paddle.started()))
-        {
-            animate_paddle_right(a_scene);
-        }
-        else if (event.key.code == sf::Keyboard::Left && (paddle.started()))
-        {
-            animate_paddle_left(a_scene);
+            if (event.key.code == sf::Keyboard::Space)
+            {
+                currentGameState = GameState::Paused;
+                pause_game(currentGameState);
+            }
+            else if (event.key.code == sf::Keyboard::Right)
+            {
+                animate_paddle_right(a_scene);
+            }
+            else if (event.key.code == sf::Keyboard::Left)
+            {
+                animate_paddle_left(a_scene);
+            }
         }
     }
     else if (event.type == sf::Event::KeyReleased && (paddle.started()))
@@ -314,9 +335,8 @@ void Game_Window::level_one_collisions_handler(Player& a_player, Scene& a_scene)
     Paddle& pad = level_one->get_paddle();
     auto& blocks = level_one->get_vector(); 
     auto& balls = level_one->get_balls();
-
     paddle_out_of_bounds_handler(a_scene);
-
+    
     for (const auto& ballPtr : balls)
     {
         if(ballPtr->isVanished())
@@ -332,7 +352,7 @@ void Game_Window::level_one_collisions_handler(Player& a_player, Scene& a_scene)
             }
             if(check_collision(*ballPtr, *block))
             {
-                a_player.add_score(40);
+                a_player.add_score(block->getScoreValue());
                 ball_block_collision_handler(*block, *ballPtr);//will vanish a block
             }
         }
