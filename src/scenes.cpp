@@ -80,6 +80,7 @@ void Level_One::make_player()
 
 void Level_One::make_blocks()
 {
+/*  
     size_t row, col;
     row = 6;
     col = 11;
@@ -124,7 +125,7 @@ void Level_One::make_blocks()
             }
             blocks.emplace_back(std::move(block)); 
         }
-    }
+    } */
 }
 
 void Level_One::make_paddle()
@@ -202,6 +203,171 @@ size_t Level_One::get_win_score() const
 {
     return win_score;
 }
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
+Level_Two::Level_Two()
+{
+
+}
+
+void Level_Two::create()
+{
+    make_player();
+    make_blocks();
+    make_border(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
+    make_kill_zone(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
+    make_paddle();
+    spawn_ball();
+    win_score = 11*(50 + 90 + 100 + 120 + 110 + 80);
+    backgroundTexture = std::make_unique<Texture>();
+
+    if (!(*backgroundTexture).loadFromFile("../../assets/textures/BG/neon.jpg"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+
+}
+
+void Level_Two::make_player()
+{
+    m_player = std::make_unique<Player>();
+}
+
+void Level_Two::make_blocks()
+{
+    size_t row;
+    row = 10;
+    const int blockWidth = 60;
+    const int blockHeight = 25;
+    int x, y;
+
+    blocks.reserve(row * row / 2);
+
+    for (size_t i = 0; i < row; ++i)
+    {
+        for (size_t j = i; j <= row; ++j)
+        {
+            x = 100 + i * (blockWidth);
+            y = 120 + j * (blockHeight);
+            switch(i)
+            {
+                case 0:
+                    blocks.emplace_back(std::make_unique<BrownBlock>(x, y));
+                    break;
+                case 1: 
+                    blocks.emplace_back(std::make_unique<TealBlock>(x, y));
+                    break;
+                case 2: 
+                    blocks.emplace_back(std::make_unique<GreenBlock>(x, y));
+                    break;
+                case 3: 
+                    blocks.emplace_back(std::make_unique<BlueBlock>(x, y));
+                    break;
+                case 4:
+                    blocks.emplace_back(std::make_unique<RedBlock>(x, y));
+                    break;
+                case 5: 
+                    blocks.emplace_back(std::make_unique<OrangeBlock>(x, y));
+                    break;
+                case 6:
+                    blocks.emplace_back(std::make_unique<TealBlock>(x, y));
+                    break;
+                case 7: 
+                    blocks.emplace_back(std::make_unique<GreenBlock>(x, y));
+                    break;
+                case 8: 
+                    blocks.emplace_back(std::make_unique<BlueBlock>(x, y));
+                    break;
+                case 9: 
+                    blocks.emplace_back(std::make_unique<RedBlock>(x, y));
+                    break;
+                case 10:
+                    blocks.emplace_back(std::make_unique<PurpleBlock>(x, y));
+                    break;
+                default: 
+                    break;
+            }
+        }
+        blocks.emplace_back(std::make_unique<GrayBlock>(x, y));
+    }
+}
+
+void Level_Two::make_paddle()
+{
+    paddle = std::make_unique<Paddle>();
+}
+
+void Level_Two::make_kill_zone(Vector2f a_size)
+{
+    kill_zone = std::make_unique<RectangleShape>(a_size);
+    kill_zone->setPosition(0, a_size.y - 10);
+    kill_zone->setFillColor(Color::Transparent);
+}
+
+void Level_Two::make_border(Vector2f a_size)
+{
+    Color Teal(0, 128, 128);
+    border = std::make_unique<sf::RectangleShape>(a_size - Vector2f(10.0f,10.0f));
+
+    border->setFillColor(Color::Transparent);
+    border->setPosition(5.0f, 5.0f);
+    border->setOutlineThickness(5.0f);
+    border->setOutlineColor(Teal);
+}
+
+void Level_Two::spawn_ball()
+{
+    balls.emplace_back(std::make_unique<Ball>());
+}
+
+void Level_Two::paddle_reset()
+{
+    paddle->reset();
+}
+
+void Level_Two::reset()
+{
+    blocks.clear();
+    paddle_reset();
+    balls.clear();
+    m_player->reset();
+}
+
+std::vector<std::unique_ptr<Block>>& Level_Two::get_vector()
+{
+    return blocks;
+}
+
+std::unique_ptr<Texture> const& Level_Two::get_BG()
+{
+    return backgroundTexture;
+}
+
+Paddle& Level_Two::get_paddle()
+{
+    return *paddle;
+}
+
+std::unique_ptr<RectangleShape> const& Level_Two::get_kill_zone()
+{
+    return kill_zone;
+}
+
+std::unique_ptr<RectangleShape> const& Level_Two::get_border()
+{
+    return border;
+}
+
+std::vector<std::unique_ptr<Ball>> const& Level_Two::get_balls()
+{
+    return balls;
+}
+
+size_t Level_Two::get_win_score() const
+{
+    return win_score;
+}
+
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 Score_Board::Score_Board(std::vector<PlayerData>& a_players)

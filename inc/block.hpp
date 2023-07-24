@@ -6,7 +6,6 @@
 
 namespace arkanoid
 {
-
 class WhiteBlock : public Block // 50 score
 {
 public:
