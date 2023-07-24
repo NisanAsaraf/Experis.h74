@@ -16,11 +16,11 @@ class Illustrator
 public:
     Illustrator();
 
-    void draw_BG_title(Title_Screen& titleScreen, sf::RenderWindow& window);
-    void draw_BG_level(Level_One& levelOne, sf::RenderWindow& window);
-    void draw_BG_scoreboard(Score_Board& scoreboard, sf::RenderWindow& window);
+    void draw_BG_title(Scene& titleScreen, sf::RenderWindow& window);
+    void draw_BG_level(Scene& levelOne, sf::RenderWindow& window);
+    void draw_BG_scoreboard(Scene& scoreboard, sf::RenderWindow& window);
 
-    void draw_title_screen(Title_Screen& titleScreen, sf::RenderWindow& window);
+    void draw_title_screen(Scene& titleScreen, sf::RenderWindow& window);
     void draw_level(Scene& a_level_one, sf::RenderWindow& a_window);
     void draw_scoreboard(Scene& scoreboard, sf::RenderWindow& window);
 

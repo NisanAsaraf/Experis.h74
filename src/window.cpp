@@ -15,22 +15,19 @@ Game_Window::Game_Window()
     window.setVerticalSyncEnabled(false);
 }
 
-void Game_Window::draw_background_title_screen(Scene& m_scene)
+void Game_Window::draw_background_title_screen(Scene& a_scene)
 {
-    Title_Screen* title_screen_ptr = dynamic_cast<Title_Screen*>(&m_scene);
-    illustrator->draw_BG_title(*title_screen_ptr,window);
+    illustrator->draw_BG_title(a_scene, window);
 }
 
-void Game_Window::draw_background_level_one(Scene& m_scene)
+void Game_Window::draw_background_level_one(Scene& a_scene)
 {
-    Level_One* level_1 = dynamic_cast<Level_One*>(&m_scene);
-    illustrator->draw_BG_level(*level_1,window);
+    illustrator->draw_BG_level(a_scene, window);
 }
 
-void Game_Window::Game_Window::draw_background_score_board(Scene& m_scene)
+void Game_Window::Game_Window::draw_background_score_board(Scene& a_scene)
 {
-    Score_Board* score_scrn = dynamic_cast<Score_Board*>(&m_scene);
-    illustrator->draw_BG_scoreboard(*score_scrn,window);
+    illustrator->draw_BG_scoreboard(a_scene, window);
 }
 
 void Game_Window::draw_background(Scene& a_scene, GameState& currentGameState)
@@ -71,8 +68,7 @@ void Game_Window::draw_pause_text()
 
 void Game_Window::draw_title_screen(Scene& a_scene)
 {
-    Title_Screen* title_scrn = dynamic_cast<Title_Screen*>(&a_scene);
-    illustrator->draw_title_screen(*title_scrn, window);
+    illustrator->draw_title_screen(a_scene, window);
 }
 
 void Game_Window::draw_level_one(Player& a_player, Scene& a_scene)

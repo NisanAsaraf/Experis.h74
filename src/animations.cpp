@@ -11,7 +11,7 @@ Illustrator::Illustrator()
     }
 }
 
-void Illustrator::draw_BG_title(Title_Screen& a_titlescreen,RenderWindow& a_window)
+void Illustrator::draw_BG_title(Scene& a_titlescreen,RenderWindow& a_window)
 {
     Sprite backgroundSprite;
     a_window.clear();
@@ -21,7 +21,7 @@ void Illustrator::draw_BG_title(Title_Screen& a_titlescreen,RenderWindow& a_wind
     a_window.draw(backgroundSprite);
 }
 
-void Illustrator::draw_BG_level(Level_One& a_level_one,RenderWindow& a_window)
+void Illustrator::draw_BG_level(Scene& a_level_one,RenderWindow& a_window)
 {
     Sprite backgroundSprite;
     a_window.clear();
@@ -31,7 +31,7 @@ void Illustrator::draw_BG_level(Level_One& a_level_one,RenderWindow& a_window)
     a_window.draw(backgroundSprite);
 }
 
-void Illustrator::draw_BG_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_window)
+void Illustrator::draw_BG_scoreboard(Scene& a_scoreBoard,RenderWindow& a_window)
 {
     Texture& backgroundTexture = *a_scoreBoard.get_BG();
     Sprite backgroundSprite;
@@ -42,7 +42,7 @@ void Illustrator::draw_BG_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_w
 
 }
 
-void Illustrator::draw_title_screen(Title_Screen& a_titlescreen,RenderWindow& a_window)
+void Illustrator::draw_title_screen(Scene& a_titlescreen,RenderWindow& a_window)
 {
     auto const& buttons = a_titlescreen.get_buttons();
     Texture msg_texture;
