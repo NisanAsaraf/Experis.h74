@@ -1,12 +1,13 @@
 CXX = g++
 CXXFLAGS = -pedantic -Wall -Werror -Wextra -g3 -std=c++17 
-CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR)
+CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR) -I$(ASSETS_DIR)
 
 SFML_LIBS =  -lsfml-graphics -lsfml-window -lsfml-system 
 SFML_LIB_DIR = /usr/lib  
 
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
+ASSETS_DIR = ../../assets
 
 OBJS = utest.o game.o window.o animations.o player.o UI.o life.o paddle.o ball.o block.o scenes.o collisions.o leaderboard.o
 TARGET = utest

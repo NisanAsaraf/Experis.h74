@@ -9,7 +9,7 @@ Title_Screen::Title_Screen()
 {
     backgroundTexture = std::make_unique<Texture>();
 
-    if (!(*backgroundTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/titleBG.jpg"))
+    if (!(*backgroundTexture).loadFromFile("../../assets/textures/BG/titleBG.jpg"))
     {
         throw std::runtime_error("Failed to load font from file.");
     }
@@ -18,8 +18,8 @@ Title_Screen::Title_Screen()
 void Title_Screen::create()
 {
     Texture startButton, quitButton;
-    startButton.loadFromFile("/home/nisan/Experis.h74/assets/textures/Buttons/start_button.png");
-    quitButton.loadFromFile("/home/nisan/Experis.h74/assets/textures/Buttons/quit_button.png");
+    startButton.loadFromFile("../../assets/textures/Buttons/start_button.png");
+    quitButton.loadFromFile("../../assets/textures/Buttons/quit_button.png");
 
     std::unique_ptr<Button> m_start_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.3, SCREEN_HEIGHT/1.9), startButton);
     std::unique_ptr<Button> m_quit_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.13, SCREEN_HEIGHT/1.5), quitButton);
@@ -48,6 +48,8 @@ size_t Title_Screen::get_win_score() const
     return 0;
 }
 
+/* ------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
 Level_One::Level_One()
 {
 
@@ -64,7 +66,7 @@ void Level_One::create()
     win_score = 11*(50 + 90 + 100 + 120 + 110 + 80);
     backgroundTexture = std::make_unique<Texture>();
 
-    if (!(*backgroundTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/neon.jpg"))
+    if (!(*backgroundTexture).loadFromFile("../../assets/textures/BG/neon.jpg"))
     {
         throw std::runtime_error("Failed to load font from file.");
     }
@@ -208,11 +210,11 @@ Score_Board::Score_Board(std::vector<PlayerData>& a_players)
     m_header = std::make_unique<Text>();
 
     m_font = std::make_unique<Font>();
-    if(!backgroundTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/ScoreBoard_BG.jpg"))
+    if(!backgroundTexture->loadFromFile("../../assets/textures/BG/ScoreBoard_BG.jpg"))
     {
         throw std::runtime_error("Failed to load font from file.");
     }
-    if(!m_font->loadFromFile("/home/nisan/Experis.h74/assets/fonts/Antonio-Regular.ttf"))
+    if(!m_font->loadFromFile("../../assets/fonts/Antonio-Regular.ttf"))
     {
         throw std::runtime_error("Failed to load font from file.");
     }

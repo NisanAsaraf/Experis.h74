@@ -54,7 +54,7 @@ WhiteBlock::WhiteBlock(float a_x, float a_y)
 : Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/white-50.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/white-50.png"))
     shape->setTexture(&(*blockTexture));
     score = 50;
     vanished = false;
@@ -64,7 +64,7 @@ WhiteBlock::WhiteBlock(Vector2f a_vec)
 : Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/white-50.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/white-50.png"))
     shape->setTexture(&(*blockTexture));
     score = 50;
     vanished = false;
@@ -80,7 +80,7 @@ void WhiteBlock::Collision()
 TealBlock::TealBlock(float a_x, float a_y) : Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/teal-70.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/teal-70.png"))
     shape->setTexture(&(*blockTexture));
     score = 70;
     vanished = false;
@@ -89,7 +89,7 @@ TealBlock::TealBlock(float a_x, float a_y) : Block(a_x, a_y)
 TealBlock::TealBlock(Vector2f a_vec) : Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/teal-70.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/teal-70.png"))
     shape->setTexture(&(*blockTexture));
     score = 70;
     vanished = false;
@@ -105,7 +105,7 @@ void TealBlock::Collision()
 BrownBlock::BrownBlock(float a_x, float a_y) : Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/brown-60.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/brown-60.png"))
     shape->setTexture(&(*blockTexture));
     score = 60;
     vanished = false;
@@ -114,7 +114,7 @@ BrownBlock::BrownBlock(float a_x, float a_y) : Block(a_x, a_y)
 BrownBlock::BrownBlock(Vector2f a_vec) : Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/brown-60.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/brown-60.png"))
     shape->setTexture(&(*blockTexture));
     score = 60;
     vanished = false;
@@ -130,7 +130,7 @@ void BrownBlock::Collision()
 OrangeBlock::OrangeBlock(float a_x, float a_y) : Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/orange-120.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/orange-120.png"))
     shape->setTexture(&(*blockTexture));
     score = 120;
     vanished = false;
@@ -139,7 +139,7 @@ OrangeBlock::OrangeBlock(float a_x, float a_y) : Block(a_x, a_y)
 OrangeBlock::OrangeBlock(Vector2f a_vec) : Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/orange-120.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/orange-120.png"))
     shape->setTexture(&(*blockTexture));
     score = 120;
     vanished = false;
@@ -155,7 +155,7 @@ void OrangeBlock::Collision()
 GreenBlock::GreenBlock(float a_x, float a_y) : Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/green-80.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/green-80.png"))
     shape->setTexture(&(*blockTexture));
     score = 80;
     vanished = false;
@@ -164,7 +164,7 @@ GreenBlock::GreenBlock(float a_x, float a_y) : Block(a_x, a_y)
 GreenBlock::GreenBlock(Vector2f a_vec) : Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/green-80.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/green-80.png"))
     shape->setTexture(&(*blockTexture));
     score = 80;
     vanished = false;
@@ -180,7 +180,7 @@ void GreenBlock::Collision()
 PurpleBlock::PurpleBlock(float a_x, float a_y) : Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/purple-110.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/purple-110.png"))
     shape->setTexture(&(*blockTexture));
     score = 110;
     vanished = false;
@@ -189,7 +189,7 @@ PurpleBlock::PurpleBlock(float a_x, float a_y) : Block(a_x, a_y)
 PurpleBlock::PurpleBlock(Vector2f a_vec) : Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/purple-110.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/purple-110.png"))
     shape->setTexture(&(*blockTexture));
     score = 110;
     vanished = false;
@@ -205,7 +205,7 @@ void PurpleBlock::Collision()
 BlueBlock::BlueBlock(float a_x, float a_y) : Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/blue-100.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/blue-100.png"))
     shape->setTexture(&(*blockTexture));
     score = 100;
     vanished = false;
@@ -214,7 +214,7 @@ BlueBlock::BlueBlock(float a_x, float a_y) : Block(a_x, a_y)
 BlueBlock::BlueBlock(Vector2f a_vec) : Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/blue-100.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/blue-100.png"))
     shape->setTexture(&(*blockTexture));
     score = 100;
     vanished = false;
@@ -230,7 +230,7 @@ void BlueBlock::Collision()
 RedBlock::RedBlock(float a_x, float a_y) : Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/red-90.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/red-90.png"))
     shape->setTexture(&(*blockTexture));
     score = 90;
     vanished = false;
@@ -239,7 +239,7 @@ RedBlock::RedBlock(float a_x, float a_y) : Block(a_x, a_y)
 RedBlock::RedBlock(Vector2f a_vec) : Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/red-90.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/red-90.png"))
     shape->setTexture(&(*blockTexture));
     score = 90;
     vanished = false;
@@ -255,7 +255,7 @@ void RedBlock::Collision()
 GrayBlock::GrayBlock(float a_x, float a_y) : Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/gray-50x.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/gray-50x.png"))
     shape->setTexture(&(*blockTexture));
     score = 50;
     vanished = false;
@@ -264,7 +264,7 @@ GrayBlock::GrayBlock(float a_x, float a_y) : Block(a_x, a_y)
 GrayBlock::GrayBlock(Vector2f a_vec) : Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("/home/nisan/Experis.h74/assets/textures/Breakout/PNG/gray-50x.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/gray-50x.png"))
     shape->setTexture(&(*blockTexture));
     score = 50;
     vanished = false;
