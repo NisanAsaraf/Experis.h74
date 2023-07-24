@@ -5,7 +5,7 @@ namespace arkanoid
 
 Player::Player()
 :m_name{}
-,m_score{0}//11*(50 + 90 + 100 + 120 + 110 + 80)
+,m_score{11*(50 + 90 + 100 + 120 + 110 + 80)}//11*(50 + 90 + 100 + 120 + 110 + 80)
 ,m_lives{3}
 {
 }

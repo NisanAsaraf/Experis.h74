@@ -314,10 +314,10 @@ bool Game_Window::pressed_any_key(Event const& event)
 
 void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
 {
-
     Paddle& pad = a_scene.get_paddle();
     auto& blocks = a_scene.get_blocks(); 
     auto& balls = a_scene.get_balls();
+
     paddle_out_of_bounds_handler(a_scene);
 
     for (const auto& ballPtr : balls)
@@ -346,14 +346,8 @@ void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
         if(ball_kill_zone_collision_handler(*ballPtr, *a_scene.get_kill_zone()))  // will vanish a ball , wont delete it from the vector
         {
             a_player.hit();
-            if(a_player.is_dead())
-            {
-                game_over_screen();
-            }
             ballPtr->reset();
             pad.reset();
-
-            //balls.erase(balls.begin()); // will delete the pointer from the vector, the smart pointer will handle the memory
         }
     }
 }

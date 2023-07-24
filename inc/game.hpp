@@ -24,6 +24,7 @@ private:
     void advance_level();
 
     void check_win_condition();
+    void check_lose_condition();
     void processEvents();
     bool new_high_score_check();
     void update_top_scores();

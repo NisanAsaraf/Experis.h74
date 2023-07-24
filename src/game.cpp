@@ -81,6 +81,7 @@ void Arkanoid_Game::run()
             case GameState::Level:
                 m_window_ptr->run_level(*player, *scene, currentGameState);
                 check_win_condition();
+                check_lose_condition();
                 break;
             case GameState::ScoreBoard:
                 m_window_ptr->run_scoreboard_screen(*player, *scene, currentGameState);
@@ -148,8 +149,7 @@ void Arkanoid_Game::advance_level()
     {
         make_level_two();
     }
-
-    if(scene->get_level_number() == 2)
+    else if(scene->get_level_number() == 2)
     {
         make_scoreBoard_screen();
     }
@@ -161,6 +161,14 @@ void Arkanoid_Game::check_win_condition()
     {
         m_window_ptr->game_win_screen();
         advance_level();
+    }
+}
+void Arkanoid_Game::check_lose_condition()
+{
+    if(player->is_dead())
+    {
+        m_window_ptr->game_over_screen();
+        make_scoreBoard_screen();
     }
 }
 

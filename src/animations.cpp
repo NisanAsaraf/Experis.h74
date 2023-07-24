@@ -159,7 +159,6 @@ void Illustrator::draw_game_over_screen(RenderWindow& a_window)
         {
             if (event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
             {
-                a_window.close();
                 quit = true;
             }
         }
