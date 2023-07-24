@@ -2,47 +2,10 @@
 #define BLOCK_H
 
 #include <SFML/Graphics.hpp>
+#include "abs_block.hpp"
 
 namespace arkanoid
 {
-/* class Block
-{
-public:
-    Block(sf::Texture a_texture, float a_x, float a_y);
-    sf::FloatRect getGlobalBounds();
-    sf::Vector2f getSize();
-    const sf::RectangleShape& getShape() const;
-    bool isVanished();
-    void Collision() ;
-private:
-    void vanish();
-private:
-    std::unique_ptr<sf::RectangleShape> shape;
-    std::unique_ptr<sf::Texture> blockTexture;
-    bool vanished;
-
-}; */
-
-class Block
-{
-public:
-    Block(float a_x, float a_y);
-    Block(sf::Vector2f a_pos);
-    virtual ~Block() = default;
-    int getScoreValue(size_t a_lvl = 1) const;
-    sf::FloatRect getGlobalBounds() const;
-    sf::Vector2f getSize() const ;
-    const sf::RectangleShape& getShape() const;
-    bool isVanished() const ;
-    virtual void Collision() = 0;
-    
-protected:
-    void vanish();
-    std::unique_ptr<sf::RectangleShape> shape;
-    std::unique_ptr<sf::Texture> blockTexture;
-    int score;
-    bool vanished;
-};
 
 class WhiteBlock : public Block // 50 score
 {
