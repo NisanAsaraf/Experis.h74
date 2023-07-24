@@ -33,9 +33,9 @@ void Illustrator::draw_BG_level(Level_One& a_level_one,RenderWindow& a_window)
 
 void Illustrator::draw_BG_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_window)
 {
-    Texture* backgroundTexture = a_scoreBoard.getBG().get();
+    Texture& backgroundTexture = *a_scoreBoard.get_BG();
     Sprite backgroundSprite;
-    backgroundSprite.setTexture(*backgroundTexture);     
+    backgroundSprite.setTexture(backgroundTexture);     
     a_window.clear();
     backgroundSprite.setScale(0.2f, 0.25f);
     a_window.draw(backgroundSprite);
@@ -44,7 +44,7 @@ void Illustrator::draw_BG_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_w
 
 void Illustrator::draw_title_screen(Title_Screen& a_titlescreen,RenderWindow& a_window)
 {
-    auto const& buttons = a_titlescreen.get_vector();
+    auto const& buttons = a_titlescreen.get_buttons();
     Texture msg_texture;
     Sprite msg_sprite;
     msg_texture.loadFromFile("../../assets/textures/Messages/arkanoid_color.png");
@@ -66,7 +66,7 @@ void Illustrator::draw_title_screen(Title_Screen& a_titlescreen,RenderWindow& a_
 void Illustrator::draw_level_one(Level_One& a_level_one,RenderWindow& a_window)
 {
     auto const& paddle = a_level_one.get_paddle();
-    auto const& blocks = a_level_one.get_vector();
+    auto const& blocks = a_level_one.get_blocks();
 
     for (auto& blockPtr : blocks)
     { 
@@ -87,10 +87,13 @@ void Illustrator::draw_level_one(Level_One& a_level_one,RenderWindow& a_window)
 
 void Illustrator::draw_scoreboard(Score_Board& a_scoreBoard,RenderWindow& a_window)
 {
+    auto& header = a_scoreBoard.getHeader();
+    header.setFont(m_font);
+    a_window.draw(a_scoreBoard.getHeader());
+
     std::vector<Text> texts = a_scoreBoard.getTexts();
-    a_window.draw(*a_scoreBoard.getHeader());
     for(auto& text: texts)
-    {   
+    {   text.setFont(m_font);
         a_window.draw(text);
     }
 }

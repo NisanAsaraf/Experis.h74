@@ -12,9 +12,8 @@ public:
     Scene() = default;
     virtual void create() = 0;
     virtual void reset() = 0;
-
-    size_t get_win_score() const;
-    size_t get_level_number() const;
+    virtual size_t get_win_score() const = 0;
+    virtual size_t get_level_number() const = 0;
 
     std::vector<std::unique_ptr<Button>> const& get_buttons() const;
     std::vector<std::unique_ptr<Block>> const& get_blocks() const;
@@ -25,8 +24,7 @@ public:
     std::unique_ptr<sf::RectangleShape> const& get_border() const;
     std::vector<std::unique_ptr<Ball>> const& get_balls() const;
 
-private:
-    void make_blocks(); 
+protected:
     void make_paddle();
     void make_kill_zone(sf::Vector2f a_size);
     void make_border(sf::Vector2f a_size);
@@ -43,6 +41,7 @@ protected:
     std::vector<std::unique_ptr<Block>> blocks;
     std::unique_ptr<Paddle> paddle;
     std::vector<std::unique_ptr<Ball>> balls;
+
     size_t lvl;
     size_t win_score;
 };

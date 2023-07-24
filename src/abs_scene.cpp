@@ -6,29 +6,7 @@
 
 namespace arkanoid
 {
-    using namespace sf;
-/*  
-
-    std::vector<std::unique_ptr<Button>>& get_buttons();
-    std::vector<std::unique_ptr<Block>>& get_blocks();
-    Paddle& get_paddle();
-
-    std::unique_ptr<sf::Texture> const& get_BG();
-    std::unique_ptr<sf::RectangleShape> const& get_kill_zone();
-    std::unique_ptr<sf::RectangleShape> const& get_border();
-    std::vector<std::unique_ptr<Ball>> const& get_balls();
-
-    void make_blocks(); 
-    void make_paddle();
-    void make_kill_zone(sf::Vector2f a_size);
-    void make_border(sf::Vector2f a_size);
-    void spawn_ball();
-    void paddle_reset();
-
-    size_t get_win_score() const;
-    size_t get_level_number() const;
- */
-
+using namespace sf;
 
 std::vector<std::unique_ptr<Button>> const& Scene::get_buttons() const
 {
@@ -51,19 +29,19 @@ std::unique_ptr<Texture> const& Scene::get_BG() const
 }
 
 
-std::unique_ptr<sf::RectangleShape> const& get_kill_zone()
+std::unique_ptr<sf::RectangleShape> const& Scene::get_kill_zone() const
 {
-
+    return kill_zone;
 }
 
-std::unique_ptr<sf::RectangleShape> const& get_border()
+std::unique_ptr<sf::RectangleShape> const& Scene::get_border() const
 {
-
+    return border;
 }
 
-std::vector<std::unique_ptr<Ball>> const& get_balls()
+std::vector<std::unique_ptr<Ball>> const& Scene::get_balls() const
 {
-
+    return balls;
 }
 
 size_t Scene::get_win_score() const
@@ -76,6 +54,39 @@ size_t Scene::get_level_number() const
     return lvl;;
 }
 
+void make_blocks(); //<<
 
+void Scene::make_paddle()
+{
+    paddle = std::make_unique<Paddle>();
+}
+
+void Scene::make_kill_zone(Vector2f a_size)
+{
+    kill_zone = std::make_unique<RectangleShape>(a_size);
+    kill_zone->setPosition(0, a_size.y - 10);
+    kill_zone->setFillColor(Color::Transparent);
+}
+
+void Scene::make_border(Vector2f a_size)
+{
+    Color Teal(0, 128, 128);
+    border = std::make_unique<sf::RectangleShape>(a_size - Vector2f(10.0f,10.0f));
+
+    border->setFillColor(Color::Transparent);
+    border->setPosition(5.0f, 5.0f);
+    border->setOutlineThickness(5.0f);
+    border->setOutlineColor(Teal);
+}
+
+void Scene::spawn_ball()
+{
+    balls.emplace_back(std::make_unique<Ball>());
+}
+
+void Scene::paddle_reset()
+{
+    paddle->reset();
+}
 
 }//namespace arkanoid
