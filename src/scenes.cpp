@@ -136,7 +136,13 @@ void Level_Two::create()
     {
         throw std::runtime_error("Failed to load font from file.");
     }
+    if (!scene_music.openFromFile("../../assets/audio/level_two.ogg"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
 
+    scene_music.setLoop(true);
+    scene_music.setVolume(75);
 }
 
 void Level_Two::make_blocks()
@@ -187,7 +193,13 @@ void Level_Three::create()
     {
         throw std::runtime_error("Failed to load font from file.");
     }
+    if (!scene_music.openFromFile("../../assets/audio/level_three.ogg"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
 
+    scene_music.setLoop(true);
+    scene_music.setVolume(75);
 }
 
 void Level_Three::make_blocks()
