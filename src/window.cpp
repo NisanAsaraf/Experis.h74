@@ -210,9 +210,8 @@ void Game_Window::pause_game(GameState& currentGameState)
 
 void Game_Window::paddle_movement_control(Scene& a_scene, Event const& event, GameState& currentGameState)
 {
-    Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
-    Paddle& paddle = level_one->get_paddle();
-    auto& balls = level_one->get_balls();
+    Paddle& paddle = a_scene.get_paddle();
+    auto& balls = a_scene.get_balls();
     if (event.type == sf::Event::KeyPressed)
     {
         if (!(paddle.started()))
@@ -289,7 +288,6 @@ bool Game_Window::title_screen_button_click_handler(Scene& a_scene, Event& event
             window.close();
         }
     }
-
     return false;
 }
 
