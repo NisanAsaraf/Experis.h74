@@ -77,8 +77,7 @@ void Game_Window::draw_title_screen(Scene& a_scene)
 
 void Game_Window::draw_level_one(Player& a_player, Scene& a_scene)
 {
-    Level_One* level_one = dynamic_cast<Level_One*>(&a_scene);
-    illustrator->draw_level_one(*level_one, window);
+    illustrator->draw_level(a_scene, window);
     draw_hearts(a_player.get_lives());
 }
 
