@@ -67,8 +67,8 @@ void Level_One::make_blocks()
 {
     size_t row, col;
 
-    row = 3;
-    col = 5;
+    row = 6;
+    col = 11;
     backgroundTexture = std::make_unique<Texture>();
 
     if (!(*backgroundTexture).loadFromFile("/home/nisan/Experis.h74/assets/textures/BG/neon.jpg"))
@@ -76,8 +76,8 @@ void Level_One::make_blocks()
         throw std::runtime_error("Failed to load font from file.");
     }
 
-    const int blockWidth = 100;
-    const int blockHeight = 40;
+    const int blockWidth = 60;
+    const int blockHeight = 25;
     
     const int spacingX = 1;
     const int spacingY = 1;
@@ -88,7 +88,7 @@ void Level_One::make_blocks()
     {
         for (size_t j = 0; j < col; ++j)
         {
-            int x = 150 + spacingX + j * (blockWidth + spacingX);
+            int x = 60 + spacingX + j * (blockWidth + spacingX);
             int y = 100 + spacingY + i * (blockHeight + spacingY);
             std::unique_ptr<Block> block = std::make_unique<WhiteBlock>( x, y);
             blocks.emplace_back(std::move(block)); 
