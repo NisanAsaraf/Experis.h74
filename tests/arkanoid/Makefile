@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -pedantic -Wall -Werror -Wextra -g3 -std=c++17 
 CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR) -I$(ASSETS_DIR)
 
-SFML_LIBS =  -lsfml-graphics -lsfml-window -lsfml-system 
+SFML_LIBS =  -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 SFML_LIB_DIR = /usr/lib  
 
 INCLUDES_DIR = ../../inc

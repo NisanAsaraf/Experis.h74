@@ -1,6 +1,7 @@
 #ifndef ABS_SCENE_H
 #define ABS_SCENE_H
-#include<SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 #include "UI.hpp"
 #include "ball.hpp"
@@ -29,7 +30,7 @@ public:
     std::unique_ptr<sf::RectangleShape> const& get_border() const;
     std::vector<std::unique_ptr<Ball>> const& get_balls() const;
     void load_blocks_from_json(std::ifstream& file);
-
+    void play_scene_music();
     std::vector<sf::Text> const& getTexts();
     sf::Text& getHeader();
 
@@ -54,7 +55,7 @@ protected:
     std::vector<PlayerData> m_players;
     sf::Text m_header;
     std::vector<sf::Text> m_texts;
-
+    sf::Music scene_music;
     size_t lvl;
     size_t win_score;
 };

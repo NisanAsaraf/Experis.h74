@@ -51,8 +51,6 @@ size_t Scene::get_level_number() const
     return lvl;;
 }
 
-void make_blocks(); //<<
-
 void Scene::make_paddle()
 {
     paddle = std::make_unique<Paddle>();
@@ -94,6 +92,11 @@ std::vector<sf::Text> const& Scene::getTexts()
 sf::Text& Scene::getHeader()
 {
     return m_header;
+}
+
+void Scene::play_scene_music()
+{
+    scene_music.play();
 }
 
 void Scene::load_blocks_from_json(std::ifstream& file)

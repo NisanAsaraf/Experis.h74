@@ -19,6 +19,13 @@ Title_Screen::Title_Screen()
     {
         throw std::runtime_error("Failed to load font from file.");
     }
+    
+    if (!scene_music.openFromFile("../../assets/audio/title_screen.ogg"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+
+    scene_music.setLoop(true);
 }
 
 void Title_Screen::create()
@@ -32,6 +39,8 @@ void Title_Screen::create()
     
     buttons.emplace_back(std::move(m_start_game));
     buttons.emplace_back(std::move(m_quit_game));
+
+
 }
 
 void Title_Screen::reset()
