@@ -27,6 +27,7 @@ void Arkanoid_Game::make_title_screen()
 void Arkanoid_Game::make_level_one()
 {
     currentGameState = GameState::Level;
+    player->reset_to_next_level();
     clock.restart();
     scene = std::make_unique<Level_One>();
     scene ->create();
@@ -38,6 +39,15 @@ void Arkanoid_Game::make_level_two()
     clock.restart();
     player->reset_to_next_level();
     scene = std::make_unique<Level_Two>();
+    scene ->create();
+}
+
+void Arkanoid_Game::make_level_three()
+{
+    currentGameState = GameState::Level;
+    clock.restart();
+    player->reset_to_next_level();
+    scene = std::make_unique<Level_Three>();
     scene ->create();
 }
 
@@ -126,8 +136,8 @@ void Arkanoid_Game::processEvents()
 
 bool Arkanoid_Game::new_high_score_check()
 {
-    player->update_score();
-    uint32_t score = static_cast<uint32_t>(player->get_score());
+    player->update_total_score();
+    uint32_t score = static_cast<uint32_t>(player->get_total_score());
     uint64_t elapsedTimeMs = static_cast<uint64_t>(clock.getElapsedTime().asMilliseconds());
 
     PlayerData new_player{"", score, elapsedTimeMs};
@@ -152,13 +162,17 @@ void Arkanoid_Game::advance_level()
     }
     else if(scene->get_level_number() == 2)
     {
+        make_level_three();
+    }
+    else if(scene->get_level_number() == 3)
+    {
         make_scoreBoard_screen();
     }
 }
 
 void Arkanoid_Game::check_win_condition()
 {
-    if((*player).get_score() >= scene->get_win_score())
+    if((*player).get_level_score() >= scene->get_win_score())
     {
         m_window_ptr->game_win_screen();
         advance_level();
@@ -183,7 +197,7 @@ void Arkanoid_Game::update_top_scores()
     std::copy_n(playerName.c_str(), nameLength, nameArray.begin());
     nameArray[nameLength] = '\0';
 
-    uint32_t score = static_cast<uint32_t>(player->get_score());
+    uint32_t score = static_cast<uint32_t>(player->get_total_score());
     uint64_t elapsedTimeMs = static_cast<uint64_t>(clock.getElapsedTime().asMilliseconds());
 
     std::unique_ptr<PlayerData> playerData = std::make_unique<PlayerData>();

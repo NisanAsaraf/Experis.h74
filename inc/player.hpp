@@ -14,10 +14,11 @@ public:
     void reset_to_next_level();
     bool is_dead() const;
     size_t get_lives();
-    std::string const& get_name();
+    std::string const& get_name() const;
     void set_name(std::string a_name);
-    size_t const& get_score();
-    void update_score();
+    void update_total_score();
+    size_t const& get_level_score() const;
+    size_t const& get_total_score() const;
 private:
     std::string m_name;
     size_t m_score;

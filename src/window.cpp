@@ -112,7 +112,7 @@ void Game_Window::run_level(Player& a_player, Scene& a_scene, GameState& current
     handleCollisions(a_player, a_scene, currentGameState);
     draw_background(a_scene, currentGameState);
     draw_scene(a_player, a_scene, currentGameState);
-    draw_score(a_player.get_score());
+    draw_score(a_player.get_level_score());
     animate_balls(a_scene);
     window.display();
 }

@@ -19,6 +19,7 @@ private:
     void make_title_screen();
     void make_level_one();
     void make_level_two();
+    void make_level_three();
     void make_scoreBoard_screen();
 
     void advance_level();
