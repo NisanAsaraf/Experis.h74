@@ -10,6 +10,7 @@ namespace arkanoid
         shape = std::make_unique<CircleShape>(10.0f);
         shape->setPosition(SCREEN_WIDTH/2 - 10, SCREEN_HEIGHT - 70);
         vanished = false;
+        speed = 5.0f;
         ballTexture = std::make_unique<Texture>();
         if (!(*ballTexture).loadFromFile("../../assets/textures/Breakout/PNG/58-Breakout-Tiles.png"))
         {
@@ -19,6 +20,7 @@ namespace arkanoid
         shape->setTexture(&(*ballTexture));
         velocity = Vector2f(0,0);
         start = false;
+        is_slowed = false;
     }
 
     void Ball::ball_start()
@@ -28,7 +30,7 @@ namespace arkanoid
         std::mt19937 gen(rd());
 
         float angle_rad = toRadians(dist(gen));
-        float magnitude = -5.0f;
+        float magnitude = -speed;
         float vx = magnitude * cos(angle_rad);
         float vy = magnitude * sin(angle_rad);
 
@@ -91,6 +93,23 @@ namespace arkanoid
     FloatRect Ball::getGlobalBounds()
     {
         return shape->getGlobalBounds();
+    }
+
+    void Ball::ball_slow_down()
+    {
+        velocity *= 0.5f;
+        is_slowed = true;
+    }
+
+    bool Ball::is_slow() const
+    {
+        return is_slowed;
+    }
+
+    void Ball::ball_return_normal_speed()
+    {
+        velocity *= 2.0f;
+        is_slowed = false;
     }
 
     void Ball::set_color(Color a_color)

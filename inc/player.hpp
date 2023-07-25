@@ -20,6 +20,7 @@ public:
     void update_total_score();
     size_t const& get_level_score() const;
     size_t const& get_total_score() const;
+    void add_life();
 private:
     std::string m_name;
     size_t m_score;

@@ -56,6 +56,8 @@ public:
     void animate_paddle_stop(Scene& a_scene);
 
     void draw_shapes();
+    void slow_down_game(Scene& a_scene);
+    void resume_normal_speed(Scene& a_scene);
 
     bool title_screen_button_click_handler(Scene& a_scene, sf::Event& event);
     void paddle_movement_control(Scene& a_scene, sf::Event const&, GameState& currentGameState);
@@ -63,13 +65,14 @@ public:
     bool pressed_any_key(sf::Event const& event);
     void paddle_out_of_bounds_handler(Scene& a_scene);
     void handleCollisions(Player& a_player, Scene& a_scene, GameState& currentGameState);
-    void random_gift_handler(Scene& a_scene);
+    void random_gift_handler(Player& a_player, Scene& a_scene);
 
     bool isOpen();
     sf::RenderWindow& getWindow();
 private:
     sf::RenderWindow window;
     sf::Clock clock;
+    sf::Clock ref_clock;
     std::unique_ptr<Illustrator> illustrator;
     std::unique_ptr<Animator> animator;
 

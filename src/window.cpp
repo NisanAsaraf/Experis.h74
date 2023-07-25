@@ -323,22 +323,46 @@ bool Game_Window::pressed_any_key(Event const& event)
     return false;
 }
 
-void Game_Window::random_gift_handler(Scene& a_scene)
+void Game_Window::slow_down_game(Scene& a_scene)
+{
+    auto& balls = a_scene.get_balls();
+    for (auto& ballPtr : balls)
+    {
+        ballPtr->ball_slow_down();
+    }
+}
+
+void Game_Window::resume_normal_speed(Scene& a_scene)
+{
+    auto& balls = a_scene.get_balls();
+    for (auto& ballPtr : balls)
+    {
+        ballPtr->ball_return_normal_speed();
+    }
+}
+
+void Game_Window::random_gift_handler(Player& a_player, Scene& a_scene)
 {
     RandomNumberGenerator generator;
     int gift_number = generator.getRandomNumber();
-    a_scene.get_paddle().upgrade_size();
+
     switch(gift_number)
     {
         case 0:
+            a_scene.get_paddle().upgrade_size();
             break;
         case 1:
+            a_player.add_life();
             break;
         case 2:
+            a_player.add_score(1000);
             break;
         case 3:
+            a_scene.get_paddle().upgrade_size();
             break;
         case 4:
+            slow_down_game(a_scene);
+            ref_clock.restart();
             break;
     }
 }
@@ -353,6 +377,11 @@ void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
 
     for (const auto& ballPtr : balls)
     {
+        if(ballPtr->is_slow() && ref_clock.getElapsedTime().asSeconds() >= 5)
+        {
+            ballPtr->ball_return_normal_speed();
+        }
+
         if(ballPtr->isVanished())
         {
             continue;
@@ -378,7 +407,7 @@ void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
                         {
                             if(other_block->isGift())
                             {
-                                random_gift_handler(a_scene);
+                                random_gift_handler(a_player, a_scene);
                             }
                             a_player.add_score(other_block->getScoreValue(a_scene.get_level_number()));
                         }
@@ -387,7 +416,7 @@ void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
                 }
                 else if(block->isGift())
                 {
-                    random_gift_handler(a_scene);
+                    random_gift_handler(a_player, a_scene);
                 }
                 else
                 {

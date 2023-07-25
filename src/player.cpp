@@ -43,6 +43,11 @@ size_t const& Player::get_level_score() const
     return m_score;
 }
 
+void Player::add_life()
+{
+    ++m_lives;
+}
+
 void Player::update_total_score()
 {
     m_total_score += m_score;

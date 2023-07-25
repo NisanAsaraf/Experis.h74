@@ -18,7 +18,10 @@ public:
     void vanish();
     const sf::CircleShape& getShape() const;
     void ball_start();
+    void ball_slow_down();
+    void ball_return_normal_speed();
     bool started();
+    bool is_slow() const;
     void reset();
     void elastic_vertical();
     void elastic_horizontal();
@@ -35,6 +38,8 @@ private:
     std::unique_ptr<sf::CircleShape> shape;
     std::unique_ptr<sf::Texture> ballTexture;
     sf::Vector2f velocity;
+    float speed;
+    bool is_slowed;
     bool start;
     bool vanished;
 };
