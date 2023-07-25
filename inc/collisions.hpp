@@ -26,6 +26,8 @@ void ball_block_collision_handler(Ball& a_ball, Block& a_block);
 
 void ball_block_collision_handler(Block& a_block, Ball& a_ball);
 
+bool block_blocks_collision_handler(Block& a_block, Block& b_block);
+
 void ball_window_collision_handler(Ball& a_ball, sf::RenderWindow& a_window);
 
 void ball_window_collision_handler(sf::RenderWindow& a_window, Ball& a_ball);

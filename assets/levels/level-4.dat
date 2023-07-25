@@ -1,15 +1,27 @@
 {
   "blocks": [
-    { "type": "Breakable_Block", "x": 61, "y": 395 },
-    { "type": "Breakable_Block", "x": 122, "y": 395 },
-    { "type": "Breakable_Block", "x": 183, "y": 395 },
-    { "type": "Breakable_Block", "x": 244, "y": 395 },
-    { "type": "Breakable_Block", "x": 305, "y": 395 },
-    { "type": "Breakable_Block", "x": 366, "y": 395 },
-    { "type": "Breakable_Block", "x": 427, "y": 395 },
-    { "type": "Breakable_Block", "x": 488, "y": 395 },
-    { "type": "Breakable_Block", "x": 549, "y": 395 },
-    { "type": "Breakable_Block", "x": 610, "y": 395 },
-    { "type": "Breakable_Block", "x": 671, "y": 395 }
+    { "type": "BlueBlock", "x": 61, "y": 370 },
+    { "type": "BlueBlock", "x": 122, "y": 370 },
+    { "type": "BlueBlock", "x": 183, "y": 370 },
+    { "type": "BlueBlock", "x": 244, "y": 370 },
+    { "type": "BlueBlock", "x": 305, "y": 370 },
+    { "type": "BlueBlock", "x": 366, "y": 370 },
+    { "type": "BlueBlock", "x": 427, "y": 370 },
+    { "type": "BlueBlock", "x": 488, "y": 370 },
+    { "type": "BlueBlock", "x": 549, "y": 370 },
+    { "type": "BlueBlock", "x": 610, "y": 370 },
+    { "type": "BlueBlock", "x": 671, "y": 370 },
+
+    { "type": "Explodable_Block", "x": 61, "y": 395 },
+    { "type": "Explodable_Block", "x": 122, "y": 395 },
+    { "type": "Explodable_Block", "x": 183, "y": 395 },
+    { "type": "Explodable_Block", "x": 244, "y": 395 },
+    { "type": "Explodable_Block", "x": 305, "y": 395 },
+    { "type": "Explodable_Block", "x": 366, "y": 395 },
+    { "type": "Explodable_Block", "x": 427, "y": 395 },
+    { "type": "Explodable_Block", "x": 488, "y": 395 },
+    { "type": "Explodable_Block", "x": 549, "y": 395 },
+    { "type": "Explodable_Block", "x": 610, "y": 395 },
+    { "type": "Explodable_Block", "x": 671, "y": 395 }
   ]
 }

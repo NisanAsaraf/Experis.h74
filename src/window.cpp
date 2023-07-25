@@ -1,5 +1,6 @@
 #include "window.hpp"
 
+
 namespace arkanoid
 {
 using namespace sf;
@@ -344,9 +345,27 @@ void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
                 continue;
             }
             if(check_collision(*ballPtr, *block))
-            {
-                ball_block_collision_handler(*block, *ballPtr);//will vanish a block
-                a_player.add_score(block->getScoreValue(a_scene.get_level_number()));
+            {   
+                if(block->isExplode())
+                {
+                   for (auto& other_block : blocks)
+                    {
+                        if(other_block->isVanished() || block == other_block)//slight optimization
+                        {
+                            continue;
+                        }
+                        if (block_blocks_collision_handler(*block, *other_block))
+                        {
+                            a_player.add_score(other_block->getScoreValue(a_scene.get_level_number()));
+                        }
+                    }
+                    ball_block_collision_handler(*block, *ballPtr);//will vanish a block
+                }
+                else
+                {
+                    ball_block_collision_handler(*block, *ballPtr);//will vanish a block
+                    a_player.add_score(block->getScoreValue(a_scene.get_level_number()));
+                }
                 //a_scene.remove_block(block&); // problematic
             }
         }

@@ -1,5 +1,6 @@
 #include "collisions.hpp"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 namespace arkanoid
 {
@@ -47,6 +48,28 @@ void ball_block_collision_handler(Ball& a_ball, Block& a_block)
     a_block.collision();
     a_ball.elastic_vertical();
 }
+
+bool block_blocks_collision_handler(Block& a_block, Block& b_block)
+{
+    float threshold = 100;
+    sf::Vector2f center1 = a_block.getPosition() + 0.5f * a_block.getSize();
+    sf::Vector2f center2 = b_block.getPosition() + 0.5f * a_block.getSize();
+
+    std::cout << "center1:" << center1.x <<" "<< center1.y << '\n';
+    std::cout << "center2:" << center2.x <<" "<< center2.y << '\n';
+
+    float distance = std::sqrt(std::pow(center2.x - center1.x, 2) + std::pow(center2.y - center1.y, 2));
+
+    std::cout << distance << '\n';
+
+    if(distance < threshold)
+    {
+        b_block.collision();
+        return true;
+    }
+    return false;
+}
+
 
 void ball_window_collision_handler(Ball& a_ball, RenderWindow& a_window)
 {

@@ -18,6 +18,11 @@ FloatRect Block::getGlobalBounds() const
     return shape->getGlobalBounds();
 }
 
+sf::Vector2f Block::getPosition() const
+{
+    return shape->getPosition();
+}
+
 bool Block::isVanished() const
 {
     return vanished;
@@ -41,16 +46,24 @@ Block::Block(float a_x, float a_y)
 {
     make_base(a_x, a_y);
     score_modifer = 0;
+    is_explode = 0;
 }
 
 Block::Block(sf::Vector2f a_pos)
 {
     make_base(a_pos.x, a_pos.y);
+    score_modifer = 0;
+    is_explode = 0;
+}
+
+bool Block::isExplode() const
+{
+    return is_explode;
 }
 
 int Block::getScoreValue(size_t a_lvl) const
 {
-    return score + (score - 1) * a_lvl * score_modifer;
+    return score + score * (a_lvl - 1) * score_modifer;
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -363,9 +376,10 @@ Explodable_Block::Explodable_Block(float a_x, float a_y)
 : Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("../..assets/textures/Breakout/PNG/explodable.png"))
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/explodable.png"))
     shape->setTexture(&(*blockTexture));
     score = 0;
+    is_explode = 1;
     vanished = false;
 }
 
@@ -376,11 +390,13 @@ Explodable_Block::Explodable_Block(Vector2f a_vec)
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/explodable.png"))
     shape->setTexture(&(*blockTexture));
     score = 0;
+    is_explode = 1;
     vanished = false;
 }
 
 void Explodable_Block::collision()
 {
+    vanish();
 }
 
 }//namespace arkanoid
