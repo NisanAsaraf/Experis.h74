@@ -8,8 +8,7 @@ Arkanoid_Game::Arkanoid_Game()
 {
     m_window_ptr = std::make_unique<Game_Window>();
     player = std::make_unique<Player>();
-    //make_title_screen();
-    make_level_four();
+    make_title_screen();
 }
 
 void Arkanoid_Game::reset()

@@ -417,6 +417,7 @@ void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
                 else if(block->isGift())
                 {
                     random_gift_handler(a_player, a_scene);
+                    ball_block_collision_handler(*block, *ballPtr);//will vanish a block
                 }
                 else
                 {
