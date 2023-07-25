@@ -80,6 +80,11 @@ namespace arkanoid
         velocity.y *= -1;
     }
 
+    void Ball::non_elastic_vertical()
+    {
+        velocity.y *= -1.1;
+    }
+
     Vector2f& Ball::getVelocity()
     {
         return velocity;

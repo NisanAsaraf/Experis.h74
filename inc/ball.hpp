@@ -22,6 +22,7 @@ public:
     void ball_return_normal_speed();
     bool started();
     bool is_slow() const;
+    void non_elastic_vertical();
     void reset();
     void elastic_vertical();
     void elastic_horizontal();

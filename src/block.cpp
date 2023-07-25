@@ -40,22 +40,20 @@ void Block::make_base(float a_x , float a_y)
 {
     shape = std::make_unique<sf::RectangleShape>(sf::Vector2f(60.0f, 25.0f));
     shape->setPosition(a_x, a_y);
+    is_explode = 0;
+    is_gift = 0;
+    is_indestructable = 0;
+    score = 0;
 }
 
 Block::Block(float a_x, float a_y)
 {
     make_base(a_x, a_y);
-    score_modifer = 0;
-    is_explode = 0;
-    is_gift = 0;
 }
 
 Block::Block(sf::Vector2f a_pos)
 {
     make_base(a_pos.x, a_pos.y);
-    score_modifer = 0;
-    is_explode = 0;
-    is_gift = 0;
 }
 
 bool Block::isExplode() const
@@ -73,6 +71,10 @@ int Block::getScoreValue(size_t a_lvl) const
     return score + score * (a_lvl - 1) * score_modifer;
 }
 
+bool Block::isIndestructable() const
+{
+    return is_indestructable;
+}
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
 
 WhiteBlock::WhiteBlock(float a_x, float a_y) 
@@ -311,6 +313,7 @@ YellowBlock::YellowBlock(float a_x, float a_y)
     blockTexture = std::make_unique<Texture>();
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/yellow-indestructible.png"))
     shape->setTexture(&(*blockTexture));
+    is_indestructable = 1;
     score = 0;
     vanished = false;
 }
@@ -321,6 +324,7 @@ YellowBlock::YellowBlock(Vector2f a_vec)
     blockTexture = std::make_unique<Texture>();
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/yellow-indestructible.png"))
     shape->setTexture(&(*blockTexture));
+    is_indestructable = 1;
     score = 0;
     vanished = false;
 }
@@ -414,6 +418,7 @@ Gift_Block::Gift_Block(float a_x, float a_y)
     blockTexture = std::make_unique<Texture>();
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/gift_block.png"))
     shape->setTexture(&(*blockTexture));
+    is_gift = true;
     score = 0;
     is_gift = 1;
     vanished = false;

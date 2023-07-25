@@ -25,7 +25,7 @@ void Paddle::right(Clock a_clock)
     float timeDeltaSeconds = deltaTime.asSeconds();
     if(velocity.x < max_speed)
     {
-        float newVelocity = velocity.x + (acceleration * timeDeltaSeconds);
+        float newVelocity = velocity.x + (acceleration * timeDeltaSeconds * timeDeltaSeconds);
         velocity.x = std::min(newVelocity, max_speed);
     }
 }
@@ -36,7 +36,7 @@ void Paddle::left(Clock a_clock)
     float timeDeltaSeconds = deltaTime.asSeconds();
     if(velocity.x > -max_speed)
     {
-        float newVelocity = velocity.x - (acceleration * timeDeltaSeconds);
+        float newVelocity = velocity.x - (acceleration * timeDeltaSeconds * timeDeltaSeconds);
         velocity.x = std::max(newVelocity, -max_speed);
     }
 }
