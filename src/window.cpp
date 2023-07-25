@@ -174,7 +174,7 @@ void Game_Window::animate_paddle_stop(Scene& a_scene)
     animator->animate_paddle_stop(a_scene.get_paddle());
 }
 
-void Game_Window::pause_game(GameState& currentGameState)
+bool Game_Window::pause_game(GameState& currentGameState)
 {
     Event event;
     while(currentGameState == GameState::Paused)
@@ -183,8 +183,10 @@ void Game_Window::pause_game(GameState& currentGameState)
         window.display();
         while (window.pollEvent(event))
         {   
-            close_window_check(event);
-
+            if(close_window_check(event))
+            {
+                return false;
+            }
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
             {
                 currentGameState = GameState::Level;
@@ -192,6 +194,7 @@ void Game_Window::pause_game(GameState& currentGameState)
             }
         }
     }
+    return true;
 }
 
 void Game_Window::paddle_movement_control(Scene& a_scene, Event const& event, GameState& currentGameState)
@@ -232,7 +235,10 @@ void Game_Window::paddle_movement_control(Scene& a_scene, Event const& event, Ga
             if (event.key.code == sf::Keyboard::Space)
             {
                 currentGameState = GameState::Paused;
-                pause_game(currentGameState);
+                if(!pause_game(currentGameState))
+                {
+                    a_scene.stop_scene_music();
+                }
             }
             else if (event.key.code == sf::Keyboard::Right)
             {

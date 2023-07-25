@@ -39,7 +39,7 @@ public:
     bool new_high_score_check(Player& a_player);
 
     bool input_name(std::string& a_name);
-    void pause_game(GameState& currentGameState);
+    bool pause_game(GameState& currentGameState);
     void draw_hearts(size_t lives);
     void restart(Scene& a_scene);
     
