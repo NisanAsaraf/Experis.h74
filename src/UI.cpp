@@ -12,7 +12,7 @@ Button::Button(Vector2f a_pos, Texture const& a_texture)
     m_buttonSprite = std::make_unique<Sprite>(*m_buttonTexture);
     m_buttonSprite->setPosition(a_pos - Vector2f(20.0f, 10.0f));
     m_buttonSprite->setColor(Color::White);
-    m_buttonSprite->setScale(0.2f,0.2f);
+    m_buttonSprite->setScale(0.5f,0.5f);
 }
 
 FloatRect Button::getBounds()
@@ -40,5 +40,8 @@ Text const& Button::getText()
     return m_button_text;
 }
 
+void Button::on_hover()
+{
+}
 
 }//namespace arkanoid

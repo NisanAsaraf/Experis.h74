@@ -42,6 +42,8 @@ public:
     void setText(std::string const& a_str);
     void setButtonColor(sf::Color a_color);
     const sf::Sprite& getShape() const;
+    void on_hover();
+    void on_click();
 private:
     std::unique_ptr<sf::Sprite> m_buttonSprite;
     std::unique_ptr<sf::Texture> m_buttonTexture;

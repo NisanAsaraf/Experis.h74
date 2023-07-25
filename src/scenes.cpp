@@ -28,7 +28,7 @@ void Title_Screen::create()
     quitButton.loadFromFile("../../assets/textures/Buttons/quit_button.png");
 
     std::unique_ptr<Button> m_start_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.3, SCREEN_HEIGHT/1.9), startButton);
-    std::unique_ptr<Button> m_quit_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.13, SCREEN_HEIGHT/1.5), quitButton);
+    std::unique_ptr<Button> m_quit_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.3, SCREEN_HEIGHT/1.5), quitButton);
     
     buttons.emplace_back(std::move(m_start_game));
     buttons.emplace_back(std::move(m_quit_game));
