@@ -237,7 +237,7 @@ void Game_Window::paddle_movement_control(Scene& a_scene, Event const& event, Ga
                 currentGameState = GameState::Paused;
                 if(!pause_game(currentGameState))
                 {
-                    a_scene.stop_scene_music();
+                    //a_scene.stop_scene_music();
                 }
             }
             else if (event.key.code == sf::Keyboard::Right)

@@ -35,20 +35,11 @@ void Block::make_base(float a_x , float a_y)
 {
     shape = std::make_unique<sf::RectangleShape>(sf::Vector2f(60.0f, 25.0f));
     shape->setPosition(a_x, a_y);
-    if(!soundBuffer.loadFromFile("../../assets/audio/block_collision_sound.ogg"))
-    {
-        throw std::runtime_error("Error opening sound file");
-    }
-    collisionSound.setBuffer(soundBuffer);
 }
 
 Block::Block(float a_x, float a_y)
 {
     make_base(a_x, a_y);
-    if(!soundBuffer.loadFromFile("../../assets/audio/block_collision_sound.ogg"))
-    {
-        throw std::runtime_error("Error opening sound file");
-    }
 }
 
 Block::Block(sf::Vector2f a_pos)
@@ -59,11 +50,6 @@ Block::Block(sf::Vector2f a_pos)
 int Block::getScoreValue(size_t a_lvl) const
 {
     return score * a_lvl;
-}
-
-void Block::play_collision_sound()
-{
-    collisionSound.play();
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -90,7 +76,6 @@ WhiteBlock::WhiteBlock(Vector2f a_vec)
 
 void WhiteBlock::Collision()
 {
-    play_collision_sound();
     vanish();
 }
 
@@ -116,7 +101,6 @@ TealBlock::TealBlock(Vector2f a_vec) : Block(a_vec)
 
 void TealBlock::Collision()
 {
-    play_collision_sound();
     vanish();
 }
 
@@ -142,7 +126,6 @@ BrownBlock::BrownBlock(Vector2f a_vec) : Block(a_vec)
 
 void BrownBlock::Collision()
 {
-    play_collision_sound();
     vanish();
 }
 
@@ -168,7 +151,6 @@ OrangeBlock::OrangeBlock(Vector2f a_vec) : Block(a_vec)
 
 void OrangeBlock::Collision()
 {
-    play_collision_sound();
     vanish();
 }
 
@@ -194,7 +176,6 @@ GreenBlock::GreenBlock(Vector2f a_vec) : Block(a_vec)
 
 void GreenBlock::Collision()
 {
-    play_collision_sound();
     vanish();
 }
 
@@ -220,7 +201,6 @@ PurpleBlock::PurpleBlock(Vector2f a_vec) : Block(a_vec)
 
 void PurpleBlock::Collision()
 {
-    play_collision_sound();
     vanish();
 }
 
@@ -246,7 +226,6 @@ BlueBlock::BlueBlock(Vector2f a_vec) : Block(a_vec)
 
 void BlueBlock::Collision()
 {
-    play_collision_sound();
     vanish();
 }
 
@@ -272,7 +251,6 @@ RedBlock::RedBlock(Vector2f a_vec) : Block(a_vec)
 
 void RedBlock::Collision()
 {
-    play_collision_sound();
     vanish();
 }
 
@@ -298,7 +276,6 @@ GrayBlock::GrayBlock(Vector2f a_vec) : Block(a_vec)
 
 void GrayBlock::Collision()
 {
-    play_collision_sound();
     vanish();
 }
 
@@ -324,7 +301,6 @@ YellowBlock::YellowBlock(Vector2f a_vec) : Block(a_vec)
 
 void YellowBlock::Collision()
 {
-    play_collision_sound();
 }
 
 }//namespace arkanoid

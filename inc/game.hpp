@@ -2,6 +2,7 @@
 #define GAME_H
 #include "window.hpp"
 #include "config.hpp"
+#include "sound_manager.hpp"
 
 namespace arkanoid
 {
@@ -29,9 +30,11 @@ private:
     void processEvents();
     bool new_high_score_check();
     void update_top_scores();
+    void mute_sound_handler(sf::Event& event);
 private:
 
     std::unique_ptr<Game_Window> m_window_ptr;
+    Sound_Manager sound_manager;
     std::unique_ptr<Player> player;
     std::unique_ptr<Scene> scene;
     sf::Clock clock;

@@ -17,15 +17,12 @@ public:
     const sf::RectangleShape& getShape() const;
     bool isVanished() const ;
     virtual void Collision() = 0;
-    void play_collision_sound();
 private:
     void make_base(float x , float y);
 protected:
     void vanish();
     std::unique_ptr<sf::RectangleShape> shape;
     std::unique_ptr<sf::Texture> blockTexture;
-    sf::SoundBuffer soundBuffer;
-    sf::Sound collisionSound;
     int score;
     bool vanished;
 };

@@ -22,7 +22,9 @@ void Arkanoid_Game::make_title_screen()
     scene = std::make_unique<Title_Screen>();
     scene ->create();
     is_high_score_already_entered = false;
-    scene->play_scene_music();
+    sound_manager.set_scene_music("title_screen.ogg");
+    sound_manager.play_scene_music();
+
 }
 
 void Arkanoid_Game::make_level_one()
@@ -32,7 +34,8 @@ void Arkanoid_Game::make_level_one()
     clock.restart();
     scene = std::make_unique<Level_One>();
     scene ->create();
-    scene->play_scene_music();
+    sound_manager.set_scene_music("level_one.ogg");
+    sound_manager.play_scene_music();
 }
 
 void Arkanoid_Game::make_level_two()
@@ -42,7 +45,8 @@ void Arkanoid_Game::make_level_two()
     player->reset_to_next_level();
     scene = std::make_unique<Level_Two>();
     scene ->create();
-    scene->play_scene_music();
+    sound_manager.set_scene_music("level_two.ogg");
+    sound_manager.play_scene_music();
 }
 
 void Arkanoid_Game::make_level_three()
@@ -52,7 +56,8 @@ void Arkanoid_Game::make_level_three()
     player->reset_to_next_level();
     scene = std::make_unique<Level_Three>();
     scene ->create();
-    scene->play_scene_music();
+    sound_manager.set_scene_music("level_three.ogg");
+    sound_manager.play_scene_music();
 }
 
 void Arkanoid_Game::make_scoreBoard_screen()
@@ -106,6 +111,14 @@ void Arkanoid_Game::run()
     }
 }
 
+void Arkanoid_Game::mute_sound_handler(Event& event)
+{
+    if (event.type == Event::KeyPressed && event.key.code == Keyboard::Q)
+    {
+        sound_manager.mute_sound();
+    }
+}
+
 void Arkanoid_Game::processEvents()
 {
     Event event;
@@ -113,9 +126,10 @@ void Arkanoid_Game::processEvents()
 
     while (window.pollEvent(event))
     {   
+        mute_sound_handler(event);
         if(m_window_ptr->close_window_check(event))
         {
-            scene->stop_scene_music();
+            sound_manager.stop_scene_music();
         }
         switch (currentGameState)
         {
@@ -188,6 +202,7 @@ void Arkanoid_Game::check_win_condition()
 {
     if((*player).get_level_score() >= scene->get_win_score())
     {
+        sound_manager.play_win_game_sound();
         m_window_ptr->game_win_screen();
         advance_level();
     }
@@ -196,6 +211,7 @@ void Arkanoid_Game::check_lose_condition()
 {
     if(player->is_dead())
     {
+        sound_manager.play_lose_game_sound();
         m_window_ptr->game_over_screen();
         make_scoreBoard_screen();
     }
