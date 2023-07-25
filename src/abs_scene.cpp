@@ -74,6 +74,18 @@ void Scene::make_border(Vector2f a_size)
     border->setOutlineColor(Teal);
 }
 
+bool Scene::check_all_blocks_gone()
+{
+    for(auto& block : blocks)
+    {
+        if(!block->isVanished())
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void Scene::spawn_ball()
 {
     balls.emplace_back(std::make_unique<Ball>());

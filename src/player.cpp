@@ -5,9 +5,9 @@ namespace arkanoid
 
 Player::Player()
 :m_name{}
-,m_score{LEVEL_ONE_SCORE}
+,m_score{0}
 ,m_total_score{0}
-,m_lives{3}
+,m_lives{5}
 {
 }
 
@@ -30,7 +30,7 @@ void Player::reset_to_next_level()
 {
     m_total_score += m_score;
     m_score = 0;
-    m_lives = 3;
+    m_lives = 5;
 }
 
 size_t const& Player::get_total_score() const

@@ -80,12 +80,12 @@ void Sound_Manager::mute_sound()
     if(is_mute == false)
     {
         is_mute = true;
-        scene_music.play();
+        scene_music.pause();       
     }
     else
     {
         is_mute = false;
-        scene_music.pause();
+        scene_music.play();
     }
 }
 

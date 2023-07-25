@@ -24,6 +24,7 @@ public:
     std::vector<std::unique_ptr<Button>> const& get_buttons() const;
     std::vector<std::unique_ptr<Block>> const& get_blocks() const;
     Paddle& get_paddle() const;
+    bool check_all_blocks_gone();
 
     std::unique_ptr<sf::Texture> const& get_BG() const;
     std::unique_ptr<sf::RectangleShape> const& get_kill_zone() const;

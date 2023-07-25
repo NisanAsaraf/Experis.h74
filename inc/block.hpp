@@ -87,7 +87,7 @@ public:
     void collision() override;
 };
 
-class Breakable_Block : public Block // indestructible
+class Breakable_Block : public Block // 300
 {
 public:
     Breakable_Block(float a_x , float a_y);
@@ -98,7 +98,7 @@ protected:
     int break_counter = 3;
 };
 
-class Explodable_Block : public Block // 300
+class Explodable_Block : public Block // 0 but explode and destroys all the blocks around him
 {
 public:
     Explodable_Block(float a_x , float a_y);
@@ -107,6 +107,15 @@ public:
     void explode();
 };
 
+class Gift_Block : public Block // 0
+{
+public:
+    Gift_Block(float a_x , float a_y);
+    Gift_Block(sf::Vector2f a_pos);
+    void collision() override;
+    void give_gift();
+protected:
+};
 
 }//namespace arkanoid
 #endif //BLOCK_H

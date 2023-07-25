@@ -8,7 +8,8 @@ Arkanoid_Game::Arkanoid_Game()
 {
     m_window_ptr = std::make_unique<Game_Window>();
     player = std::make_unique<Player>();
-    make_title_screen();
+    //make_title_screen();
+    make_level_two();
 }
 
 void Arkanoid_Game::reset()
@@ -200,7 +201,7 @@ void Arkanoid_Game::advance_level()
 
 void Arkanoid_Game::check_win_condition()
 {
-    if((*player).get_level_score() >= scene->get_win_score())
+    if(scene->check_all_blocks_gone())
     {
         sound_manager.play_win_game_sound();
         m_window_ptr->game_win_screen();
