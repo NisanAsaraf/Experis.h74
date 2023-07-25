@@ -40,6 +40,7 @@ void Block::make_base(float a_x , float a_y)
 Block::Block(float a_x, float a_y)
 {
     make_base(a_x, a_y);
+    score_modifer = 0;
 }
 
 Block::Block(sf::Vector2f a_pos)
@@ -49,7 +50,7 @@ Block::Block(sf::Vector2f a_pos)
 
 int Block::getScoreValue(size_t a_lvl) const
 {
-    return score * a_lvl;
+    return score + (score - 1) * a_lvl * score_modifer;
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -256,16 +257,19 @@ void RedBlock::collision()
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
 
-GrayBlock::GrayBlock(float a_x, float a_y) : Block(a_x, a_y)
+GrayBlock::GrayBlock(float a_x, float a_y) 
+: Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/gray-50x.png"))
     shape->setTexture(&(*blockTexture));
     score = 50;
     vanished = false;
+    score_modifer = 1;
 }
 
-GrayBlock::GrayBlock(Vector2f a_vec) : Block(a_vec)
+GrayBlock::GrayBlock(Vector2f a_vec) 
+: Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/gray-50x.png"))
@@ -281,7 +285,8 @@ void GrayBlock::collision()
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
 
-YellowBlock::YellowBlock(float a_x, float a_y) : Block(a_x, a_y)
+YellowBlock::YellowBlock(float a_x, float a_y) 
+: Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/yellow-indestructible.png"))
@@ -290,7 +295,8 @@ YellowBlock::YellowBlock(float a_x, float a_y) : Block(a_x, a_y)
     vanished = false;
 }
 
-YellowBlock::YellowBlock(Vector2f a_vec) : Block(a_vec)
+YellowBlock::YellowBlock(Vector2f a_vec) 
+: Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/yellow-indestructible.png"))
@@ -305,21 +311,23 @@ void YellowBlock::collision()
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
 
-Breakable_Block::Breakable_Block(float a_x, float a_y) : Block(a_x, a_y)
-{
-    blockTexture = std::make_unique<Texture>();
-    if(blockTexture->loadFromFile("../..assets/textures/Breakout/PNG/breakable-solid.png"))
-    shape->setTexture(&(*blockTexture));
-    score = 300;
-    vanished = false;
-}
-
-Breakable_Block::Breakable_Block(Vector2f a_vec) : Block(a_vec)
+Breakable_Block::Breakable_Block(float a_x, float a_y) 
+: Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/breakable-solid.png"))
     shape->setTexture(&(*blockTexture));
-    score = 300;
+    score = 0;
+    vanished = false;
+}
+
+Breakable_Block::Breakable_Block(Vector2f a_vec) 
+: Block(a_vec)
+{
+    blockTexture = std::make_unique<Texture>();
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/breakable-solid.png"))
+    shape->setTexture(&(*blockTexture));
+    score = 0; // 300 when broken
     vanished = false;
 }
 
@@ -330,6 +338,7 @@ void Breakable_Block::collision()
     if(break_counter == 0)
     {
         vanish();
+        score = 300;
     }
     else
     {
@@ -350,7 +359,8 @@ void Breakable_Block::break_off()
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
 
-Explodable_Block::Explodable_Block(float a_x, float a_y) : Block(a_x, a_y)
+Explodable_Block::Explodable_Block(float a_x, float a_y) 
+: Block(a_x, a_y)
 {
     blockTexture = std::make_unique<Texture>();
     if(blockTexture->loadFromFile("../..assets/textures/Breakout/PNG/explodable.png"))
@@ -359,7 +369,8 @@ Explodable_Block::Explodable_Block(float a_x, float a_y) : Block(a_x, a_y)
     vanished = false;
 }
 
-Explodable_Block::Explodable_Block(Vector2f a_vec) : Block(a_vec)
+Explodable_Block::Explodable_Block(Vector2f a_vec) 
+: Block(a_vec)
 {
     blockTexture = std::make_unique<Texture>();
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/explodable.png"))

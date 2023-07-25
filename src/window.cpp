@@ -71,7 +71,7 @@ void Game_Window::draw_title_screen(Scene& a_scene)
     illustrator->draw_title_screen(a_scene, window);
 }
 
-void Game_Window::draw_level_one(Player& a_player, Scene& a_scene)
+void Game_Window::draw_level(Player& a_player, Scene& a_scene)
 {
     illustrator->draw_level(a_scene, window);
     draw_hearts(a_player.get_lives());
@@ -90,7 +90,7 @@ void Game_Window::draw_scene(Player& a_player,Scene& a_scene, GameState& current
             draw_title_screen(a_scene);
             break;
         case GameState::Level:
-            draw_level_one(a_player, a_scene);
+            draw_level(a_player, a_scene);
             break;
         case GameState::ScoreBoard:
             draw_scoreboard(a_scene);
@@ -345,9 +345,9 @@ void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
             }
             if(check_collision(*ballPtr, *block))
             {
-                a_player.add_score(block->getScoreValue(a_scene.get_level_number()));
                 ball_block_collision_handler(*block, *ballPtr);//will vanish a block
-                //a_scene.remove_block(block&);
+                a_player.add_score(block->getScoreValue(a_scene.get_level_number()));
+                //a_scene.remove_block(block&); // problematic
             }
         }
 

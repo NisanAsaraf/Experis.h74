@@ -23,6 +23,7 @@ protected:
     void vanish();
     std::unique_ptr<sf::RectangleShape> shape;
     std::unique_ptr<sf::Texture> blockTexture;
+    int score_modifer; //basically a 0 or 1 to handle the gray blocks
     int score;
     bool vanished;
 };

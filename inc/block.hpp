@@ -78,7 +78,6 @@ public:
     void collision() override;
 };
 
-
 class YellowBlock : public Block // indestructible
 {
 public:
@@ -93,6 +92,7 @@ public:
     Breakable_Block(float a_x , float a_y);
     Breakable_Block(sf::Vector2f a_pos);
     void collision() override;
+private:
     void break_off();
 protected:
     int break_counter = 3;
@@ -107,7 +107,7 @@ public:
     void explode();
 };
 
-class Gift_Block : public Block // 0
+class Gift_Block : public Block // 0 gives you a powerup
 {
 public:
     Gift_Block(float a_x , float a_y);

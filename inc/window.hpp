@@ -31,7 +31,7 @@ public:
     void draw_background_score_board(Scene& a_scene);
     void draw_background(Scene& m_scene, GameState& currentGameState);
 
-    void draw_level_one(Player& a_player, Scene& a_scene);
+    void draw_level(Player& a_player, Scene& a_scene);
     void draw_title_screen(Scene& a_scene);
     void draw_scoreboard(Scene& a_scene);
     void draw_scene(Player& a_player, Scene& a_scene, GameState& currentGameState);

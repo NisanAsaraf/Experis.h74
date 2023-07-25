@@ -205,6 +205,56 @@ size_t Level_Three::get_level_number() const
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------------- */ 
 
+Level_Four::Level_Four()
+{
+
+}
+
+void Level_Four::create()
+{
+    make_blocks();
+    make_border(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
+    make_kill_zone(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
+    make_paddle();
+    spawn_ball();
+    win_score = LEVEL_THREE_SCORE;
+    backgroundTexture = std::make_unique<Texture>();
+
+    if (!(*backgroundTexture).loadFromFile("../../assets/textures/BG/neon.jpg"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+}
+
+void Level_Four::make_blocks()
+{
+    std::ifstream file("../../assets/levels/level-4.dat");
+    if (!file)
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+    load_blocks_from_json(file);
+}
+
+void Level_Four::reset()
+{
+    blocks.clear();
+    paddle_reset();
+    balls.clear();
+}
+
+size_t Level_Four::get_win_score() const
+{
+    return win_score;
+}
+
+size_t Level_Four::get_level_number() const
+{
+    return 4;
+}
+
+/* ------------------------------------------------------------------------------------------------------------------------------------------------------------- */ 
+
 Score_Board::Score_Board(std::vector<PlayerData>& a_players)
 {
     m_players = a_players;

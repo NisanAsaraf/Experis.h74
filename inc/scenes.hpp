@@ -64,6 +64,18 @@ private:
     void make_blocks(); 
 };
 
+class Level_Four : public Scene
+{
+public:
+    Level_Four();
+    void create() override;
+    void reset() override;
+    size_t get_win_score() const override;
+    size_t get_level_number() const override;
+private:
+    void make_blocks(); 
+};
+
 
 class Score_Board : public Scene
 {

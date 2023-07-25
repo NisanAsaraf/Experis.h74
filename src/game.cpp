@@ -8,7 +8,8 @@ Arkanoid_Game::Arkanoid_Game()
 {
     m_window_ptr = std::make_unique<Game_Window>();
     player = std::make_unique<Player>();
-    make_title_screen();
+    //make_title_screen();
+    make_level_four();
 }
 
 void Arkanoid_Game::reset()
@@ -60,6 +61,17 @@ void Arkanoid_Game::make_level_three()
     sound_manager.play_scene_music();
 }
 
+void Arkanoid_Game::make_level_four()
+{
+    currentGameState = GameState::Level;
+    clock.restart();
+    player->reset_to_next_level();
+    scene = std::make_unique<Level_Four>();
+    scene ->create();
+    sound_manager.set_scene_music("level_three.ogg");
+    sound_manager.play_scene_music();
+}
+
 void Arkanoid_Game::make_scoreBoard_screen()
 {
     currentGameState = GameState::ScoreBoard;
@@ -77,9 +89,9 @@ void Arkanoid_Game::draw_title_screen()
     m_window_ptr->draw_title_screen(*scene);
 }
 
-void Arkanoid_Game::draw_level_one()
+void Arkanoid_Game::draw_level()
 {
-    m_window_ptr->draw_level_one(*player, *scene);
+    m_window_ptr->draw_level(*player, *scene);
 }
 
 void Arkanoid_Game::draw_scoreBoard_screen()
@@ -177,6 +189,7 @@ bool Arkanoid_Game::new_high_score_check()
         update_top_scores();
         is_high_score_already_entered = true;
         make_scoreBoard_screen();
+
         return true;
     }
     return false;
@@ -193,6 +206,10 @@ void Arkanoid_Game::advance_level()
         make_level_three();
     }
     else if(scene->get_level_number() == 3)
+    {
+        make_level_four();
+    }
+    else if(scene->get_level_number() == 4)
     {
         make_scoreBoard_screen();
     }
