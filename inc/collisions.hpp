@@ -36,6 +36,5 @@ void ball_paddle_collision_handler(Paddle& a_paddle, Ball& a_ball);
 
 bool ball_kill_zone_collision_handler(Ball& a_ball, sf::RectangleShape& a_zone);
 
-
 }//namespace arkanoid
 #endif

@@ -16,7 +16,7 @@ public:
     sf::Vector2f getSize() const ;
     const sf::RectangleShape& getShape() const;
     bool isVanished() const ;
-    virtual void Collision() = 0;
+    virtual void collision() = 0;
 private:
     void make_base(float x , float y);
 protected:

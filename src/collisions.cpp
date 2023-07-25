@@ -38,13 +38,13 @@ bool check_collision(Paddle& a_paddle, Ball& a_ball)
 
 void ball_block_collision_handler(Block& a_block, Ball& a_ball)
 {
-    a_block.Collision();
+    a_block.collision();
     a_ball.elastic_vertical();
 }
 
 void ball_block_collision_handler(Ball& a_ball, Block& a_block)
 {
-    a_block.Collision();
+    a_block.collision();
     a_ball.elastic_vertical();
 }
 
