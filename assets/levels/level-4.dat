@@ -1,6 +1,6 @@
 {
   "blocks": [
-    { "type": "BlueBlock", "x": 61, "y": 370 },
+    { "type": "Gift_Block", "x": 61, "y": 370 },
     { "type": "BlueBlock", "x": 122, "y": 370 },
     { "type": "BlueBlock", "x": 183, "y": 370 },
     { "type": "BlueBlock", "x": 244, "y": 370 },
@@ -23,5 +23,9 @@
     { "type": "Explodable_Block", "x": 549, "y": 395 },
     { "type": "Explodable_Block", "x": 610, "y": 395 },
     { "type": "Explodable_Block", "x": 671, "y": 395 }
+
+
+
+
   ]
 }

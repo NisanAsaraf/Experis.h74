@@ -399,4 +399,33 @@ void Explodable_Block::collision()
     vanish();
 }
 
+/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
+
+Gift_Block::Gift_Block(float a_x, float a_y) 
+: Block(a_x, a_y)
+{
+    blockTexture = std::make_unique<Texture>();
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/gift_block.png"))
+    shape->setTexture(&(*blockTexture));
+    score = 0;
+    is_explode = 0;
+    vanished = false;
+}
+
+Gift_Block::Gift_Block(Vector2f a_vec) 
+: Block(a_vec)
+{
+    blockTexture = std::make_unique<Texture>();
+    if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/gift_block.png"))
+    shape->setTexture(&(*blockTexture));
+    score = 0;
+    is_explode = 0;
+    vanished = false;
+}
+
+void Gift_Block::collision()
+{
+    vanish();
+}
+
 }//namespace arkanoid

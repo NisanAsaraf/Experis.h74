@@ -145,7 +145,8 @@ void Scene::load_blocks_from_json(std::ifstream& file)
             block = std::make_unique<Breakable_Block>(x, y);
         else if (block_type == "Explodable_Block")
             block = std::make_unique<Explodable_Block>(x, y);
-
+        else if (block_type == "Gift_Block")
+            block = std::make_unique<Gift_Block>(x, y);
         blocks.emplace_back(std::move(block));
     }
 }

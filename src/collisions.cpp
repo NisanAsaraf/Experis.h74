@@ -1,6 +1,5 @@
 #include "collisions.hpp"
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
 namespace arkanoid
 {
@@ -54,14 +53,7 @@ bool block_blocks_collision_handler(Block& a_block, Block& b_block)
     float threshold = 100;
     sf::Vector2f center1 = a_block.getPosition() + 0.5f * a_block.getSize();
     sf::Vector2f center2 = b_block.getPosition() + 0.5f * a_block.getSize();
-
-    std::cout << "center1:" << center1.x <<" "<< center1.y << '\n';
-    std::cout << "center2:" << center2.x <<" "<< center2.y << '\n';
-
     float distance = std::sqrt(std::pow(center2.x - center1.x, 2) + std::pow(center2.y - center1.y, 2));
-
-    std::cout << distance << '\n';
-
     if(distance < threshold)
     {
         b_block.collision();
