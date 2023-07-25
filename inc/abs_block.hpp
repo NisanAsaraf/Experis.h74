@@ -18,6 +18,7 @@ public:
     const sf::RectangleShape& getShape() const;
     bool isVanished() const ;
     bool isExplode() const;
+    bool isGift() const;
     virtual void collision() = 0;
 private:
     void make_base(float x , float y);
@@ -28,6 +29,7 @@ protected:
     int score_modifer; //basically a 0 or 1 to handle the gray blocks
     int score;
     bool is_explode;
+    bool is_gift;
     bool vanished;
 };
 

@@ -323,6 +323,26 @@ bool Game_Window::pressed_any_key(Event const& event)
     return false;
 }
 
+void Game_Window::random_gift_handler(Scene& a_scene)
+{
+    RandomNumberGenerator generator;
+    int gift_number = generator.getRandomNumber();
+    a_scene.get_paddle().upgrade_size();
+    switch(gift_number)
+    {
+        case 0:
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+    }
+}
+
 void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
 {
     Paddle& pad = a_scene.get_paddle();
@@ -356,10 +376,18 @@ void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
                         }
                         if (block_blocks_collision_handler(*block, *other_block))
                         {
+                            if(other_block->isGift())
+                            {
+                                random_gift_handler(a_scene);
+                            }
                             a_player.add_score(other_block->getScoreValue(a_scene.get_level_number()));
                         }
                     }
                     ball_block_collision_handler(*block, *ballPtr);//will vanish a block
+                }
+                else if(block->isGift())
+                {
+                    random_gift_handler(a_scene);
                 }
                 else
                 {

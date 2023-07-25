@@ -47,6 +47,7 @@ Block::Block(float a_x, float a_y)
     make_base(a_x, a_y);
     score_modifer = 0;
     is_explode = 0;
+    is_gift = 0;
 }
 
 Block::Block(sf::Vector2f a_pos)
@@ -54,11 +55,17 @@ Block::Block(sf::Vector2f a_pos)
     make_base(a_pos.x, a_pos.y);
     score_modifer = 0;
     is_explode = 0;
+    is_gift = 0;
 }
 
 bool Block::isExplode() const
 {
     return is_explode;
+}
+
+bool Block::isGift() const
+{
+    return is_gift;
 }
 
 int Block::getScoreValue(size_t a_lvl) const
@@ -408,7 +415,7 @@ Gift_Block::Gift_Block(float a_x, float a_y)
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/gift_block.png"))
     shape->setTexture(&(*blockTexture));
     score = 0;
-    is_explode = 0;
+    is_gift = 1;
     vanished = false;
 }
 
@@ -419,7 +426,7 @@ Gift_Block::Gift_Block(Vector2f a_vec)
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/gift_block.png"))
     shape->setTexture(&(*blockTexture));
     score = 0;
-    is_explode = 0;
+    is_gift = 1;
     vanished = false;
 }
 

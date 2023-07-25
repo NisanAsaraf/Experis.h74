@@ -63,6 +63,7 @@ public:
     bool pressed_any_key(sf::Event const& event);
     void paddle_out_of_bounds_handler(Scene& a_scene);
     void handleCollisions(Player& a_player, Scene& a_scene, GameState& currentGameState);
+    void random_gift_handler(Scene& a_scene);
 
     bool isOpen();
     sf::RenderWindow& getWindow();

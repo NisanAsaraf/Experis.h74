@@ -19,6 +19,19 @@ public:
     } 
 };
 
+class RandomNumberGenerator
+{
+public:
+    static int getRandomNumber()
+    {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, 4);
+        return dis(gen);
+    } 
+};
+
+
 class Button
 {
 public:

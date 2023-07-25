@@ -103,4 +103,13 @@ void Paddle::setPosition(Vector2f a_v)
     paddle->setPosition(a_v);
 }
 
+void Paddle::upgrade_size()
+{
+    if (!(*paddleTexture).loadFromFile("../../assets/textures/Breakout/PNG/47-Breakout-Tiles.png"))
+    {
+        throw std::runtime_error("Failed to load font from file.");
+    }
+    paddle->setSize(Vector2f(150.0f, 20.0f));
+}
+
 }//namepsace arkanoid

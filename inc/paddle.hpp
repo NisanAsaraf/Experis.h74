@@ -14,6 +14,7 @@ public:
     sf::Vector2f getPosition() const;
     void paddle_start();
     bool started() const;
+    void upgrade_size();
     sf::Vector2f getSize() const;
     void reset();
     sf::RectangleShape const& getShape() const;
