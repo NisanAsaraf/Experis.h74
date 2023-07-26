@@ -111,7 +111,6 @@ void Game_Window::run_title_screen(Player& a_player, Scene& a_scene, GameState& 
 
 void Game_Window::run_level(Player& a_player, Scene& a_scene, GameState& currentGameState)
 {
-    // handleCollisions(a_player, a_scene, currentGameState);
     draw_background(a_scene, currentGameState);
     draw_scene(a_player, a_scene, currentGameState);
     draw_score(a_player.get_level_score());
@@ -130,16 +129,6 @@ void Game_Window::restart(Scene& a_scene)
 {
     window.clear();
     a_scene.reset();
-}
-
-bool Game_Window::close_window_check(Event const& event)
-{
-    if (event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
-    {
-        window.close();
-        return true;
-    }
-    return false;
 }
 
 void Game_Window::game_win_screen()
@@ -261,24 +250,60 @@ void Game_Window::paddle_movement_control(Scene& a_scene, Event const& event, Ga
     }
 }
 
-bool Game_Window::title_screen_button_click_handler(Scene& a_scene, Event& event)
-{
-    if (event.type == sf::Event::MouseButtonPressed)
+bool Game_Window::title_screen_button_event_handler(Scene& a_scene, Event& event)
+{   
+    Vector2i mousePosition = sf::Mouse::getPosition(window);
+    Vector2f worldMousePosition = window.mapPixelToCoords(mousePosition);
+    auto const& buttons = a_scene.get_buttons(); 
+
+    Button& button1 = *buttons.at(0);
+    Button& button2 = *buttons.at(1);
+
+    if (event.type == sf::Event::MouseMoved)
+    { 
+        if (button1.getBounds().contains(worldMousePosition))
+        {
+            illustrator->draw_button_hover(button1, window);
+        }
+        else if (button2.getBounds().contains(worldMousePosition))
+        {
+            illustrator->draw_button_hover(button2, window);
+        }
+        else
+        {
+            button1.on_normal();
+            button2.on_normal();
+        }
+    }
+    else if (event.type == sf::Event::MouseButtonPressed)
     {
-        Vector2f mousePosition(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
-        auto const& buttons = a_scene.get_buttons(); 
-
-        Button& button1 = *buttons.at(0);
-        Button& button2 = *buttons.at(1);
-
-        if (button1.getBounds().contains(mousePosition))
+        if (button1.getBounds().contains(worldMousePosition))
         {                    
             return true;
         }
-        else if (button2.getBounds().contains(mousePosition))
+        else if (button2.getBounds().contains(worldMousePosition))
         {
             window.close();
         }
+    }
+    return false;
+}
+
+bool Game_Window::pressed_any_key(Event const& event)
+{
+    if ((event.type == Event::KeyPressed && event.key.code != Keyboard::Escape))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Game_Window::close_window_check(Event const& event)
+{
+    if (event.type == Event::Closed || (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape))
+    {
+        window.close();
+        return true;
     }
     return false;
 }
@@ -291,15 +316,6 @@ bool Game_Window::input_name(std::string& a_name)
     }
     return false;
 }        
-
-bool Game_Window::pressed_any_key(Event const& event)
-{
-    if ((event.type == Event::KeyPressed && event.key.code != Keyboard::Escape))
-    {
-        return true;
-    }
-    return false;
-}
 
 bool Game_Window::isOpen()
 {

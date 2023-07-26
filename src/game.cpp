@@ -146,7 +146,7 @@ void Arkanoid_Game::processEvents()
         switch (currentGameState)
         {
             case GameState::TitleScreen:
-                if(m_window_ptr->title_screen_button_click_handler(*scene, event))
+                if(m_window_ptr->title_screen_button_event_handler(*scene, event))
                 {
                     make_level_one();
                 }

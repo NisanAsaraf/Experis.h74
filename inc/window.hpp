@@ -54,7 +54,7 @@ public:
 
     void draw_shapes();
 
-    bool title_screen_button_click_handler(Scene& a_scene, sf::Event& event);
+    bool title_screen_button_event_handler(Scene& a_scene, sf::Event& event);
     void paddle_movement_control(Scene& a_scene, sf::Event const&, GameState& currentGameState);
     bool close_window_check(sf::Event const&);
     bool pressed_any_key(sf::Event const& event);

@@ -57,9 +57,7 @@ void Illustrator::draw_title_screen(Scene& a_titlescreen,RenderWindow& a_window)
 
     for (auto& buttonPtr : buttons)
     {
-        Button& button = *buttonPtr;
-        draw_shape(button, a_window);
-        a_window.draw(button.getText());
+        draw_button(*buttonPtr, a_window);
     }
 }
 
@@ -191,6 +189,18 @@ void Illustrator::draw_pause(RenderWindow& a_window)
     text.setFillColor(Color::White);
     text.setPosition(SCREEN_WIDTH/3, SCREEN_HEIGHT/3);
     a_window.draw(text);
+}
+
+void Illustrator::draw_button_hover(Button& a_button, sf::RenderWindow& a_window)
+{
+    a_button.on_hover();
+    draw_shape(a_button, a_window);
+}
+
+void Illustrator::draw_button(Button& a_button, sf::RenderWindow& a_window)
+{
+    // a_button.on_normal();
+    draw_shape(a_button, a_window);
 }
 
 bool Illustrator::draw_input_name_screen(std::string& a_string, RenderWindow& a_window)

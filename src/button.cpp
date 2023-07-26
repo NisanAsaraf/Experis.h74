@@ -4,10 +4,13 @@ namespace arkanoid
 {
 using namespace sf;
 
-Button::Button(Vector2f a_pos, Texture const& a_texture)
+Button::Button(Vector2f a_pos, Texture const& a_texture, Texture const& a_hoverTexture)
 {
     m_buttonTexture = std::make_unique<Texture>(); 
+    m_button_hover_Texture = std::make_unique<Texture>();
+    
     (*m_buttonTexture) = a_texture;
+    (*m_button_hover_Texture) = a_hoverTexture;
 
     m_buttonSprite = std::make_unique<Sprite>(*m_buttonTexture);
     m_buttonSprite->setPosition(a_pos - Vector2f(20.0f, 10.0f));
@@ -30,18 +33,14 @@ void Button::setPosition(Vector2f new_pos)
     m_buttonSprite->setPosition(new_pos);
 }
 
-void Button::setText(std::string const& new_str)
+void Button::on_normal()
 {
-    m_button_text.setString(new_str);
-}
-
-Text const& Button::getText()
-{
-    return m_button_text;
+    m_buttonSprite->setTexture(*m_buttonTexture);
 }
 
 void Button::on_hover()
 {
+    m_buttonSprite->setTexture(*m_button_hover_Texture);
 }
 
 }//namespace arkanoid

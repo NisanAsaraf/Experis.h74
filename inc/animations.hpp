@@ -28,6 +28,8 @@ public:
     void draw_game_over_screen(sf::RenderWindow& window);
     void draw_pause(sf::RenderWindow& window);
 
+    void draw_button_hover(Button& a_button, sf::RenderWindow& window);
+    void draw_button(Button& a_button, sf::RenderWindow& a_window);
     void draw_score(size_t score, sf::RenderWindow& window);
     void draw_life_bar(size_t lives, sf::RenderWindow& window);
 

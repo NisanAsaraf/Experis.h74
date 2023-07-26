@@ -18,12 +18,15 @@ Title_Screen::Title_Screen()
 
 void Title_Screen::create()
 {
-    Texture startButton, quitButton;
+    Texture startButton, quitButton, startButtonHover, quitButtonHover; 
     startButton.loadFromFile("../../assets/textures/Buttons/start_button.png");
+    startButtonHover.loadFromFile("../../assets/textures/Buttons/start_button_hover.png");
+    
     quitButton.loadFromFile("../../assets/textures/Buttons/quit_button.png");
+    quitButtonHover.loadFromFile("../../assets/textures/Buttons/quit_button_hover.png");
 
-    std::unique_ptr<Button> m_start_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.3, SCREEN_HEIGHT/1.9), startButton);
-    std::unique_ptr<Button> m_quit_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.3, SCREEN_HEIGHT/1.5), quitButton);
+    std::unique_ptr<Button> m_start_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.3, SCREEN_HEIGHT/1.9), startButton, startButtonHover);
+    std::unique_ptr<Button> m_quit_game = std::make_unique<Button>(Vector2f(SCREEN_WIDTH/2.3, SCREEN_HEIGHT/1.5), quitButton, quitButtonHover);
     
     buttons.emplace_back(std::move(m_start_game));
     buttons.emplace_back(std::move(m_quit_game));

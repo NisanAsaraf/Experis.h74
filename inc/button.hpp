@@ -35,20 +35,21 @@ public:
 class Button
 {
 public:
-    Button(sf::Vector2f, sf::Texture const& a_texture);
+    Button(sf::Vector2f a_pos, sf::Texture const& a_texture, sf::Texture const& a_hoverTexture);
     sf::FloatRect getBounds();
     sf::Text const& getText();
     void setPosition(sf::Vector2f a_v);
     void setText(std::string const& a_str);
     void setButtonColor(sf::Color a_color);
     const sf::Sprite& getShape() const;
+    void on_normal();
     void on_hover();
     void on_click();
 private:
     std::unique_ptr<sf::Sprite> m_buttonSprite;
     std::unique_ptr<sf::Texture> m_buttonTexture;
-    sf::Text m_button_text;
-
+    std::unique_ptr<sf::Texture> m_button_hover_Texture;
+    std::unique_ptr<sf::Texture> m_button_click_Texture;
 };
 
 }//namespace arkanoid
