@@ -175,12 +175,12 @@ void Game_Window::animate_balls(Scene& a_scene)
 
 void Game_Window::animate_paddle_right(Scene& a_scene)
 {
-    animator->animate_paddle_right(a_scene.get_paddle(), clock);
+    animator->animate_paddle_right(a_scene.get_paddle());
 }
 
 void Game_Window::animate_paddle_left(Scene& a_scene)
 {
-    animator->animate_paddle_left(a_scene.get_paddle(), clock);
+    animator->animate_paddle_left(a_scene.get_paddle());
 }
 
 void Game_Window::animate_paddle_stop(Scene& a_scene)
@@ -264,7 +264,7 @@ void Game_Window::paddle_movement_control(Scene& a_scene, Event const& event, Ga
             }
         }
     }
-    else if (event.type == sf::Event::KeyReleased && (paddle.started()))
+    else if (event.type == sf::Event::KeyReleased)
     {
         if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::Left)
         {
@@ -272,6 +272,7 @@ void Game_Window::paddle_movement_control(Scene& a_scene, Event const& event, Ga
         }
     }
 }
+
 
 bool Game_Window::title_screen_button_event_handler(Scene& a_scene, Event& event)
 {   

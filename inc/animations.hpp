@@ -48,8 +48,8 @@ class Animator
 {
 public:
     void animate_ball(Ball&);
-    void animate_paddle_right(Paddle&, sf::Clock&);
-    void animate_paddle_left(Paddle&, sf::Clock&);
+    void animate_paddle_right(Paddle&);
+    void animate_paddle_left(Paddle&);
     void animate_paddle_stop(Paddle&);
 };
 

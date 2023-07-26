@@ -288,15 +288,15 @@ void Animator::animate_ball(Ball& a_ball)
     a_ball.move(a_ball.getVelocity());
 }
 
-void Animator::animate_paddle_right(Paddle& a_paddle , Clock& a_clock)
+void Animator::animate_paddle_right(Paddle& a_paddle)
 {
-    a_paddle.right(a_clock);
+    a_paddle.right();
     a_paddle.move(a_paddle.getVelocity());
 }
 
-void Animator::animate_paddle_left(Paddle& a_paddle, Clock& a_clock)
+void Animator::animate_paddle_left(Paddle& a_paddle)
 {
-    a_paddle.left(a_clock);
+    a_paddle.left();
     a_paddle.move(a_paddle.getVelocity());
 }
 

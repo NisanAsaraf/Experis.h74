@@ -68,7 +68,7 @@ void Coliision_Manager::ball_window_collision_handler(Ball& a_ball, RenderWindow
     auto windowSize = a_window.getSize();
     float buffer = 10.0f;
 
-    if (ballBounds.left <= buffer || ballBounds.left + ballBounds.width >= windowSize.x - buffer)
+    if (ballBounds.left <= buffer || ballBounds.left + ballBounds.width >= windowSize.x )
     {
         a_ball.elastic_horizontal();
     }

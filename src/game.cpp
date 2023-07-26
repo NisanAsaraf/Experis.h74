@@ -340,7 +340,7 @@ void Arkanoid_Game::level_collisions_handler()
                 continue;
             }
             if(collision_manager.check_collision(*ballPtr, *block))
-            {   
+            {   sound_manager.play_block_collision_sound();
                 if(block->isExplode())
                 {
                    for (auto& other_block : blocks)

@@ -21,8 +21,8 @@ public:
     void setPosition(float a_x, float a_y);
     void setPosition(sf::Vector2f a_v);
     void move(sf::Vector2f a_v);
-    void left(sf::Clock a_c);
-    void right(sf::Clock a_c);
+    void left();
+    void right();
     void stop();
 
 private:

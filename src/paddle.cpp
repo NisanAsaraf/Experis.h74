@@ -15,30 +15,30 @@ Paddle::Paddle()
     paddle->setTexture(&(*paddleTexture));
     paddle->setPosition(SCREEN_WIDTH/2 - 50, SCREEN_HEIGHT - 50);
     max_speed = 40.0f;
-    acceleration = 10.0f;
+    acceleration = 25.0f;
     velocity = Vector2f(0.0f, 0.0f);
 }
 
-void Paddle::right(Clock a_clock)
+void Paddle::right()
 {
-    Time deltaTime = a_clock.restart();
-    float timeDeltaSeconds = deltaTime.asSeconds();
+    float timeDeltaSeconds = 30.0f/64.0f;
     if(velocity.x < max_speed)
     {
-        float newVelocity = velocity.x + (acceleration * timeDeltaSeconds * timeDeltaSeconds);
+        float newVelocity = velocity.x + (acceleration * timeDeltaSeconds);
         velocity.x = std::min(newVelocity, max_speed);
     }
 }
 
-void Paddle::left(Clock a_clock)
+void Paddle::left()
 {   
-    Time deltaTime = a_clock.restart();
-    float timeDeltaSeconds = deltaTime.asSeconds();
+
+    float timeDeltaSeconds = 30.0f/64.0f;
     if(velocity.x > -max_speed)
     {
-        float newVelocity = velocity.x - (acceleration * timeDeltaSeconds * timeDeltaSeconds);
+        float newVelocity = velocity.x - (acceleration * timeDeltaSeconds);
         velocity.x = std::max(newVelocity, -max_speed);
     }
+
 }
 
 Vector2f Paddle::getSize() const
