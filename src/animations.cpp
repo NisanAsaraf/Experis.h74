@@ -216,7 +216,7 @@ void Illustrator::draw_button(Button& a_button, sf::RenderWindow& a_window)
 void Illustrator::draw_mute_icon(sf::RenderWindow& window)
 {
     Sprite muteSprite;
-    muteSprite.setPosition(0, 0);
+    muteSprite.setPosition(SCREEN_WIDTH - 150, 0);
     muteSprite.setTexture(muteIcon);
     window.draw(muteSprite);
 }
@@ -224,7 +224,7 @@ void Illustrator::draw_mute_icon(sf::RenderWindow& window)
 void Illustrator::draw_sound_icon(sf::RenderWindow& window)
 {
     Sprite soundSprite;
-    soundSprite.setPosition(0, 0);
+    soundSprite.setPosition(SCREEN_WIDTH - 150, 0);
     soundSprite.setTexture(soundIcon);
     window.draw(soundSprite);
 }

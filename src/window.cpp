@@ -52,7 +52,6 @@ void Game_Window::draw_background(Scene& a_scene, GameState& currentGameState)
         case GameState::Paused:
             break;
     }   
-    draw_mute_icon_handler();
 }
 
 void Game_Window::draw_hearts(size_t lives)
@@ -87,7 +86,7 @@ void Game_Window::draw_scoreboard(Scene& a_scene)
 }
 
 void Game_Window::draw_scene(Player& a_player,Scene& a_scene, GameState& currentGameState)
-{  
+{    
     switch (currentGameState)
     {
         case GameState::TitleScreen:
@@ -102,6 +101,7 @@ void Game_Window::draw_scene(Player& a_player,Scene& a_scene, GameState& current
         case GameState::Paused:
             break;
     }
+    draw_mute_icon_handler();
 }
 
 void Game_Window::run_title_screen(Player& a_player, Scene& a_scene, GameState& currentGameState)
