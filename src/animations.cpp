@@ -2,6 +2,7 @@
 
 namespace arkanoid
 {
+
 using namespace sf;
 Illustrator::Illustrator()
 {
@@ -9,6 +10,15 @@ Illustrator::Illustrator()
     {
         throw std::runtime_error("Error load font");
     }
+    if(!muteIcon.loadFromFile("../../assets/textures/Sound/sound_off.png"))
+    {
+        throw std::runtime_error("Error: load from file");
+    }
+    if(!soundIcon.loadFromFile("../../assets/textures/Sound/sound_on.png"))
+    {
+    throw std::runtime_error("Error: load from file");
+    }
+
 }
 
 void Illustrator::draw_BG_title(Scene& a_titlescreen,RenderWindow& a_window)
@@ -201,6 +211,22 @@ void Illustrator::draw_button(Button& a_button, sf::RenderWindow& a_window)
 {
     // a_button.on_normal();
     draw_shape(a_button, a_window);
+}
+
+void Illustrator::draw_mute_icon(sf::RenderWindow& window)
+{
+    Sprite muteSprite;
+    muteSprite.setPosition(0, 0);
+    muteSprite.setTexture(muteIcon);
+    window.draw(muteSprite);
+}
+
+void Illustrator::draw_sound_icon(sf::RenderWindow& window)
+{
+    Sprite soundSprite;
+    soundSprite.setPosition(0, 0);
+    soundSprite.setTexture(soundIcon);
+    window.draw(soundSprite);
 }
 
 bool Illustrator::draw_input_name_screen(std::string& a_string, RenderWindow& a_window)

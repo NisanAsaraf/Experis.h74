@@ -46,14 +46,15 @@ public:
     void draw_score(size_t score);
 
     void draw_pause_text();
-
+    void draw_mute_icon_handler();
+    
     void animate_balls(Scene& a_scene);
     void animate_paddle_right(Scene& a_scene);
     void animate_paddle_left(Scene& a_scene);
     void animate_paddle_stop(Scene& a_scene);
 
     void draw_shapes();
-
+    void set_mute_status(bool a_mute);
     bool title_screen_button_event_handler(Scene& a_scene, sf::Event& event);
     void paddle_movement_control(Scene& a_scene, sf::Event const&, GameState& currentGameState);
     bool close_window_check(sf::Event const&);
@@ -63,10 +64,11 @@ public:
     sf::RenderWindow& getWindow();
 private:
     sf::RenderWindow window;
+    sf::Clock mute_clock;
     sf::Clock clock;
     std::unique_ptr<Illustrator> illustrator;
     std::unique_ptr<Animator> animator;
-
+    bool is_muted;
 };
 
 } // namespace arkanoid

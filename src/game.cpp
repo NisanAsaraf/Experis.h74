@@ -24,7 +24,6 @@ void Arkanoid_Game::make_title_screen()
     is_high_score_already_entered = false;
     sound_manager.set_scene_music("title_screen.ogg");
     sound_manager.play_scene_music();
-
 }
 
 void Arkanoid_Game::make_level_one()
@@ -127,7 +126,8 @@ void Arkanoid_Game::mute_sound_handler(Event& event)
 {
     if (event.type == Event::KeyPressed && event.key.code == Keyboard::Q)
     {
-        sound_manager.mute_sound();
+        ref_clock.restart();
+        m_window_ptr->set_mute_status(sound_manager.mute_sound());
     }
 }
 

@@ -15,6 +15,7 @@ Game_Window::Game_Window()
 
     window.setFramerateLimit(64);
     window.setVerticalSyncEnabled(false);
+    is_muted = false;
 }
 
 void Game_Window::draw_background_title_screen(Scene& a_scene)
@@ -51,6 +52,7 @@ void Game_Window::draw_background(Scene& a_scene, GameState& currentGameState)
         case GameState::Paused:
             break;
     }   
+    draw_mute_icon_handler();
 }
 
 void Game_Window::draw_hearts(size_t lives)
@@ -129,6 +131,27 @@ void Game_Window::restart(Scene& a_scene)
 {
     window.clear();
     a_scene.reset();
+}
+
+void Game_Window::set_mute_status(bool a_mute)
+{
+    mute_clock.restart();
+    is_muted = a_mute;
+}
+
+void Game_Window::draw_mute_icon_handler()
+{   
+    if(clock.getElapsedTime().asSeconds() > 2 && mute_clock.getElapsedTime().asSeconds() < 2)
+    {   
+        if(is_muted)
+        {
+            illustrator->draw_mute_icon(window);
+        }
+        else
+        {
+            illustrator->draw_sound_icon(window);
+        }
+    }
 }
 
 void Game_Window::game_win_screen()

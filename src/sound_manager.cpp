@@ -32,6 +32,10 @@ void Sound_Manager::set_scene_music(const std::string& filename)
         throw std::runtime_error("Failed to load font from file.");
     }
 }
+void Sound_Manager::set_scene_volume(float a_vol)
+{
+    scene_music.setVolume(a_vol);
+}
 
 void Sound_Manager::play_scene_music()
 {
@@ -75,7 +79,7 @@ bool Sound_Manager::is_sound_muted()
     return is_mute;
 }
 
-void Sound_Manager::mute_sound()
+bool Sound_Manager::mute_sound()
 {
     if(is_mute == false)
     {
@@ -87,6 +91,7 @@ void Sound_Manager::mute_sound()
         is_mute = false;
         scene_music.play();
     }
+    return is_mute;
 }
 
 }//namespace arkanoid

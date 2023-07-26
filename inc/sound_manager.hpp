@@ -20,13 +20,14 @@ class Sound_Manager
 public:
     Sound_Manager();
     void set_scene_music(const std::string& filename);
+    void set_scene_volume(float a_vol);
     void stop_scene_music();
     void play_scene_music();
     void play_block_collision_sound();
     void play_win_game_sound();
     void play_lose_game_sound();
     bool is_sound_muted();
-    void mute_sound();
+    bool mute_sound();
 private:
     sf::Music scene_music;
     Sound_Effect block_collision;

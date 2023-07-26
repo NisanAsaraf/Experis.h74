@@ -32,11 +32,16 @@ public:
     void draw_button(Button& a_button, sf::RenderWindow& a_window);
     void draw_score(size_t score, sf::RenderWindow& window);
     void draw_life_bar(size_t lives, sf::RenderWindow& window);
+    void draw_mute_icon(sf::RenderWindow& window);
+    void draw_sound_icon(sf::RenderWindow& window);
 
     bool draw_input_name_screen(std::string& a_string, sf::RenderWindow& a_window);
 
 private:
     sf::Font m_font;
+    sf::Texture muteIcon;
+    sf::Texture soundIcon;  
+    sf::Sprite soundSprite;
 };
 
 class Animator
