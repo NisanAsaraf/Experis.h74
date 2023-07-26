@@ -9,7 +9,7 @@ INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 ASSETS_DIR = ../../assets
 
-OBJS = utest.o game.o window.o animations.o player.o UI.o life.o paddle.o ball.o block.o abs_scene.o scenes.o collisions.o leaderboard.o sound_manager.o
+OBJS = utest.o game.o window.o animations.o player.o UI.o life.o paddle.o ball.o block.o abs_scene.o scenes.o collision_manager.o leaderboard.o sound_manager.o
 TARGET = utest
 
 all: $(TARGET)
@@ -65,13 +65,13 @@ abs_scene.o: $(SOURCES_DIR)/abs_scene.cpp $(INCLUDES_DIR)/abs_scene.hpp
 scenes.o: $(SOURCES_DIR)/scenes.cpp $(INCLUDES_DIR)/scenes.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@	
 
-collisions.o: $(SOURCES_DIR)/collisions.cpp $(INCLUDES_DIR)/collisions.hpp
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@	
-
 leaderboard.o: $(SOURCES_DIR)/leaderboard.cpp $(INCLUDES_DIR)/leaderboard.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@	
 	
 sound_manager.o: $(SOURCES_DIR)/sound_manager.cpp $(INCLUDES_DIR)/sound_manager.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@	
+
+collision_manager.o: $(SOURCES_DIR)/collision_manager.cpp $(INCLUDES_DIR)/collision_manager.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@	
 
 $(TARGET): $(OBJS)

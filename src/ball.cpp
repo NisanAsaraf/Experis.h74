@@ -85,17 +85,17 @@ namespace arkanoid
         velocity.y *= -1.1;
     }
 
-    Vector2f& Ball::getVelocity()
+    Vector2f Ball::getVelocity() const
     {
         return velocity;
     }
 
-    Vector2f const& Ball::getPosition()
+    Vector2f const& Ball::getPosition() const
     {
         return shape->getPosition();
     }
 
-    FloatRect Ball::getGlobalBounds()
+    FloatRect Ball::getGlobalBounds() const
     {
         return shape->getGlobalBounds();
     }
@@ -132,7 +132,7 @@ namespace arkanoid
         shape->setPosition(x ,y);
     }
     
-    float Ball::getRadius()
+    float Ball::getRadius() const
     {
         return shape->getRadius();
     }

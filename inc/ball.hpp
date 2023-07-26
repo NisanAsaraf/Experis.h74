@@ -11,10 +11,10 @@ class Ball
 {
 public:
     Ball();
-    sf::Vector2f& getVelocity();
+    sf::Vector2f getVelocity() const;
     void setVelocity(sf::Vector2f);
-    sf::FloatRect getGlobalBounds();
-    sf::Vector2f const& getPosition();
+    sf::FloatRect getGlobalBounds() const;
+    sf::Vector2f const& getPosition() const;
     void vanish();
     const sf::CircleShape& getShape() const;
     void ball_start();
@@ -32,7 +32,7 @@ public:
     void set_color(sf::Color);
     void setPosition(sf::Vector2f);
     void setPosition(float, float);
-    float getRadius();
+    float getRadius() const;
     ~Ball() = default;
     
 private:

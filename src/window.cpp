@@ -111,7 +111,7 @@ void Game_Window::run_title_screen(Player& a_player, Scene& a_scene, GameState& 
 
 void Game_Window::run_level(Player& a_player, Scene& a_scene, GameState& currentGameState)
 {
-    handleCollisions(a_player, a_scene, currentGameState);
+    // handleCollisions(a_player, a_scene, currentGameState);
     draw_background(a_scene, currentGameState);
     draw_scene(a_player, a_scene, currentGameState);
     draw_score(a_player.get_level_score());
@@ -266,8 +266,6 @@ bool Game_Window::title_screen_button_click_handler(Scene& a_scene, Event& event
     if (event.type == sf::Event::MouseButtonPressed)
     {
         Vector2f mousePosition(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
-
-
         auto const& buttons = a_scene.get_buttons(); 
 
         Button& button1 = *buttons.at(0);
@@ -294,27 +292,6 @@ bool Game_Window::input_name(std::string& a_name)
     return false;
 }        
 
-void Game_Window::paddle_out_of_bounds_handler(Scene& a_scene)
-{
-    Paddle& pad = a_scene.get_paddle();
-
-    FloatRect paddleBounds = pad.getGlobalBounds();
-    FloatRect borderBounds = (*a_scene.get_border()).getGlobalBounds();
-
-    float newY = pad.getPosition().y;
-    float newXL = borderBounds.left + 5.0f;
-    float newXR = borderBounds.left + borderBounds.width - paddleBounds.width - 5.0f;
-
-    if (paddleBounds.left < borderBounds.left)
-    {
-        pad.setPosition(newXL,newY);
-    }
-    else if (paddleBounds.left + paddleBounds.width > borderBounds.left + borderBounds.width)
-    {
-        pad.setPosition(newXR,newY);
-    }
-}
-
 bool Game_Window::pressed_any_key(Event const& event)
 {
     if ((event.type == Event::KeyPressed && event.key.code != Keyboard::Escape))
@@ -322,139 +299,6 @@ bool Game_Window::pressed_any_key(Event const& event)
         return true;
     }
     return false;
-}
-
-void Game_Window::slow_down_game(Scene& a_scene)
-{
-    auto& balls = a_scene.get_balls();
-    for (auto& ballPtr : balls)
-    {
-        ballPtr->ball_slow_down();
-    }
-}
-
-void Game_Window::resume_normal_speed(Scene& a_scene)
-{
-    auto& balls = a_scene.get_balls();
-    for (auto& ballPtr : balls)
-    {
-        ballPtr->ball_return_normal_speed();
-    }
-}
-
-void Game_Window::random_gift_handler(Player& a_player, Scene& a_scene)
-{
-    RandomNumberGenerator generator;
-    int gift_number = generator.getRandomNumber();
-
-    switch(gift_number)
-    {
-        case 0:
-            a_scene.get_paddle().upgrade_size();
-            break;
-        case 1:
-            a_player.add_life();
-            break;
-        case 2:
-            a_player.add_score(1000);
-            break;
-        case 3:
-            a_scene.get_paddle().upgrade_size();
-            break;
-        case 4:
-            slow_down_game(a_scene);
-            ref_clock.restart();
-            break;
-    }
-}
-
-void Game_Window::level_collisions_handler(Player& a_player, Scene& a_scene)
-{
-    Paddle& pad = a_scene.get_paddle();
-    auto& blocks = a_scene.get_blocks(); 
-    auto& balls = a_scene.get_balls();
-
-    paddle_out_of_bounds_handler(a_scene);
-
-    for (const auto& ballPtr : balls)
-    {
-        if(ballPtr->is_slow() && ref_clock.getElapsedTime().asSeconds() >= 5)
-        {
-            ballPtr->ball_return_normal_speed();
-        }
-
-        if(ballPtr->isVanished())
-        {
-            continue;
-        }
-
-        for (auto& block : blocks)
-        {   
-            if(block->isVanished())//slight optimization
-            {
-                continue;
-            }
-            if(check_collision(*ballPtr, *block))
-            {   
-                if(block->isExplode())
-                {
-                   for (auto& other_block : blocks)
-                    {
-                        if(other_block->isVanished() || block == other_block)//slight optimization
-                        {
-                            continue;
-                        }
-                        if (block_blocks_collision_handler(*block, *other_block))
-                        {
-                            if(other_block->isGift())
-                            {
-                                random_gift_handler(a_player, a_scene);
-                            }
-                            a_player.add_score(other_block->getScoreValue(a_scene.get_level_number()));
-                        }
-                    }
-                    ball_block_collision_handler(*block, *ballPtr);//will vanish a block
-                }
-                else if(block->isGift())
-                {
-                    random_gift_handler(a_player, a_scene);
-                    ball_block_collision_handler(*block, *ballPtr);//will vanish a block
-                }
-                else
-                {
-                    a_player.add_score(block->getScoreValue(a_scene.get_level_number()));
-                    ball_block_collision_handler(*block, *ballPtr);//will vanish a block
-                }
-                //a_scene.remove_block(block&); // problematic
-            }
-        }
-
-        ball_window_collision_handler(*ballPtr, window);    
-        ball_paddle_collision_handler(*ballPtr,pad);
-
-        if(ball_kill_zone_collision_handler(*ballPtr, *a_scene.get_kill_zone()))  // will vanish a ball , wont delete it from the vector
-        {
-            a_player.hit();
-            ballPtr->reset();
-            pad.reset();
-        }
-    }
-}
-
-void Game_Window::handleCollisions(Player& a_player, Scene& a_scene, GameState& currentGameState)
-{
-    switch (currentGameState)
-    {
-        case GameState::TitleScreen:
-            break;
-        case GameState::Level:
-            level_collisions_handler(a_player, a_scene);
-            break;
-        case GameState::ScoreBoard:
-            break;
-        case GameState::Paused:
-            break;
-    }
 }
 
 bool Game_Window::isOpen()

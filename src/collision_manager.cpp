@@ -1,10 +1,10 @@
-#include "collisions.hpp"
-#include <SFML/Graphics.hpp>
+#include "collision_manager.hpp"
 
 namespace arkanoid
 {
 using namespace sf;
-bool check_collision(Ball& a_ball, Block& a_block)
+
+bool Coliision_Manager::check_collision(Ball& a_ball, Block& a_block)
 {
     FloatRect ball_bounds = a_ball.getGlobalBounds();
     FloatRect block_bounds = a_block.getGlobalBounds();
@@ -12,7 +12,7 @@ bool check_collision(Ball& a_ball, Block& a_block)
     return ( ball_bounds.intersects(block_bounds));
 }
 
-bool check_collision(Block& a_block, Ball& a_ball)
+bool Coliision_Manager::check_collision(Block & a_block, Ball & a_ball)
 {
     FloatRect ball_bounds = a_ball.getGlobalBounds();
     FloatRect block_bounds = a_block.getGlobalBounds();
@@ -20,7 +20,7 @@ bool check_collision(Block& a_block, Ball& a_ball)
     return ( ball_bounds.intersects(block_bounds));
 }
 
-bool check_collision(Ball& a_ball, Paddle& a_paddle)
+bool Coliision_Manager::check_collision(Ball & a_ball, Paddle& a_paddle)
 {
     FloatRect ball_bounds = a_ball.getGlobalBounds();
     FloatRect paddle_bounds = a_paddle.getGlobalBounds();
@@ -28,7 +28,7 @@ bool check_collision(Ball& a_ball, Paddle& a_paddle)
     return ( ball_bounds.intersects(paddle_bounds));
 }
 
-bool check_collision(Paddle& a_paddle, Ball& a_ball)
+bool Coliision_Manager::check_collision(Paddle& a_paddle, Ball& a_ball)
 {
     FloatRect ball_bounds = a_ball.getGlobalBounds();
     FloatRect paddle_bounds = a_paddle.getGlobalBounds();
@@ -36,19 +36,19 @@ bool check_collision(Paddle& a_paddle, Ball& a_ball)
     return ( ball_bounds.intersects(paddle_bounds));
 }
 
-void ball_block_collision_handler(Block& a_block, Ball& a_ball)
+void Coliision_Manager::ball_block_collision_handler(Block& a_block, Ball& a_ball)
 {
     a_block.collision();
     a_ball.elastic_vertical();
 }
 
-void ball_block_collision_handler(Ball& a_ball, Block& a_block)
+void Coliision_Manager::ball_block_collision_handler(Ball& a_ball, Block& a_block)
 {
     a_block.collision();
     a_ball.elastic_vertical();
 }
 
-bool block_blocks_collision_handler(Block& a_block, Block& b_block)
+bool Coliision_Manager::block_blocks_collision_handler(Block& a_block, Block& b_block)
 {
     float threshold = 100;
     sf::Vector2f center1 = a_block.getPosition() + 0.5f * a_block.getSize();
@@ -62,7 +62,7 @@ bool block_blocks_collision_handler(Block& a_block, Block& b_block)
     return false;
 }
 
-void ball_window_collision_handler(Ball& a_ball, RenderWindow& a_window)
+void Coliision_Manager::ball_window_collision_handler(Ball& a_ball, RenderWindow& a_window)
 {
     FloatRect ballBounds = a_ball.getGlobalBounds();
     auto windowSize = a_window.getSize();
@@ -79,7 +79,7 @@ void ball_window_collision_handler(Ball& a_ball, RenderWindow& a_window)
     }
 }
 
-void ball_window_collision_handler(RenderWindow& a_window, Ball& a_ball)
+void Coliision_Manager::ball_window_collision_handler(RenderWindow& a_window, Ball& a_ball)
 {
     FloatRect ballBounds = a_ball.getGlobalBounds();
     auto windowSize = a_window.getSize();
@@ -96,7 +96,7 @@ void ball_window_collision_handler(RenderWindow& a_window, Ball& a_ball)
     }
 }
 
-void ball_paddle_collision_handler(Ball& a_ball, Paddle& a_paddle)
+void Coliision_Manager::ball_paddle_collision_handler(Ball& a_ball, Paddle& a_paddle)
 {
     auto ballBounds = a_ball.getGlobalBounds();
     auto paddleBounds = a_paddle.getGlobalBounds();
@@ -145,7 +145,7 @@ void ball_paddle_collision_handler(Ball& a_ball, Paddle& a_paddle)
     }
 }
 
-bool check_window_collision(Shape& a_shape,RenderWindow& a_window , float a_buffer)
+bool Coliision_Manager::check_window_collision(Shape& a_shape,RenderWindow& a_window , float a_buffer)
 {
     FloatRect shape_bounds = a_shape.getGlobalBounds();
     FloatRect window_bounds(Vector2f(a_buffer, a_buffer), Vector2f(a_window.getSize().x - a_buffer, a_window.getSize().y - a_buffer));
@@ -153,7 +153,7 @@ bool check_window_collision(Shape& a_shape,RenderWindow& a_window , float a_buff
     return (shape_bounds.intersects(window_bounds));
 }
 
-void ball_paddle_collision_handler(Paddle& a_paddle, Ball& a_ball)
+void Coliision_Manager::ball_paddle_collision_handler(Paddle& a_paddle, Ball& a_ball)
 {
     auto ballBounds = a_ball.getGlobalBounds();
     auto paddleBounds = a_paddle.getGlobalBounds();
@@ -196,14 +196,13 @@ void ball_paddle_collision_handler(Paddle& a_paddle, Ball& a_ball)
     }
 }
 
-bool ball_kill_zone_collision_handler(Ball& a_ball, RectangleShape& a_kill_zone)
+bool Coliision_Manager::ball_kill_zone_collision_handler(Ball& a_ball, RectangleShape& a_kill_zone)
 {
     auto ballBounds = a_ball.getGlobalBounds();
     auto killBounds = a_kill_zone.getGlobalBounds();
 
     if(ballBounds.intersects(killBounds))
     {
-        //a_ball.vanish();
         return true;
     }
     return false;

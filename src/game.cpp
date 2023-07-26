@@ -103,6 +103,7 @@ void Arkanoid_Game::run()
     while (m_window_ptr->isOpen())
     {   
         processEvents();
+        handleCollisions();
         switch (currentGameState)
         {
             case GameState::TitleScreen:
@@ -218,6 +219,7 @@ void Arkanoid_Game::check_win_condition()
 {
     if(scene->check_all_blocks_gone())
     {
+        sound_manager.stop_scene_music();
         sound_manager.play_win_game_sound();
         m_window_ptr->game_win_screen();
         advance_level();
@@ -227,6 +229,7 @@ void Arkanoid_Game::check_lose_condition()
 {
     if(player->is_dead())
     {
+        sound_manager.stop_scene_music();
         sound_manager.play_lose_game_sound();
         m_window_ptr->game_over_screen();
         make_scoreBoard_screen();
@@ -252,6 +255,150 @@ void Arkanoid_Game::update_top_scores()
     (*playerData).score = score;
     (*playerData).elapsedTimeMs = elapsedTimeMs;
     sc_manager.update_top10_file(*playerData);
+}
+
+void Arkanoid_Game::paddle_out_of_bounds_handler()
+{
+    Paddle& pad = scene->get_paddle();
+
+    FloatRect paddleBounds = pad.getGlobalBounds();
+    FloatRect borderBounds = (*scene->get_border()).getGlobalBounds();
+
+    float newY = pad.getPosition().y;
+    float newXL = borderBounds.left + 5.0f;
+    float newXR = borderBounds.left + borderBounds.width - paddleBounds.width - 5.0f;
+
+    if (paddleBounds.left < borderBounds.left)
+    {
+        pad.setPosition(newXL,newY);
+    }
+    else if (paddleBounds.left + paddleBounds.width > borderBounds.left + borderBounds.width)
+    {
+        pad.setPosition(newXR,newY);
+    }
+}
+
+void Arkanoid_Game::slow_down_game()
+{
+    auto& balls = scene->get_balls();
+    for (auto& ballPtr : balls)
+    {
+        ballPtr->ball_slow_down();
+    }
+}
+
+void Arkanoid_Game::random_gift_handler()
+{
+    RandomNumberGenerator generator;
+    int gift_number = generator.getRandomNumber();
+
+    switch(gift_number)
+    {
+        case 0:
+            scene->get_paddle().upgrade_size();
+            break;
+        case 1:
+            player->add_life();
+            break;
+        case 2:
+            player->add_score(1000);
+            break;
+        case 3:
+            scene->get_paddle().upgrade_size();
+            break;
+        case 4:
+            slow_down_game();
+            ref_clock.restart();
+            break;
+    }
+}
+
+void Arkanoid_Game::level_collisions_handler()
+{
+    Paddle& pad = scene->get_paddle();
+    auto& blocks = scene->get_blocks(); 
+    auto& balls = scene->get_balls();
+
+    paddle_out_of_bounds_handler();
+
+    for (const auto& ballPtr : balls)
+    {
+        if(ballPtr->is_slow() && ref_clock.getElapsedTime().asSeconds() >= 5)
+        {
+            ballPtr->ball_return_normal_speed();
+        }
+
+        if(ballPtr->isVanished())
+        {
+            continue;
+        }
+
+        for (auto& block : blocks)
+        {   
+            if(block->isVanished())//slight optimization
+            {
+                continue;
+            }
+            if(collision_manager.check_collision(*ballPtr, *block))
+            {   
+                if(block->isExplode())
+                {
+                   for (auto& other_block : blocks)
+                    {
+                        if(other_block->isVanished() || block == other_block)//slight optimization
+                        {
+                            continue;
+                        }
+                        if (collision_manager.block_blocks_collision_handler(*block, *other_block))
+                        {
+                            if(other_block->isGift())
+                            {
+                                random_gift_handler();
+                            }
+                            player->add_score(other_block->getScoreValue(scene->get_level_number()));
+                        }
+                    }
+                    collision_manager.ball_block_collision_handler(*block, *ballPtr);
+                }
+                else if(block->isGift())
+                {
+                    random_gift_handler();
+                    collision_manager.ball_block_collision_handler(*block, *ballPtr);//will vanish a block
+                }
+                else
+                {
+                    player->add_score(block->getScoreValue(scene->get_level_number()));
+                    collision_manager.ball_block_collision_handler(*block, *ballPtr);//will vanish a block
+                }
+                //a_scene.remove_block(block&); // problematic
+            }
+        }
+        collision_manager.ball_window_collision_handler(*ballPtr, m_window_ptr->getWindow());
+        collision_manager.ball_paddle_collision_handler(*ballPtr,pad);
+
+        if(collision_manager.ball_kill_zone_collision_handler(*ballPtr, *scene->get_kill_zone()))  // will vanish a ball , wont delete it from the vector
+        {
+            player->hit();
+            ballPtr->reset();
+            pad.reset();
+        }
+    }
+}
+
+void Arkanoid_Game::handleCollisions()
+{
+    switch (currentGameState)
+    {
+        case GameState::TitleScreen:
+            break;
+        case GameState::Level:
+            level_collisions_handler();
+            break;
+        case GameState::ScoreBoard:
+            break;
+        case GameState::Paused:
+            break;
+    }
 }
 
 
