@@ -1,9 +1,4 @@
 #include "scenes.hpp"
-#include <memory>
-#include "UI.hpp"
-#include "paddle.hpp"
-#include "ball.hpp"
-#include "block.hpp"
 #include <nlohmann/json.hpp>
 
 namespace arkanoid

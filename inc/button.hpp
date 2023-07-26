@@ -1,5 +1,5 @@
-#ifndef UI_H
-#define UI_H
+#ifndef BUTTON_H
+#define BUTTON_H
 #include <SFML/Graphics.hpp>
 #include "config.hpp"
 #include <random>

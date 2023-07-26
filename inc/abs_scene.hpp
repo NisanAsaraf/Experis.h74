@@ -2,12 +2,14 @@
 #define ABS_SCENE_H
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <memory>
 #include <vector>
-#include "UI.hpp"
-#include "ball.hpp"
+#include "button.hpp"
 #include "paddle.hpp"
 #include "block.hpp"
+#include "ball.hpp"
 #include "leaderboard.hpp"
+#include "life.hpp"
 
 namespace arkanoid
 {

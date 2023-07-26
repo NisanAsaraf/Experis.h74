@@ -9,7 +9,7 @@ INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 ASSETS_DIR = ../../assets
 
-OBJS = utest.o game.o window.o animations.o player.o UI.o life.o paddle.o ball.o block.o abs_scene.o scenes.o collision_manager.o leaderboard.o sound_manager.o
+OBJS = utest.o game.o window.o animations.o player.o button.o life.o paddle.o ball.o block.o abs_scene.o scenes.o collision_manager.o leaderboard.o sound_manager.o
 TARGET = utest
 
 all: $(TARGET)
@@ -44,7 +44,7 @@ animations.o: $(SOURCES_DIR)/animations.cpp $(INCLUDES_DIR)/animations.hpp
 player.o: $(SOURCES_DIR)/player.cpp $(INCLUDES_DIR)/player.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-UI.o: $(SOURCES_DIR)/UI.cpp $(INCLUDES_DIR)/UI.hpp
+button.o: $(SOURCES_DIR)/button.cpp $(INCLUDES_DIR)/button.hpp
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 life.o: $(SOURCES_DIR)/life.cpp $(INCLUDES_DIR)/life.hpp

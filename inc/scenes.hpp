@@ -1,10 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
-#include <SFML/Graphics.hpp>
 #include "abs_scene.hpp"
-#include "life.hpp"
-#include "leaderboard.hpp"
-#include <vector>
+
 
 namespace arkanoid
 {
