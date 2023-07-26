@@ -41,11 +41,6 @@ std::vector<std::unique_ptr<Ball>> const& Scene::get_balls() const
     return balls;
 }
 
-size_t Scene::get_win_score() const
-{
-    return 0;
-}
-
 size_t Scene::get_level_number() const
 {
     return lvl;;
@@ -78,7 +73,7 @@ bool Scene::check_all_blocks_gone()
 {
     for(auto& block : blocks)
     {
-        if(!block->isVanished())
+        if(!block->isVanished() && !block->isIndestructable())
         {
             return false;
         }

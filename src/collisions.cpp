@@ -62,7 +62,6 @@ bool block_blocks_collision_handler(Block& a_block, Block& b_block)
     return false;
 }
 
-
 void ball_window_collision_handler(Ball& a_ball, RenderWindow& a_window)
 {
     FloatRect ballBounds = a_ball.getGlobalBounds();

@@ -7,7 +7,7 @@
     { "type": "BrownBlock", "x": 70, "y": 220 },
     { "type": "BrownBlock", "x": 70, "y": 245 },
     { "type": "BrownBlock", "x": 70, "y": 270 },
-    { "type": "YellowBlock", "x": 70, "y": 295 },
+    { "type": "Breakable_Block", "x": 70, "y": 295 },
     { "type": "BrownBlock", "x": 70, "y": 320 },
     { "type": "BrownBlock", "x": 70, "y": 345 },
 
@@ -74,7 +74,7 @@
     { "type": "GrayBlock", "x": 370, "y": 370 },
     { "type": "GrayBlock", "x": 430, "y": 370 },
     { "type": "GrayBlock", "x": 490, "y": 370 },
-    { "type": "YellowBlock", "x": 550, "y": 370 },
+    { "type": "Breakable_Block", "x": 550, "y": 370 },
     { "type": "GrayBlock", "x": 610, "y": 370 },
     { "type": "GrayBlock", "x": 670, "y": 370 },
     { "type": "PurpleBlock", "x": 670, "y": 370 }

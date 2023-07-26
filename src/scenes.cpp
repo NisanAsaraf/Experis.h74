@@ -33,22 +33,12 @@ void Title_Screen::create()
     buttons.emplace_back(std::move(m_start_game));
     buttons.emplace_back(std::move(m_quit_game));
 
-
+    lvl = 0;
 }
 
 void Title_Screen::reset()
 {
     create();
-}
-
-size_t Title_Screen::get_win_score() const
-{
-    return 0;
-}
-
-size_t Title_Screen::get_level_number() const
-{
-    return 0;
 }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -65,9 +55,8 @@ void Level_One::create()
     make_kill_zone(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
     make_paddle();
     spawn_ball();
-    win_score = LEVEL_ONE_SCORE;
     backgroundTexture = std::make_unique<Texture>();
-
+    lvl = 1;
     if (!(*backgroundTexture).loadFromFile("../../assets/textures/BG/neon.jpg"))
     {
         throw std::runtime_error("Failed to load font from file.");
@@ -91,16 +80,6 @@ void Level_One::reset()
     balls.clear();
 }
 
-size_t Level_One::get_win_score() const
-{
-    return win_score;
-}
-
-size_t Level_One::get_level_number() const
-{
-    return 1;
-}
-
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 Level_Two::Level_Two()
@@ -115,7 +94,7 @@ void Level_Two::create()
     make_kill_zone(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
     make_paddle();
     spawn_ball();
-    win_score = LEVEL_TWO_SCORE;
+    lvl = 2;
     backgroundTexture = std::make_unique<Texture>();
 
     if (!(*backgroundTexture).loadFromFile("../../assets/textures/BG/neon.jpg"))
@@ -141,17 +120,6 @@ void Level_Two::reset()
     balls.clear();
 }
 
-
-size_t Level_Two::get_win_score() const
-{
-    return win_score;
-}
-
-size_t Level_Two::get_level_number() const
-{
-    return 2;
-}
-
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 Level_Three::Level_Three()
@@ -166,7 +134,7 @@ void Level_Three::create()
     make_kill_zone(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
     make_paddle();
     spawn_ball();
-    win_score = LEVEL_THREE_SCORE;
+    lvl = 3;
     backgroundTexture = std::make_unique<Texture>();
 
     if (!(*backgroundTexture).loadFromFile("../../assets/textures/BG/neon.jpg"))
@@ -192,17 +160,6 @@ void Level_Three::reset()
     balls.clear();
 }
 
-
-size_t Level_Three::get_win_score() const
-{
-    return win_score;
-}
-
-size_t Level_Three::get_level_number() const
-{
-    return 3;
-}
-
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------------- */ 
 
 Level_Four::Level_Four()
@@ -217,7 +174,7 @@ void Level_Four::create()
     make_kill_zone(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
     make_paddle();
     spawn_ball();
-    win_score = LEVEL_THREE_SCORE;
+    lvl = 4;
     backgroundTexture = std::make_unique<Texture>();
 
     if (!(*backgroundTexture).loadFromFile("../../assets/textures/BG/neon.jpg"))
@@ -242,17 +199,6 @@ void Level_Four::reset()
     paddle_reset();
     balls.clear();
 }
-
-size_t Level_Four::get_win_score() const
-{
-    return win_score;
-}
-
-size_t Level_Four::get_level_number() const
-{
-    return 4;
-}
-
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------------- */ 
 
 Score_Board::Score_Board(std::vector<PlayerData>& a_players)
@@ -277,7 +223,7 @@ void Score_Board::create()
     m_header.setFillColor(Color::White);
     m_header.setPosition(SCREEN_WIDTH/3, 10);
     m_header.setString("LEADERBOARD");
-
+    lvl = 0;
     for(size_t i = m_players.size(); i > 0; i--)
     {
         Text text;
@@ -287,16 +233,6 @@ void Score_Board::create()
         text.setString(std::string(m_players.at(i - 1).name) + "    " + std::to_string(m_players.at(i - 1).score));
         m_texts.push_back(text);
     }
-}
-
-size_t Score_Board::get_win_score() const
-{
-    return 0;
-}
-
-size_t Score_Board::get_level_number() const
-{
-    return 42;
 }
 
 } // namespace arkanoid

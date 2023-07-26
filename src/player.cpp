@@ -1,4 +1,5 @@
 #include "../inc/player.hpp"
+#include <iostream>
 
 namespace arkanoid
 {
@@ -60,7 +61,7 @@ size_t Player::get_lives()
 
 void Player::hit()
 {
-    m_lives--;
+    --m_lives;
 }
 
 bool Player::is_dead() const

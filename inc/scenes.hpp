@@ -23,8 +23,6 @@ public:
     Title_Screen();
     void create() override;
     void reset() override;
-    size_t get_win_score() const override;
-    size_t get_level_number() const override;
 };
 
 
@@ -34,8 +32,6 @@ public:
     Level_One();
     void create() override;
     void reset() override;
-    size_t get_win_score() const override;
-    size_t get_level_number() const override;
 private:
     void make_blocks(); 
 };
@@ -46,8 +42,6 @@ public:
     Level_Two();
     void create() override;
     void reset() override;
-    size_t get_win_score() const override;
-    size_t get_level_number() const override;
 private:
     void make_blocks(); 
 };
@@ -58,8 +52,6 @@ public:
     Level_Three();
     void create() override;
     void reset() override;
-    size_t get_win_score() const override;
-    size_t get_level_number() const override;
 private:
     void make_blocks(); 
 };
@@ -70,8 +62,6 @@ public:
     Level_Four();
     void create() override;
     void reset() override;
-    size_t get_win_score() const override;
-    size_t get_level_number() const override;
 private:
     void make_blocks(); 
 };
@@ -83,8 +73,6 @@ public:
     Score_Board(std::vector<PlayerData>&);
     void create() override;
     void reset() override;
-    size_t get_win_score() const;
-    size_t get_level_number() const;
 private:
     std::vector<PlayerData> m_players;
 };

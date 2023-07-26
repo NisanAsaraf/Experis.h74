@@ -11,7 +11,7 @@ public:
     Block(float a_x, float a_y);
     Block(sf::Vector2f a_pos);
     virtual ~Block() = default;
-    int getScoreValue(size_t a_lvl = 1) const;
+    size_t getScoreValue(size_t a_lvl = 1) const;
     sf::Vector2f getPosition() const;
     sf::FloatRect getGlobalBounds() const;
     sf::Vector2f getSize() const ;

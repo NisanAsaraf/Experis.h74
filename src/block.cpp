@@ -33,6 +33,7 @@ void Block::vanish()
     shape->setPosition(0,0);
     shape->setFillColor(Color::Transparent);
     shape->setSize(Vector2f(0, 0));
+    score = 0;
     vanished = true;
 }
 
@@ -40,6 +41,7 @@ void Block::make_base(float a_x , float a_y)
 {
     shape = std::make_unique<sf::RectangleShape>(sf::Vector2f(60.0f, 25.0f));
     shape->setPosition(a_x, a_y);
+    score_modifer = 0;
     is_explode = 0;
     is_gift = 0;
     is_indestructable = 0;
@@ -66,7 +68,7 @@ bool Block::isGift() const
     return is_gift;
 }
 
-int Block::getScoreValue(size_t a_lvl) const
+size_t Block::getScoreValue(size_t a_lvl) const
 {
     return score + score * (a_lvl - 1) * score_modifer;
 }
@@ -298,6 +300,7 @@ GrayBlock::GrayBlock(Vector2f a_vec)
     shape->setTexture(&(*blockTexture));
     score = 50;
     vanished = false;
+    score_modifer = 1;
 }
 
 void GrayBlock::collision()
@@ -331,6 +334,7 @@ YellowBlock::YellowBlock(Vector2f a_vec)
 
 void YellowBlock::collision()
 {
+    score = 0;
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
