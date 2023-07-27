@@ -343,7 +343,8 @@ void Arkanoid_Game::level_collisions_handler()
             {   sound_manager.play_block_collision_sound();
                 if(block->isExplode())
                 {
-                   for (auto& other_block : blocks)
+                    sound_manager.play_explosion_sound();
+                    for (auto& other_block : blocks)
                     {
                         if(other_block->isVanished() || block == other_block)//slight optimization
                         {

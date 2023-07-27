@@ -8,7 +8,7 @@ using namespace sf;
 
 Game_Window::Game_Window()
 : window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT)
-, "Arkanoid",Style::Titlebar | Style::Close)
+, "Arkanoid", Style::Titlebar | Style::Close)
 { 
     illustrator = std::make_unique<Illustrator>();
     animator = std::make_unique<Animator>();

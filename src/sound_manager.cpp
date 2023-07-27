@@ -22,6 +22,7 @@ Sound_Manager::Sound_Manager()
 ,win_level{"game_win_sound.ogg"}
 ,lose_game{"game_over_sound.ogg"}
 ,gift_sound{"gift_sound.ogg"}
+,explosion_sound{"explosion.ogg"}
 ,is_mute{false}
 {
 }
@@ -99,6 +100,12 @@ void Sound_Manager::play_gift_sound()
 {
     gift_sound.play_sound();
 }
+
+void Sound_Manager::play_explosion_sound()
+{
+    explosion_sound.play_sound();
+}
+
 }//namespace arkanoid
 
 

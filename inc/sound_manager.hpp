@@ -24,6 +24,7 @@ public:
     void stop_scene_music();
     void play_scene_music();
     void play_block_collision_sound();
+    void play_explosion_sound();
     void play_win_game_sound();
     void play_lose_game_sound();
     void play_gift_sound();
@@ -35,6 +36,7 @@ private:
     Sound_Effect win_level;
     Sound_Effect lose_game;
     Sound_Effect gift_sound;
+    Sound_Effect explosion_sound;
     bool is_mute;
 };
 }//namespace arkanoid
