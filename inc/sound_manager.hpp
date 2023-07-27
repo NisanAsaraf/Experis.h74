@@ -8,7 +8,7 @@ namespace arkanoid
 class Sound_Effect
 {
 public:
-    Sound_Effect(const std::string& filename);
+    Sound_Effect(std::string const& filename);
     void play_sound();
 private:
     sf::SoundBuffer soundBuffer;
@@ -26,6 +26,7 @@ public:
     void play_block_collision_sound();
     void play_win_game_sound();
     void play_lose_game_sound();
+    void play_gift_sound();
     bool is_sound_muted();
     bool mute_sound();
 private:
@@ -33,6 +34,7 @@ private:
     Sound_Effect block_collision;
     Sound_Effect win_level;
     Sound_Effect lose_game;
+    Sound_Effect gift_sound;
     bool is_mute;
 };
 }//namespace arkanoid

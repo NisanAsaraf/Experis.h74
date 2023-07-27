@@ -8,15 +8,16 @@ Paddle::Paddle()
     start = false;
     paddleTexture    = std::make_unique<Texture>();
 
-    if (!(*paddleTexture).loadFromFile("../../assets/textures/Breakout/PNG/49-Breakout-Tiles.png"))
+    if (!(*paddleTexture).loadFromFile("../../assets/textures/Breakout/PNG/paddle.png"))
     {
         throw std::runtime_error("Failed to load font from file.");
     }
     paddle->setTexture(&(*paddleTexture));
     paddle->setPosition(SCREEN_WIDTH/2 - 50, SCREEN_HEIGHT - 50);
     max_speed = 40.0f;
-    acceleration = 25.0f;
-    velocity = Vector2f(0.0f, 0.0f);
+    min_speed = 20.0f;
+    acceleration = 40.0f;
+    velocity = Vector2f(min_speed, 0.0f);
 }
 
 void Paddle::right()
@@ -24,7 +25,7 @@ void Paddle::right()
     float timeDeltaSeconds = 30.0f/64.0f;
     if(velocity.x < max_speed)
     {
-        float newVelocity = velocity.x + (acceleration * timeDeltaSeconds);
+        float newVelocity = min_speed + velocity.x + (acceleration * timeDeltaSeconds);
         velocity.x = std::min(newVelocity, max_speed);
     }
 }
@@ -35,7 +36,7 @@ void Paddle::left()
     float timeDeltaSeconds = 30.0f/64.0f;
     if(velocity.x > -max_speed)
     {
-        float newVelocity = velocity.x - (acceleration * timeDeltaSeconds);
+        float newVelocity = -1.0 * min_speed + velocity.x - (acceleration * timeDeltaSeconds);
         velocity.x = std::max(newVelocity, -max_speed);
     }
 
@@ -105,7 +106,7 @@ void Paddle::setPosition(Vector2f a_v)
 
 void Paddle::upgrade_size()
 {
-    if (!(*paddleTexture).loadFromFile("../../assets/textures/Breakout/PNG/47-Breakout-Tiles.png"))
+    if (!(*paddleTexture).loadFromFile("../../assets/textures/Breakout/PNG/long_paddle.png"))
     {
         throw std::runtime_error("Failed to load font from file.");
     }

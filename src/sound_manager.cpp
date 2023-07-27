@@ -21,6 +21,7 @@ Sound_Manager::Sound_Manager()
 :block_collision{"block_collision_sound.ogg"}
 ,win_level{"game_win_sound.ogg"}
 ,lose_game{"game_over_sound.ogg"}
+,gift_sound{"gift_sound.ogg"}
 ,is_mute{false}
 {
 }
@@ -94,6 +95,10 @@ bool Sound_Manager::mute_sound()
     return is_mute;
 }
 
+void Sound_Manager::play_gift_sound()
+{
+    gift_sound.play_sound();
+}
 }//namespace arkanoid
 
 

@@ -12,7 +12,7 @@ namespace arkanoid
         vanished = false;
         speed = 5.0f;
         ballTexture = std::make_unique<Texture>();
-        if (!(*ballTexture).loadFromFile("../../assets/textures/Breakout/PNG/58-Breakout-Tiles.png"))
+        if (!(*ballTexture).loadFromFile("../../assets/textures/Breakout/PNG/ball.png"))
         {
             throw std::runtime_error("Failed to load font from file.");
         }

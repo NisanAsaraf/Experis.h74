@@ -31,6 +31,7 @@ private:
     sf::Vector2f velocity;
     float acceleration;
     bool start;
+    float min_speed;
     float max_speed;
 };
 

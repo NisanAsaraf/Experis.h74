@@ -354,6 +354,7 @@ void Arkanoid_Game::level_collisions_handler()
                             if(other_block->isGift())
                             {
                                 random_gift_handler();
+                                sound_manager.play_gift_sound();
                             }
                             player->add_score(other_block->getScoreValue(scene->get_level_number()));
                         }
@@ -362,6 +363,7 @@ void Arkanoid_Game::level_collisions_handler()
                 }
                 else if(block->isGift())
                 {
+                    sound_manager.play_gift_sound();
                     random_gift_handler();
                     collision_manager.ball_block_collision_handler(*block, *ballPtr);//will vanish a block
                 }
