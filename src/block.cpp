@@ -346,6 +346,7 @@ Breakable_Block::Breakable_Block(float a_x, float a_y)
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/breakable-solid.png"))
     shape->setTexture(&(*blockTexture));
     score = 0;
+    break_counter = 3;
     vanished = false;
 }
 
@@ -356,6 +357,7 @@ Breakable_Block::Breakable_Block(Vector2f a_vec)
     if(blockTexture->loadFromFile("../../assets/textures/Breakout/PNG/breakable-solid.png"))
     shape->setTexture(&(*blockTexture));
     score = 0; // 300 when broken
+    break_counter = 3;
     vanished = false;
 }
 
