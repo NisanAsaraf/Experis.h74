@@ -50,7 +50,7 @@ void Coliision_Manager::ball_block_collision_handler(Ball& a_ball, Block& a_bloc
 
 bool Coliision_Manager::block_blocks_collision_handler(Block& a_block, Block& b_block)
 {
-    float threshold = 100;
+    float threshold = 75;
     sf::Vector2f center1 = a_block.getPosition() + 0.5f * a_block.getSize();
     sf::Vector2f center2 = b_block.getPosition() + 0.5f * a_block.getSize();
     float distance = std::sqrt(std::pow(center2.x - center1.x, 2) + std::pow(center2.y - center1.y, 2));

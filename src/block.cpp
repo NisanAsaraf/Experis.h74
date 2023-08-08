@@ -77,6 +77,7 @@ bool Block::isIndestructable() const
 {
     return is_indestructable;
 }
+
 /* -------------------------------------------------------------------------------------------------------------------------------------------- */
 
 WhiteBlock::WhiteBlock(float a_x, float a_y) 

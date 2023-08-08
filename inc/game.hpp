@@ -38,7 +38,7 @@ private:
     bool new_high_score_check();
     void update_top_scores();
     void mute_sound_handler(sf::Event& event);
-    
+    void skip_level_handler(sf::Event& event);
 private:
 
     std::unique_ptr<Game_Window> m_window_ptr;

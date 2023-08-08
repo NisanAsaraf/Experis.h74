@@ -35,7 +35,7 @@
     { "type": "BlueBlock", "x": 250, "y": 245 },
     { "type": "BlueBlock", "x": 250, "y": 270 },
     { "type": "BlueBlock", "x": 250, "y": 295 },
-    { "type": "BlueBlock", "x": 250, "y": 320 },
+    { "type": "Explodable_Block", "x": 250, "y": 320 },
     { "type": "BlueBlock", "x": 250, "y": 345 },
 
     { "type": "RedBlock", "x": 310, "y": 220 },

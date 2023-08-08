@@ -131,6 +131,14 @@ void Arkanoid_Game::mute_sound_handler(Event& event)
     }
 }
 
+void Arkanoid_Game::skip_level_handler(Event& event)
+{
+    if (event.type == Event::KeyPressed && event.key.code == Keyboard::X)
+    {
+        advance_level();
+    }
+}
+
 void Arkanoid_Game::processEvents()
 {
     Event event;
@@ -139,6 +147,7 @@ void Arkanoid_Game::processEvents()
     while (window.pollEvent(event))
     {   
         mute_sound_handler(event);
+        skip_level_handler(event);
         if(m_window_ptr->close_window_check(event))
         {
             sound_manager.stop_scene_music();
