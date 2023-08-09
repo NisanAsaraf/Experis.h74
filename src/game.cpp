@@ -66,7 +66,7 @@ void Arkanoid_Game::make_level_four()
     player->reset_to_next_level();
     scene = std::make_unique<Level_Four>();
     scene ->create();
-    sound_manager.set_scene_music("level_three.ogg");
+    sound_manager.set_scene_music("final_boss.ogg");
     sound_manager.play_scene_music();
 }
 

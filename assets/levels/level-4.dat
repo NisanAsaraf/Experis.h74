@@ -1,43 +1,30 @@
 {
   "blocks": [
 
-    { "type": "GrayBlock", "x": 480, "y": 345 },
-    { "type": "GrayBlock", "x": 480, "y": 320 },
-    { "type": "GrayBlock", "x": 480, "y": 295 },
-    { "type": "GrayBlock", "x": 480, "y": 270 },
-    { "type": "GrayBlock", "x": 480, "y": 245 },
+    { "type": "Explodable_Block", "x": 260, "y": 150 },
+    { "type": "Explodable_Block", "x": 380, "y": 150 },
+    { "type": "Explodable_Block", "x": 500, "y": 150 },
 
-    { "type": "WhiteBlock", "x": 419, "y": 370 },
-    { "type": "WhiteBlock", "x": 419, "y": 345 },
-    { "type": "WhiteBlock", "x": 419, "y": 320 },
-    { "type": "Explodable_Block", "x": 419, "y": 295 },
-    { "type": "WhiteBlock", "x": 419, "y": 270 },
-    { "type": "WhiteBlock", "x": 419, "y": 245 },
-    { "type": "WhiteBlock", "x": 419, "y": 220 },
+    { "type": "Explodable_Block", "x": 260, "y": 175 },
+    { "type": "Explodable_Block", "x": 380, "y": 175 },
+    { "type": "Explodable_Block", "x": 500, "y": 175 },
 
-    { "type": "BrownBlock", "x": 358, "y": 395 },
-    { "type": "BrownBlock", "x": 358, "y": 370 },
-    { "type": "Explodable_Block", "x": 358, "y": 345 },
-    { "type": "BrownBlock", "x": 358, "y": 320 },
-    { "type": "Gift_Block", "x": 358, "y": 295 },
-    { "type": "BrownBlock", "x": 358, "y": 270 },
-    { "type": "Explodable_Block", "x": 358, "y": 245 },
-    { "type": "BrownBlock", "x": 358, "y": 220 },
-    { "type": "BrownBlock", "x": 358, "y": 195 },
+    { "type": "Explodable_Block", "x": 260, "y": 200 },
+    { "type": "Explodable_Block", "x": 320, "y": 200 },
+    { "type": "Explodable_Block", "x": 380, "y": 200 },
+    { "type": "Explodable_Block", "x": 440, "y": 200 },
+    { "type": "Explodable_Block", "x": 500, "y": 200 },
 
-    { "type": "WhiteBlock", "x": 297, "y": 370 },
-    { "type": "WhiteBlock", "x": 297, "y": 345 },
-    { "type": "WhiteBlock", "x": 297, "y": 320 },
-    { "type": "Explodable_Block", "x": 297, "y": 295 },
-    { "type": "WhiteBlock", "x": 297, "y": 270 },
-    { "type": "WhiteBlock", "x": 297, "y": 245 },
-    { "type": "WhiteBlock", "x": 297, "y": 220 },
+    { "type": "GrayBlock", "x": 260, "y": 225 },
+    { "type": "GrayBlock", "x": 320, "y": 225 },
+    { "type": "GrayBlock", "x": 380, "y": 225 },
+    { "type": "GrayBlock", "x": 440, "y": 225 },
+    { "type": "GrayBlock", "x": 500, "y": 225 },
 
-    { "type": "GrayBlock", "x": 236, "y": 345 },
-    { "type": "GrayBlock", "x": 236, "y": 320 },
-    { "type": "GrayBlock", "x": 236, "y": 295 },
-    { "type": "GrayBlock", "x": 236, "y": 270 },
-    { "type": "GrayBlock", "x": 236, "y": 245 }
+    { "type": "GrayBlock", "x": 320, "y": 250 },
+    { "type": "GrayBlock", "x": 380, "y": 250 },
+    { "type": "GrayBlock", "x": 440, "y": 250 },
 
+    { "type": "GrayBlock", "x": 380, "y": 275 }
   ]
 }

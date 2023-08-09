@@ -19,7 +19,7 @@
     { "type": "OrangeBlock", "x": 305, "y": 143 },
     { "type": "OrangeBlock", "x": 366, "y": 143 },
     { "type": "OrangeBlock", "x": 427, "y": 143 },
-    { "type": "OrangeBlock", "x": 488, "y": 143 },
+    { "type": "Explodable_Block", "x": 488, "y": 143 },
     { "type": "OrangeBlock", "x": 549, "y": 143 },
     { "type": "OrangeBlock", "x": 610, "y": 143 },
     { "type": "OrangeBlock", "x": 671, "y": 143 },
@@ -41,7 +41,7 @@
     { "type": "OrangeBlock", "x": 183, "y": 227 },
     { "type": "OrangeBlock", "x": 244, "y": 227 },
     { "type": "OrangeBlock", "x": 305, "y": 227 },
-    { "type": "OrangeBlock", "x": 366, "y": 227 },
+    { "type": "Explodable_Block", "x": 366, "y": 227 },
     { "type": "OrangeBlock", "x": 427, "y": 227 },
     { "type": "OrangeBlock", "x": 488, "y": 227 },
     { "type": "WhiteBlock", "x": 549, "y": 227 },
@@ -55,14 +55,14 @@
     { "type": "PurpleBlock", "x": 305, "y": 269 },
     { "type": "PurpleBlock", "x": 366, "y": 269 },
     { "type": "PurpleBlock", "x": 427, "y": 269 },
-    { "type": "PurpleBlock", "x": 488, "y": 269 },
+    { "type": "Explodable_Block", "x": 488, "y": 269 },
     { "type": "PurpleBlock", "x": 549, "y": 269 },
     { "type": "PurpleBlock", "x": 610, "y": 269 },
     { "type": "PurpleBlock", "x": 671, "y": 269 },
 
     { "type": "BlueBlock", "x": 61, "y": 311 },
     { "type": "BlueBlock", "x": 122, "y": 311 },
-    { "type": "BlueBlock", "x": 183, "y": 311 },
+    { "type": "Explodable_Block", "x": 183, "y": 311 },
     { "type": "OrangeBlock", "x": 244, "y": 311 },
     { "type": "OrangeBlock", "x": 305, "y": 311 },
     { "type": "OrangeBlock", "x": 366, "y": 311 },
@@ -84,7 +84,7 @@
     { "type": "BlueBlock", "x": 610, "y": 353 },
     { "type": "BlueBlock", "x": 671, "y": 353 },
 
-    { "type": "RedBlock", "x": 61, "y": 395 },
+    { "type": "Gift_Block", "x": 61, "y": 395 },
     { "type": "RedBlock", "x": 122, "y": 395 },
     { "type": "RedBlock", "x": 183, "y": 395 },
     { "type": "RedBlock", "x": 244, "y": 395 },
@@ -93,7 +93,7 @@
     { "type": "RedBlock", "x": 427, "y": 395 },
     { "type": "RedBlock", "x": 488, "y": 395 },
     { "type": "RedBlock", "x": 549, "y": 395 },
-    { "type": "RedBlock", "x": 610, "y": 395 },
+    { "type": "Explodable_Block", "x": 610, "y": 395 },
     { "type": "RedBlock", "x": 671, "y": 395 }
   ]
 }
